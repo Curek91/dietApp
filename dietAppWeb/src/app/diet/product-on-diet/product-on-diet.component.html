@@ -1,0 +1,13 @@
+<div class="product-container container">
+  <div class="row image-row">
+    <div class="col-sm-12" title="{{ getTooltipText(productInput) }}" data-toggle="tooltip"><img src="../../../assets/{{ productInput.imageName }}.jpg" class="product-image"/></div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 text-center">{{productInput.name}}</div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <input [(ngModel)]="productInput.weight" class="form-control weight-input">
+    </div>
+  </div>
+</div>

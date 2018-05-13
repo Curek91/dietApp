@@ -1,0 +1,118 @@
+<div class="container product-container">
+  <div class="table">
+    <div class="row">
+      <div class="col-sm-6" style="height: 100%">
+        <div class="row dietRow" [ngClass]="{'active-row': mealOnDiet.id == activeMeal}" *ngFor="let mealOnDiet of diet.meals" (click)="setActiveMeal(mealOnDiet.id)">
+          <div class="col-sm-1">
+            <p>{{ mealOnDiet.id }}</p>
+          </div>
+          <div class="col-sm-7 text-sm-center">
+            <div *ngFor="let productOnMeal of mealOnDiet.products; let i = index">
+              <app-product-on-diet [productInput]="productOnMeal" (dblclick)="deleteFromMeal(i)"></app-product-on-diet>
+            </div>
+          </div>
+          <div class="col-sm-2 meal-summary">
+            <div class="row">
+              <div class="col-sm-12">
+                Białko: <br/>
+                Węglowodany: <br/>
+                Tłuszcze: <br/>
+                <b>Kcal:</b> <br/>
+                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">Suplementy</button>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-2 meal-summary">
+            <div class="row">
+              <div class="col-sm-12">
+                {{ getProteinsForMeal(mealOnDiet) | number:'1.1-2'}}<br/>
+                {{ getCarbsForMeal(mealOnDiet) | number:'1.1-2'}}<br/>
+                {{ getFatsForMeal(mealOnDiet) | number:'1.1-2'}}<br/>
+                <b>{{ getEnergyForMeal(mealOnDiet) | number:'1.1-2'}}</b><br/>
+                <input type="text" class="form-control input-group-sm needed-kcal" [(ngModel)]="mealOnDiet.kcal">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12 kcal-difference">
+                <span [ngClass]="{'greater': getEnergyForMeal(mealOnDiet) - mealOnDiet.kcal >= 0, 'lower': getEnergyForMeal(mealOnDiet) - mealOnDiet.kcal < 0}">{{ getEnergyForMeal(mealOnDiet) - mealOnDiet.kcal | number:'1.1-2' }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row meal-summary" *ngIf="diet.meals && diet.meals.length > 0">
+          <div class="col-sm-3" style="text-align: right;">
+            Białko: <br/>
+            Węglowodany: <br/>
+            Tłuszcze: <br/>
+            Kcal: <br/>
+          </div>
+          <div class="col-sm-2 meal-summary">
+            {{ getProteinsForDiet() | number:'1.1-2'}}<br/>
+            {{ getCarbsForDiet() | number:'1.1-2'}}<br/>
+            {{ getFatsForDiet() | number:'1.1-2'}}<br/>
+            {{ getEnergyForDiet() | number:'1.1-2'}}<br/>
+          </div>
+          <div class="col-sm-7">
+
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12 center-block">
+            <button *ngIf="diet.meals && diet.meals.length > 0" type="button" class="btn btn-sm btn-danger addDietBtn text-center" (click)="deleteMeal()">Usuń posiłek</button>
+            <button type="button" class="btn btn-sm btn-success addDietBtn center" (click)="addMeal()">Dodaj posiłek</button>
+            <button *ngIf="diet.meals && diet.meals.length > 0" type="button" class="btn btn-sm btn-success addDietBtn text-right">Zapisz Diete</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 product-column">
+        <div class="row filter-row">
+            <div class="col-sm-6">
+              <input type="text" [(ngModel)]="filter" class="form-control" placeholder="Wpisz nazwę produktu...">
+            </div>
+            <div class="col-sm-6">
+              <select class="form-control" [(ngModel)]="productTypeSelected">
+                <option *ngFor="let option of productType" [value]="option">{{ option }}</option>
+              </select>
+            </div>
+        </div>
+        <div class="row products-row">
+          <div class="col-sm-12 text-sm-center">
+            <div *ngFor="let product of products | productFilter:filter:productTypeSelected" (dblclick)="addToMeal(product)">
+              <app-product [productInput]="product"></app-product>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12 text-center">
+    Copyright by Curek, 2018
+  </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="myModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Suplementy</h5>
+        <button type="button" class="close" data-dismiss="modal">
+          <span>&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <textarea class="form-control" rows="5">
+          Wpisz suplementy...
+        </textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Anuluj</button>
+        <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">Zapisz</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

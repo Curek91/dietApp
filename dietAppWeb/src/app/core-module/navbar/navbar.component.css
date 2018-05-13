@@ -1,0 +1,38 @@
+.navbar-diet{
+  background: #ffe419;
+  margin: 0px;
+  padding: 0px;
+}
+
+.logo{
+  width: 10%
+}
+
+ul {
+  list-style: none;
+  padding-left: 0;
+}
+li {
+  text-transform: uppercase;
+  font-weight: 700;
+  cursor: pointer;
+  color: white;
+  padding: 10px;
+}
+
+li:hover {
+  background: #e1cc16;
+  transition: linear 300ms;
+  border-bottom:  1px solid white;
+}
+
+li.active {
+  background: #ff9518
+}
+
+.logout{
+  margin-right: 2%;
+  font-weight: 700;
+}
+
+

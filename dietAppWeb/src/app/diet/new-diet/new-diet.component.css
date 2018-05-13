@@ -1,0 +1,63 @@
+.product-container{
+  margin-top: 1%;
+  /*border-top: 2px solid black;*/
+  border-bottom: 2px solid black;
+
+}
+
+.dietRow{
+  border-bottom: 1px solid black;
+  height: 100%;
+}
+
+.addDietBtn{
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.active-row{
+  border: 3px solid darkblue;
+}
+
+.meal-summary{
+  font-size: small;
+}
+
+.products-row{
+  margin-top: 3%;
+}
+
+.filter-row{
+  margin-top: 3%;
+  padding-bottom: 3%;
+  border-bottom: 1px solid black;
+}
+
+.product-column{
+  border-left: 1px solid black;
+}
+
+.needed-kcal {
+  text-align: center;
+  margin-bottom: 4%;
+}
+
+.kcal-difference {
+  font-weight: 900;
+  text-align: center;
+  font-size: larger;
+}
+
+.greater{
+  color: green;
+}
+
+.lower{
+  color: red;
+}
+
+.fade {
+  opacity: 1;
+  -webkit-transition: opacity .10s linear;
+  transition: opacity .10s linear;
+}
