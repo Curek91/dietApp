@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Product} from '../models/IProduct';
+import {Product} from '../models/Product';
 
 @Component({
   selector: 'app-product-on-diet',
@@ -9,7 +9,6 @@ import {Product} from '../models/IProduct';
 export class ProductOnDietComponent implements OnInit {
   @Input() productInput: Product;
 
-  weight: Number = 0;
 
   constructor() { }
 
@@ -23,8 +22,5 @@ export class ProductOnDietComponent implements OnInit {
       'Kalorie: ' + product.kcal * (this.productInput.weight / 100);
   }
 
-  fakeAction(): void{
-    console.log('Nic nie rob');
-  }
 
 }

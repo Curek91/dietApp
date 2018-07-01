@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {Product} from "../models/Product";
-import {Diet} from "../models/Diet";
-import {DietService} from "../diet.service";
-import {Meal} from "../models/Meal";
+import {Product} from '../models/Product';
+import {Diet} from '../models/Diet';
+import {DietService} from '../diet.service';
+import {Meal} from '../models/Meal';
 
 @Component({
   selector: 'app-new-diet',
@@ -13,11 +13,10 @@ export class NewDietComponent implements OnInit {
 
   diet: Diet = new Diet();
   products: Product[];
-  activeMeal: Number;
+  activeMeal: number;
   filter: String;
   productType = ['Wszystko', 'Owoce', 'Mięso'];
   productTypeSelected: String = 'Wszystko';
-  modalSuplements: String = '';
 
   constructor(private dietService: DietService) { }
 
@@ -39,8 +38,19 @@ export class NewDietComponent implements OnInit {
   }
 
   addMeal(): void {
-    console.log('dodaje posilek');
-    this.diet.meals.push(new Meal(this.diet.meals.length + 1));
+    if (this.activeMeal == null) {
+      this.diet.meals.push(new Meal(1));
+      this.activeMeal = 1;
+    } else {
+      for (const x of this.diet.meals) {
+        if (x.id > this.activeMeal) {
+          x.id += 1;
+        }
+      }
+      this.diet.meals.push(new Meal(this.activeMeal +  1));
+      this.activeMeal = this.activeMeal + 1;
+      this.diet.meals.sort((n1, n2) => (n1.id - n2.id));
+    }
   }
 
   deleteFromMeal(index: number): void {
@@ -50,11 +60,23 @@ export class NewDietComponent implements OnInit {
 
   deleteMeal(): void {
     console.log('usuwam posilek');
-    this.diet.meals.splice(this.activeMeal - 1, 1);
-    this.activeMeal = this.activeMeal - 1;
+    const active = this.activeMeal;
+    console.log('active: ' + active);
+    this.diet.meals.map(function(item) {
+      if (item.id > active) {
+        item.id -= 1;
+      }
+    });
+    this.diet.meals.splice(this.diet.meals.findIndex(function(element) {
+      return element.id === active;
+    }), 1);
+    console.log('actif: ' + active);
+    if (active === this.diet.meals.length + 1) {
+      this.activeMeal -= 1;
+    }
   }
 
-  setActiveMeal(id: Number) {
+  setActiveMeal(id: number) {
     this.activeMeal = id;
   }
 

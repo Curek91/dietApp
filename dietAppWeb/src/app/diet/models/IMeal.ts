@@ -6,5 +6,5 @@ export interface IMeal {
   id: number;
   products: Product[];
   kcal: number;
-  suplements: string;
+  suplements: String;
 }

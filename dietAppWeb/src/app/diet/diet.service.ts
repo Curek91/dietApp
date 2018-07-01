@@ -12,6 +12,6 @@ export class DietService {
   constructor(private http: HttpClient) { }
 
   getProducts(): Observable<Product[]> {
-    return this.http.get(this.apiUrl);
+    return this.http.get<Product[]>(this.apiUrl);
   }
 }
