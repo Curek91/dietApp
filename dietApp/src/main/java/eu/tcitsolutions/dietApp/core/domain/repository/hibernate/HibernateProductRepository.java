@@ -1,6 +1,7 @@
 package eu.tcitsolutions.dietApp.core.domain.repository.hibernate;
 
 import eu.tcitsolutions.dietApp.core.domain.entity.Product;
+import eu.tcitsolutions.dietApp.core.domain.entity.Type;
 import eu.tcitsolutions.dietApp.core.domain.repository.ProductRepository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -37,6 +38,10 @@ public class HibernateProductRepository implements ProductRepository {
     @Override
     public void save(Product product) {
         entityManager.persist(product);
+    }
+
+    public void saveType(Type type){
+        entityManager.persist(type);
     }
 
     @Override

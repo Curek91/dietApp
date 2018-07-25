@@ -8,14 +8,11 @@ import java.util.Date;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-
 public class Product {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    private String type;
 
     private String name;
 
@@ -26,6 +23,9 @@ public class Product {
     private Long fat;
 
     private Long kcal;
+
+    @OneToOne
+    private Type type;
 
     @Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -41,7 +41,7 @@ public class Product {
 
     }
 
-    public Product(String type, String name, Long protein, Long carb, Long fat, Long kcal){
+    public Product(Type type, String name, Long protein, Long carb, Long fat, Long kcal){
         this.type = type;
         this.name = name;
         this.protein = protein;
@@ -58,11 +58,11 @@ public class Product {
         this.id = id;
     }
 
-    public String getType() {
+    public Type getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(Type type) {
         this.type = type;
     }
 

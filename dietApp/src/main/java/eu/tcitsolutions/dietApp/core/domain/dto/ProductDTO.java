@@ -1,9 +1,11 @@
 package eu.tcitsolutions.dietApp.core.domain.dto;
 
+import eu.tcitsolutions.dietApp.core.domain.entity.Type;
+
 public class ProductDTO {
 
     private Long id;
-    private String type;
+    private Type type;
     private String name;
     private Long protein;
     private Long carb;
@@ -18,11 +20,11 @@ public class ProductDTO {
         this.id = id;
     }
 
-    public String getType() {
+    public Type getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(Type type) {
         this.type = type;
     }
 
