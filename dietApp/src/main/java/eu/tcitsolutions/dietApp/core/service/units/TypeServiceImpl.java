@@ -1,7 +1,9 @@
 package eu.tcitsolutions.dietApp.core.service.units;
 
+import eu.tcitsolutions.dietApp.core.domain.dto.TypeDTO;
 import eu.tcitsolutions.dietApp.core.domain.entity.Type;
 import eu.tcitsolutions.dietApp.core.domain.repository.TypeRepository;
+import eu.tcitsolutions.dietApp.core.service.DTOMappingService;
 import eu.tcitsolutions.dietApp.core.service.TypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,9 @@ public class TypeServiceImpl implements TypeService {
     @Autowired
     private TypeRepository typeRepository;
 
+    @Autowired
+    DTOMappingService dtoMappingService;
+
     @Override
     public List<Type> getTypes() {
         return typeRepository.getTypes();
@@ -27,8 +32,8 @@ public class TypeServiceImpl implements TypeService {
     }
 
     @Override
-    public void saveProduct(Type source) {
-        typeRepository.save(source);
+    public void saveType(TypeDTO source) {
+        typeRepository.save(dtoMappingService.createEntity(source));
     }
 
     @Override
@@ -37,7 +42,7 @@ public class TypeServiceImpl implements TypeService {
     }
 
     @Override
-    public void updateType(Type source) {
-        typeRepository.update(source);
+    public void updateType(Long id, TypeDTO source) {
+        typeRepository.update(dtoMappingService.createEntity(id ,source));
     }
 }

@@ -1,13 +1,16 @@
 package eu.tcitsolutions.dietApp.controllers;
 
+import eu.tcitsolutions.dietApp.core.domain.dto.TypeDTO;
 import eu.tcitsolutions.dietApp.core.domain.entity.Product;
 import eu.tcitsolutions.dietApp.core.domain.entity.Type;
 import eu.tcitsolutions.dietApp.core.service.TypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 @RestController
@@ -30,5 +33,26 @@ public class TypeController {
     ResponseEntity<Type> getType(@PathVariable Long id){
         Type type = typeService.getType(id);
         return new ResponseEntity<Type>(type, HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value="/type/create", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody
+    ResponseEntity<Type> createType(@RequestBody TypeDTO source){
+        typeService.saveType(source);
+        return new ResponseEntity<Type>(HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/type/modify/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody
+    ResponseEntity<Type> updateType(@PathVariable("id") Long id, @RequestBody TypeDTO source){
+        typeService.updateType(id, source);
+        return new ResponseEntity<Type>(HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE, value = "/type/delete/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody
+    ResponseEntity<Type> updateType(@PathVariable("id") Long id){
+        typeService.removeType(id);
+        return new ResponseEntity<Type>(HttpStatus.OK);
     }
 }

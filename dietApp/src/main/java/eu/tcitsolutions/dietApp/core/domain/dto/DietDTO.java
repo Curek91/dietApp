@@ -1,26 +1,19 @@
 package eu.tcitsolutions.dietApp.core.domain.dto;
 
 import eu.tcitsolutions.dietApp.core.domain.entity.Meal;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import java.util.Set;
 
+@Builder
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class DietDTO {
 
-    private Long id;
-    private Set<Meal> meals;
+    private Set<MealDTO> meals;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Set<Meal> getMeals() {
-        return meals;
-    }
-
-    public void setMeals(Set<Meal> meals) {
-        this.meals = meals;
-    }
 }
