@@ -16,7 +16,7 @@ export class ProductComponent implements OnInit {
 
   getTooltipText(product: Product): String {
     return 'Białko: ' + product.protein + 'g\n' +
-           'Węglowodany: ' + product.carb + 'g\n' +
+           'Węglowodany: ' + product.carbs + 'g\n' +
            'Tłuszcze: ' + product.fat + 'g\n' +
            'Kalorie: ' + product.kcal;
   }

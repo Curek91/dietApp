@@ -1,0 +1,69 @@
+<div class="container product-container">
+  <form [formGroup]="productForm">
+    <div class="row form-group">
+      <div class="col-sm-4">
+        <img src="../../../assets/{{ productForm.value['name'].toString() }}.jpg" class="product-image"/>
+      </div>
+      <div class="col-sm-4 align-self-end ">
+        <label class="new-product-label">Typ:</label>
+        <select id="type"  class="form-control" formControlName="type" >
+          <option [ngValue]="null" *ngIf="!productForm.get('type').dirty" [disabled]="true">Wybierz typ</option>
+          <option *ngFor="let item of types" value="{{item.id}}">{{item.name}}</option>
+        </select>
+      </div>
+      <div class="col-sm-4 align-self-end ">
+        <label class="new-product-label">Nazwa:</label>
+        <input class="form-control" formControlName="name" placeholder="Nazwa">
+      </div>
+    </div>
+    <div class="row form-group">
+      <div class="col-sm-3">
+        <label class="new-product-label">Węglowodany</label>
+        <input class="form-control" formControlName="carbs" placeholder="Węglowodany">
+        <p *ngIf="!productForm.get('carbs').valid && productForm.get('carbs').dirty">Wegle trzeba podać</p>
+      </div>
+      <div class="col-sm-3">
+        <label class="new-product-label">Tłuszcze</label>
+        <input class="form-control" formControlName="fat" placeholder="Tłuszcze">
+      </div>
+      <div class="col-sm-3">
+        <label class="new-product-label">Białko</label>
+        <input class="form-control" formControlName="protein" placeholder="Białko">
+      </div>
+      <div class="col-sm-3">
+        <label class="new-product-label">Kalorie</label>
+        <input class="form-control" formControlName="kcal" placeholder="Kalorie">
+      </div>
+    </div>
+    <div class="row form-group">
+      <div class="col-sm-12">
+        <image-upload [max]="1" [preview]="true" [buttonCaption]="'Wybierz obrazek'" [dropBoxMessage]="'Przenieś obrazek tutaj'"
+                      [fileTooLargeMessage]="'Obrazek jest za duzy'" [clearButtonCaption]="'Wyczyść'"></image-upload>
+      </div>
+    </div>
+    <div class="row form-group">
+      <div class="col-sm-12">
+        <button class="btn btn-primary btn-md" style="margin-right: 2%" [disabled]="productForm.invalid">Zapisz</button>
+        <button class="btn btn-danger btn-md" type="submit" [routerLink]="['/manage-products']">Wróć</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+
+<div class="modal fade" tabindex="-1" role="dialog" id="saveModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Czy napewno chcesz zapisać produkt?</h5>
+        <button type="button" class="close" data-dismiss="modal">
+          <span></span>
+        </button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success btn-sm" data-dismiss="modal" (click)="modifyProduct()">Zapisz</button>
+        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Anuluj</button>
+      </div>
+    </div>
+  </div>
+</div>

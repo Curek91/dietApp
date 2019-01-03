@@ -25,14 +25,7 @@ public class HibernateProductRepository implements ProductRepository {
 
     @Override
     public Product getProduct(Long id) {
-        Product product = entityManager.find(Product.class, id);
-        return product;
-    }
-
-    @Override
-    public Product load(Long id) {
-        Product product = entityManager.find(Product.class, id);
-        return product;
+        return entityManager.find(Product.class, id);
     }
 
     @Override
@@ -40,22 +33,18 @@ public class HibernateProductRepository implements ProductRepository {
         entityManager.persist(product);
     }
 
-    public void saveType(Type type){
-        entityManager.persist(type);
-    }
-
     @Override
     public void delete(Product product) {
-
+        entityManager.remove(product);
     }
 
     @Override
     public void delete(Long id) {
-
+        entityManager.remove(entityManager.find(Product.class, id));
     }
 
     @Override
     public void update(Product product) {
-
+        entityManager.merge(product);
     }
 }

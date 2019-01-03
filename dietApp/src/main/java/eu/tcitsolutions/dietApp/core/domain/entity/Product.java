@@ -15,18 +15,38 @@ import java.util.Date;
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 public class Product extends BaseLogEntity implements Serializable {
 
     private String name;
     private Long protein;
-    private Long carb;
+    private Long carbs;
     private Long fat;
     private Long kcal;
+    private String imageName;
 
     @OneToOne
     private Type type;
 
+    public Product(String name, Long protein, Long carbs, Long fat, Long kcal, Type type, String imageName) {
+        this.name = name;
+        this.protein = protein;
+        this.carbs = carbs;
+        this.fat = fat;
+        this.kcal = kcal;
+        this.type = type;
+        this.imageName = imageName;
 
+    }
+
+    public Product(Long id, String name, Long protein, Long carbs, Long fat, Long kcal, Type type, String imageName) {
+        this.id = id;
+        this.name = name;
+        this.protein = protein;
+        this.carbs = carbs;
+        this.fat = fat;
+        this.kcal = kcal;
+        this.type = type;
+        this.imageName = imageName;
+    }
 }

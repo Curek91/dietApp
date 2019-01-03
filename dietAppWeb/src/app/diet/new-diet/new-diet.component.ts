@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Product} from '../models/Product';
 import {Diet} from '../models/Diet';
 import {DietService} from '../diet.service';
 import {Meal} from '../models/Meal';
+import {ProductType} from '../models/ProductType';
+import {IProduct} from '../models/IProduct';
 
 @Component({
   selector: 'app-new-diet',
@@ -12,21 +14,42 @@ import {Meal} from '../models/Meal';
 export class NewDietComponent implements OnInit {
 
   diet: Diet = new Diet();
-  products: Product[];
+  products: Product[] = new Array();
   activeMeal: number;
   filter: String;
-  productType = ['Wszystko', 'Owoce', 'Mięso'];
-  productTypeSelected: String = 'Wszystko';
 
-  constructor(private dietService: DietService) { }
+
+  constructor(private dietService: DietService) {
+  }
 
   ngOnInit() {
     this.loadProducts();
   }
 
   loadProducts(): void {
+    let prodTemp: Product;
     this.dietService.getProducts().subscribe((products) => {
-      this.products = products;
+      console.log(products);
+      products.forEach((product) => {
+
+        prodTemp = {
+          id: product.id,
+          type: {
+            id: product.type.id,
+            name: product.type.name
+          },
+          name: product.name,
+          protein: product.protein,
+          carbs: product.carbs,
+          fat: product.fat,
+          kcal: product.kcal,
+          weight: 0,
+          imageName: product.imageName
+        };
+        this.products.push(prodTemp);
+      });
+      console.log('koneic');
+      console.log(this.products);
     });
   }
 
@@ -47,7 +70,7 @@ export class NewDietComponent implements OnInit {
           x.id += 1;
         }
       }
-      this.diet.meals.push(new Meal(this.activeMeal +  1));
+      this.diet.meals.push(new Meal(this.activeMeal + 1));
       this.activeMeal = this.activeMeal + 1;
       this.diet.meals.sort((n1, n2) => (n1.id - n2.id));
     }
@@ -62,12 +85,12 @@ export class NewDietComponent implements OnInit {
     console.log('usuwam posilek');
     const active = this.activeMeal;
     console.log('active: ' + active);
-    this.diet.meals.map(function(item) {
+    this.diet.meals.map(function (item) {
       if (item.id > active) {
         item.id -= 1;
       }
     });
-    this.diet.meals.splice(this.diet.meals.findIndex(function(element) {
+    this.diet.meals.splice(this.diet.meals.findIndex(function (element) {
       return element.id === active;
     }), 1);
     console.log('actif: ' + active);
@@ -82,8 +105,8 @@ export class NewDietComponent implements OnInit {
 
   getProteinsForMeal(meal: Meal): number {
     if (meal.products.length > 0) {
-      return  meal.products
-        .map((product) => +product.protein * (product.weight / 100))
+      return meal.products
+        .map((product) => +product.protein)
         .reduce((prev, next) => prev + next);
     } else {
       return 0;
@@ -93,7 +116,7 @@ export class NewDietComponent implements OnInit {
   getCarbsForMeal(meal: Meal): number {
     if (meal.products.length > 0) {
       return meal.products
-        .map((product) => +product.carb * (product.weight / 100))
+        .map((product) => +product.carbs)
         .reduce((prev, next) => prev + next);
     } else {
       return 0;
@@ -103,7 +126,7 @@ export class NewDietComponent implements OnInit {
   getFatsForMeal(meal: Meal): number {
     if (meal.products.length > 0) {
       return meal.products
-        .map((product) => +product.fat * (product.weight / 100))
+        .map((product) => +product.fat)
         .reduce((prev, next) => prev + next);
     } else {
       return 0;
@@ -113,7 +136,7 @@ export class NewDietComponent implements OnInit {
   getEnergyForMeal(meal: Meal): number {
     if (meal.products.length > 0) {
       return meal.products
-        .map((product) => +product.kcal * (product.weight / 100))
+        .map((product) => +product.kcal)
         .reduce((prev, next) => prev + next);
     } else {
       return 0;

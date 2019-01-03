@@ -59,21 +59,35 @@ public class DTOMappingServiceImpl implements DTOMappingService, ApplicationCont
 
     @Override
     public ProductDTO createDTO(Product source) {
-        return new ProductDTO(createDTO(source.getType()), source.getName(), source.getProtein(), source.getCarb(), source.getFat(), source.getKcal());
+        return new ProductDTO(createDTO(source.getType()), source.getName(), source.getProtein(), source.getCarbs(), source.getFat(), source.getKcal(), source.getImageName());
     }
 
     @Override
     public TypeDTO createDTO(Type source) {
-        return new TypeDTO(source.getName());
+        return new TypeDTO(null, source.getName());
     }
 
     @Override
     public Type createEntity(TypeDTO source){
-        return new Type(source.getName());
+        String name = source.getName();
+        if (source.getId() != null){
+            name = typeRepository.getType(source.getId()).getName();
+        }
+        return new Type(source.getId(), name);
     }
 
     @Override
     public Type createEntity(Long id, TypeDTO source){
         return new Type(id, source.getName());
+    }
+
+    @Override
+    public Product createEntity(ProductDTO source){
+        return new Product(source.getName(), source.getProtein(), source.getCarbs(), source.getFat(), source.getKcal(), createEntity(source.getType()), source.getImageName());
+    }
+
+    @Override
+    public Product createEntity(Long id, ProductDTO source){
+        return new Product(id, source.getName(), source.getProtein(), source.getCarbs(), source.getFat(), source.getKcal(), createEntity(source.getType()), source.getImageName());
     }
 }

@@ -1,29 +1,25 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import {Product} from "./diet/models/Product";
+import {Product} from './diet/models/Product';
 
 @Pipe({
   name: 'productFilter'
 })
 export class ProductFilterPipe implements PipeTransform {
 
-  transform(items: Product[], searchText: string, productType: string): Product[] {
+  transform(items: Product[], searchText: string): any {
     if (!items) {
       return [];
-    }
-    if (!searchText && productType.toLowerCase() === 'wszystko') {
+    } else if (!searchText) {
       return items;
     }
 
+
+
     return items.filter(it => {
       if (!searchText) {
-        console.log(it.type);
-        console.log(productType);
-        return it.type.toLowerCase() === productType.toLowerCase();
-      } else if (productType.toLowerCase() === 'wszystko') {
-        return it.name.toLowerCase().includes(searchText.toLowerCase());
+        return true;
       } else {
-        return it.name.toLowerCase().includes(searchText.toLowerCase())
-          && (it.type.toLowerCase() === productType.toLowerCase());
+        return it.name.toLowerCase().includes(searchText.toLowerCase());
       }
     });
   }

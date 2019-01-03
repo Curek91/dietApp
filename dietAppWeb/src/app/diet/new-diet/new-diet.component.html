@@ -1,5 +1,6 @@
 <div class="container product-container">
   <div class="table">
+  <div class="table">
     <div class="row">
       <div class="col-sm-6" style="height: 100%">
         <div class="row dietRow" [ngClass]="{'active-row': mealOnDiet.id == activeMeal}" *ngFor="let mealOnDiet of diet.meals" (click)="setActiveMeal(mealOnDiet.id)">
@@ -70,21 +71,30 @@
               <input type="text" [(ngModel)]="filter" class="form-control" placeholder="Wpisz nazwę produktu...">
             </div>
             <div class="col-sm-6">
-              <select class="form-control" [(ngModel)]="productTypeSelected">
-                <option *ngFor="let option of productType" [value]="option">{{ option }}</option>
+              <select class="form-control" [(ngModel)]="productTypeKcalSelected">
+                <option *ngFor="let optionKcal of productTypeKcal" [value]="optionKcal">{{ optionKcal }}</option>
               </select>
             </div>
         </div>
+<!--        <div class="row filter-row">
+          <div class="col-sm-6">
+          </div>
+          <div class="col-sm-6">
+            <select class="form-control" [(ngModel)]="productTypeSelected">
+              <option *ngFor="let option of productType" [value]="option">{{ option }}</option>
+            </select>
+          </div>
+        </div>-->
         <div class="row products-row">
           <div class="col-sm-12 text-sm-center">
-            <div *ngFor="let product of products | productFilter:filter:productTypeSelected" (dblclick)="addToMeal(product)">
+            <div *ngFor="let product of products" (dblclick)="addToMeal(product)">
               <app-product [productInput]="product"></app-product>
             </div>
           </div>
         </div>
         <div class="row">
           <div class="col-sm-12">
-            <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#productModal">Zarządzaj produktami</button>
+            <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#productModal" [routerLink]="['/manage-products']">Zarządzaj produktami</button>
           </div>
         </div>
       </div>

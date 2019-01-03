@@ -24,4 +24,7 @@ public interface DTOMappingService {
     //create Entities
     public Type createEntity(TypeDTO source);
     public Type createEntity(Long id, TypeDTO source);
+
+    public Product createEntity(ProductDTO source);
+    public Product createEntity(Long id, ProductDTO source);
 }

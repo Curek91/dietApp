@@ -1,0 +1,65 @@
+<div class="container product-container">
+  <div class="row header-r'ow">
+    <div class="col-md-5 float-md-left">
+      <div class="input-group">
+        <span class="input-group-addon glyphicon glyphicon-search"></span>
+        <input type="text" class="form-control" [(ngModel)]="filter" placeholder="Szukaj...">
+      </div>
+    </div>
+    <div class="col-md-7">
+      <button class="btn btn-success btn-sm" [routerLink]="['/new-product']">Dodaj produkt</button>
+    </div>
+  </div>
+  <div class="row">
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>Lp</th>
+      <th>Nazwa</th>
+      <th>Białko</th>
+      <th>Węglowodany</th>
+      <th>Tłuszcze</th>
+      <th>Kalorie</th>
+      <th>Typ</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let product of products | productFilter:filter">
+      <td>{{product.id}}</td>
+      <td [routerLink]="['/product', product.id]">{{product.name}}</td>
+      <td>{{product.protein}} </td>
+      <td>{{product.carbs}}</td>
+      <td>{{product.fat}}</td>
+      <td>{{product.kcal}}</td>
+      <td>{{product.type.name}}</td>
+      <td><button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal">Usuń</button></td>
+
+      <div class="modal fade" tabindex="-1" role="dialog" id="deleteModal">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Czy napewno chcesz usunąć produkt?</h5>
+              <button type="button" class="close" data-dismiss="modal">
+                <span></span>
+              </button>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-success btn-sm" data-dismiss="modal" (click)="deleteProduct(product.id)">Usuń</button>
+              <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Anuluj</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+
+
+
+
+

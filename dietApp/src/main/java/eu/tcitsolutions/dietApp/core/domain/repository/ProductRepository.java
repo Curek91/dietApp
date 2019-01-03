@@ -11,8 +11,6 @@ public interface ProductRepository {
 
     public Product getProduct(Long id);
 
-    public Product load(Long id);
-
     public void save(Product product);
 
     public void delete(Product product);
@@ -20,6 +18,4 @@ public interface ProductRepository {
     public void delete(Long id);
 
     public void update(Product product);
-
-    public void saveType(Type type);
 }

@@ -15,8 +15,9 @@ public class ProductDTO {
     private TypeDTO type;
     private String name;
     private Long protein;
-    private Long carb;
+    private Long carbs;
     private Long fat;
     private Long kcal;
+    private String imageName;
 
 }
