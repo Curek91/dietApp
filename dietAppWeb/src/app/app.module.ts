@@ -14,6 +14,8 @@ import {ManageProductComponent} from './diet/manage-product/manage-product.compo
 import {NewDietComponent} from './diet/new-diet/new-diet.component';
 import {AppRoutingModule} from './app-routing.module';
 import {DietRoutingModule} from './diet/diet-routing.module';
+import {AuthModule} from './auth/auth.module';
+import {AuthService} from './auth/auth.service';
 
 
 @NgModule({
@@ -27,9 +29,10 @@ import {DietRoutingModule} from './diet/diet-routing.module';
     FormsModule,
     CoreModuleModule,
     AppRoutingModule,
-    DietRoutingModule
+    DietRoutingModule,
+    AuthModule
   ],
-  providers: [DietService],
+  providers: [DietService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

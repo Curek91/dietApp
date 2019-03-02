@@ -23,7 +23,7 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "${cors.host}")
     @RequestMapping(method = RequestMethod.GET, value = "/products")
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
@@ -32,7 +32,7 @@ public class ProductController {
         return new ResponseEntity<List<Product>>(productList, HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "${cors.host}")
     @RequestMapping(method = RequestMethod.GET, value = "/product/{id}")
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
@@ -41,7 +41,7 @@ public class ProductController {
         return new ResponseEntity<Product>(product, HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "${cors.host}")
     @RequestMapping(method = RequestMethod.POST, value="/product/create", consumes = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     ResponseEntity<Product> createProduct(@RequestBody ProductDTO source){
@@ -49,7 +49,7 @@ public class ProductController {
         return new ResponseEntity<Product>(HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "${cors.host}")
     @RequestMapping(method = RequestMethod.PUT, value = "/product/modify/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     ResponseEntity<Product> updateProduct(@PathVariable("id") Long id, @RequestBody ProductDTO source){
@@ -57,7 +57,7 @@ public class ProductController {
         return new ResponseEntity<Product>(HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "${cors.host}")
     @RequestMapping(method = RequestMethod.DELETE, value = "/product/delete/{id}")
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
@@ -65,19 +65,4 @@ public class ProductController {
         productService.removeProduct(id);
         return new ResponseEntity<Product>(HttpStatus.OK);
     }
-
-    @CrossOrigin(origins = "http://localhost:4200")
-    @RequestMapping(method = RequestMethod.POST, value = "/product/imageUpload")
-    public String handleFormUpload(@RequestParam("file") MultipartFile file) throws IOException {
-        System.out.println(file);
-        if (!file.isEmpty()) {
-            //BufferedImage src = ImageIO.read(new ByteArrayInputStream(file.getBytes()));
-            //File destination = new File("File directory with file name"); // something like C:/Users/tom/Documents/nameBasedOnSomeId.png
-            //ImageIO.write(src, "png", destination);
-            //Save the id you have used to create the file name in the DB. You can retrieve the image in future with the ID.
-        }
-        return "asd";
-    }
-
-
 }

@@ -3,8 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ProductType} from '../models/ProductType';
 import {DietService} from '../diet.service';
 import {Product} from '../models/Product';
-import {ObservableInput} from 'rxjs/index';
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute, Router} from '@angular/router';
 
 
 @Component({

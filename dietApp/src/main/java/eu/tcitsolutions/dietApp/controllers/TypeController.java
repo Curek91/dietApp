@@ -19,7 +19,7 @@ public class TypeController {
     @Autowired
     TypeService typeService;
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "${cors.host}")
     @RequestMapping(method = RequestMethod.GET, value = "/types")
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
@@ -28,7 +28,7 @@ public class TypeController {
         return new ResponseEntity<List<Type>>(typeList, HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "${cors.host}")
     @RequestMapping(method = RequestMethod.GET, value = "/type/{id}")
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
@@ -37,7 +37,7 @@ public class TypeController {
         return new ResponseEntity<Type>(type, HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "${cors.host}")
     @RequestMapping(method = RequestMethod.POST, value="/type/create", consumes = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     ResponseEntity<Type> createType(@RequestBody TypeDTO source){
@@ -45,7 +45,7 @@ public class TypeController {
         return new ResponseEntity<Type>(HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "${cors.host}")
     @RequestMapping(method = RequestMethod.POST, value = "/type/modify/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     ResponseEntity<Type> updateType(@PathVariable("id") Long id, @RequestBody TypeDTO source){
@@ -53,7 +53,7 @@ public class TypeController {
         return new ResponseEntity<Type>(HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "${cors.host}")
     @RequestMapping(method = RequestMethod.DELETE, value = "/type/delete/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     ResponseEntity<Type> updateType(@PathVariable("id") Long id){
