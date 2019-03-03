@@ -28,8 +28,10 @@ export class LoginComponent implements OnInit {
     this.loading = true;
     this.authService.login(this.loginForm.value['username'], this.loginForm.value['password'])
       .subscribe(result => {
+        console.log('zalogowalo !!!');
         this.router.navigate(['diet']);
       }, error => {
+        console.log('wyszla lipa !!!');
         this.loading = false;
         this.error = error;
       });

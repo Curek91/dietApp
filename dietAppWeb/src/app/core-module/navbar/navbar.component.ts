@@ -7,9 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor() { }
+  username: String = '';
+  constructor() {
+    this.username = '';
+  }
 
   ngOnInit() {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.username = currentUser && currentUser.username;
+    console.log(this.username);
   }
 
 }

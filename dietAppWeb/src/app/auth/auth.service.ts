@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs/Rx';
 import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
+import { Response } from '@angular/http';
 
 @Injectable({
   providedIn: 'root'
@@ -12,10 +13,9 @@ export class AuthService {
   }
   login(username: string, password: string): Observable<boolean> {
     return this.http.post(this.authUrl, JSON.stringify({username: username, password: password}), {headers: this.headers})
-      .map((response: HttpResponse) => {
-        // login successful if there's a jwt token in the response
-        const token = response.json() && response.json().token;
-        if (token) {
+      .map((response: Response) => {
+        const token = response;
+        if (response) {
           // store username and jwt token in local storage to keep user logged in between page refreshes
           localStorage.setItem('currentUser', JSON.stringify({ username: username, token: token }));
           // return true to indicate successful login
@@ -24,7 +24,7 @@ export class AuthService {
           // return false to indicate failed login
           return false;
         }
-      }).catch((error: any) => Observable.throwError(error.json().error || 'Server error'));
+      }).catch((error: any) => Observable.throw(error.json().error || 'Server error'));
   }
   getToken(): String {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));

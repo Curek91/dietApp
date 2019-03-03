@@ -14,7 +14,7 @@ export class AppComponent {
     if (this.authService.getToken()) {
       return true;
     } else {
-      return true;
+      return false;
     }
   }
 

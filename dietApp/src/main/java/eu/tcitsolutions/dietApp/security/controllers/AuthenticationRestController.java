@@ -36,6 +36,7 @@ public class AuthenticationRestController {
     @Qualifier("jwtUserDetailsService")
     private UserDetailsService userDetailsService;
 
+    @CrossOrigin(origins = "${cors.host}")
     @RequestMapping(value = "${jwt.route.authentication.path}", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtAuthenticationRequest authenticationRequest) throws AuthenticationException {
 
@@ -49,6 +50,7 @@ public class AuthenticationRestController {
         return ResponseEntity.ok(new JwtAuthenticationResponse(token));
     }
 
+    @CrossOrigin(origins = "${cors.host}")
     @RequestMapping(value = "${jwt.route.authentication.refresh}", method = RequestMethod.GET)
     public ResponseEntity<?> refreshAndGetAuthenticationToken(HttpServletRequest request) {
         String authToken = request.getHeader(tokenHeader);
