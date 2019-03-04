@@ -5,9 +5,11 @@ import {NgModule} from '@angular/core';
 import {Route, RouterModule} from '@angular/router';
 import {CanActivateAuthGuard} from '../can-activate.authguard';
 import {ManageClientComponent} from './manage-client/manage-client.component';
+import {NewClientComponent} from './new-client/new-client.component';
 
 const CLIENT_ROUTES: Route[] = [
-  {path: 'manage-client', component: ManageClientComponent, canActivate: [CanActivateAuthGuard]}
+  {path: 'manage-client', component: ManageClientComponent, canActivate: [CanActivateAuthGuard]},
+  {path: 'new-client', component: NewClientComponent, canActivate: [CanActivateAuthGuard]}
 ];
 
 @NgModule({

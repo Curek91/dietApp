@@ -1,3 +1,62 @@
-<p>
-  manage-client works!
-</p>
+<div class="container product-container">
+  <div class="row header-row">
+    <div class="col-md-5 float-md-left">
+      <div class="input-group">
+        <span class="input-group-addon glyphicon glyphicon-search"></span>
+        <input type="text" class="form-control" [(ngModel)]="filter" placeholder="Szukaj...">
+      </div>
+    </div>
+    <div class="col-md-7">
+      <button class="btn btn-success btn-sm" [routerLink]="['/new-client']">Nowy klient</button>
+    </div>
+  </div>
+  <div class="row">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Lp</th>
+        <th>Imię</th>
+        <th>Nazwisko</th>
+        <th>Wiek</th>
+        <th>Waga</th>
+        <th>Wzrost</th>
+        <th>Email</th>
+        <th>Telefon</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let client of clients">
+        <td>{{client.id}}</td>
+        <td>{{client.firstname}}</td>
+        <td>{{client.lastname}} </td>
+        <td>{{client.age}}</td>
+        <td>{{client.weight}}</td>
+        <td>{{client.height}}</td>
+        <td>{{client.email}}</td>
+        <td>{{client.telephone}}</td>
+        <td><button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal" (click)="setClientToDelete(client.id)">Usuń</button></td>
+
+        <div class="modal fade" tabindex="-1" role="dialog" id="deleteModal">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Czy napewno chcesz usunąć klienta?</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                  <span></span>
+                </button>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-success btn-sm" data-dismiss="modal" (click)="deleteClient(clientToDelete)">Usuń</button>
+                <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Anuluj</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

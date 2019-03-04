@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ManageClientComponent } from './manage-client/manage-client.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
+import { NewClientComponent } from './new-client/new-client.component';
 
 @NgModule({
   imports: [
@@ -11,6 +12,6 @@ import {RouterModule} from '@angular/router';
     RouterModule,
     ReactiveFormsModule
   ],
-  declarations: [ManageClientComponent]
+  declarations: [ManageClientComponent, NewClientComponent]
 })
 export class ClientModule { }
