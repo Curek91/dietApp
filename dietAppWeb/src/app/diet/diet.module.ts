@@ -9,6 +9,7 @@ import { ManageProductComponent } from './manage-product/manage-product.componen
 import {RouterModule} from '@angular/router';
 import { NewProductComponent } from './new-product/new-product.component';
 import { EditProductComponent } from './edit-product/edit-product.component';
+import {CanActivateAuthGuard} from "../can-activate.authguard";
 
 
 @NgModule({

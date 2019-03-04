@@ -12,7 +12,7 @@ export class DietService {
   private apiUrl: String = 'http://localhost:8091/';
   private headers = new HttpHeaders({
     'Content-Type': 'application/json',
-    'Authorization': 'Bearer ' + this.authService.getToken().token
+    'Authorization': 'Bearer ' + this.authService.getToken()
   });
   constructor(private http: HttpClient, private authService: AuthService) {
   }
@@ -40,6 +40,4 @@ export class DietService {
   deleteProduct(id: number): any {
     return this.http.delete<any>(this.apiUrl + 'product/delete/' + id, {headers: this.headers});
   }
-
-
 }

@@ -1,6 +1,6 @@
 package eu.tcitsolutions.dietApp.security.domain.entity;
 
-import eu.tcitsolutions.dietApp.core.domain.entity.BaseLogEntity;
+import eu.tcitsolutions.dietApp.core.common.entity.BaseLogEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

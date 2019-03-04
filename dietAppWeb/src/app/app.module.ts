@@ -16,6 +16,9 @@ import {AppRoutingModule} from './app-routing.module';
 import {DietRoutingModule} from './diet/diet-routing.module';
 import {AuthModule} from './auth/auth.module';
 import {AuthService} from './auth/auth.service';
+import {CanActivateAuthGuard} from './can-activate.authguard';
+import {ClientModule} from './client/client.module';
+import {ClientRoutingModule} from "./client/client-routing.module";
 
 
 @NgModule({
@@ -25,14 +28,16 @@ import {AuthService} from './auth/auth.service';
   imports: [
     BrowserModule,
     DietModule,
+    ClientModule,
     HttpClientModule,
     FormsModule,
     CoreModuleModule,
     AppRoutingModule,
     DietRoutingModule,
+    ClientRoutingModule,
     AuthModule
   ],
-  providers: [DietService, AuthService],
+  providers: [DietService, AuthService, CanActivateAuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
