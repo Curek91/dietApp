@@ -12,6 +12,9 @@ import {Client} from '../models/Client';
 export class NewClientComponent implements OnInit {
 
   clientForm: FormGroup;
+  showInfo: boolean;
+  showDiets: boolean;
+  showTrainings: boolean;
 
   constructor(private formBuilder: FormBuilder,
               private clientService: ClientService,
@@ -19,6 +22,9 @@ export class NewClientComponent implements OnInit {
               private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.showInfo = true;
+    this.showDiets = false;
+    this.showTrainings = false;
     this.clientForm = this.formBuilder.group({
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
