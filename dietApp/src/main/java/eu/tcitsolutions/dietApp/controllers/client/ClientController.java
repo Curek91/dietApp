@@ -44,7 +44,7 @@ public class ClientController {
     }
 
     @CrossOrigin(origins = "${cors.host}")
-    @RequestMapping(method = RequestMethod.POST, value = "/client/modify/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.PUT, value = "/client/modify/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     ResponseEntity<Client> updateClient(@PathVariable("id") Long id, @RequestBody ClientDTO source){
         clientService.updateClient(id, source);

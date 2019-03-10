@@ -27,7 +27,7 @@ export class EditProductComponent implements OnInit {
       fat: ['', Validators.required],
       kcal: ['', Validators.required]
     });
-    this.loadCar();
+    this.loadProduct();
     this.loadProductTypes();
   }
 
@@ -71,7 +71,7 @@ export class EditProductComponent implements OnInit {
     });
   }
 
-  loadCar() {
+  loadProduct() {
     const id = +this.route.snapshot.params['id'];
     this.dietService.getProduct(id).subscribe((product) => {
       this.productForm = this.formBuilder.group({

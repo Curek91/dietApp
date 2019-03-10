@@ -27,14 +27,14 @@
       </thead>
       <tbody>
       <tr *ngFor="let client of clients">
-        <td>{{client.id}}</td>
-        <td>{{client.firstname}}</td>
-        <td>{{client.lastname}} </td>
-        <td>{{client.age}}</td>
-        <td>{{client.weight}}</td>
-        <td>{{client.height}}</td>
-        <td>{{client.email}}</td>
-        <td>{{client.telephone}}</td>
+        <td [routerLink]="['/client', client.id]">{{client.id}}</td>
+        <td [routerLink]="['/client', client.id]">{{client.firstname}}</td>
+        <td [routerLink]="['/client', client.id]">{{client.lastname}} </td>
+        <td [routerLink]="['/client', client.id]">{{client.age}}</td>
+        <td [routerLink]="['/client', client.id]">{{client.weight}}</td>
+        <td [routerLink]="['/client', client.id]">{{client.height}}</td>
+        <td [routerLink]="['/client', client.id]">{{client.email}}</td>
+        <td [routerLink]="['/client', client.id]">{{client.telephone}}</td>
         <td><button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal" (click)="setClientToDelete(client.id)">Usuń</button></td>
 
         <div class="modal fade" tabindex="-1" role="dialog" id="deleteModal">

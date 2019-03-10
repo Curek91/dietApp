@@ -18,7 +18,8 @@ import {AuthModule} from './auth/auth.module';
 import {AuthService} from './auth/auth.service';
 import {CanActivateAuthGuard} from './can-activate.authguard';
 import {ClientModule} from './client/client.module';
-import {ClientRoutingModule} from "./client/client-routing.module";
+import {ClientRoutingModule} from './client/client-routing.module';
+import {AngularFontAwesomeModule} from 'angular-font-awesome';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import {ClientRoutingModule} from "./client/client-routing.module";
     AppRoutingModule,
     DietRoutingModule,
     ClientRoutingModule,
-    AuthModule
+    AuthModule,
+    AngularFontAwesomeModule
   ],
   providers: [DietService, AuthService, CanActivateAuthGuard],
   bootstrap: [AppComponent]

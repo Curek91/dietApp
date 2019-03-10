@@ -4,13 +4,15 @@ import { LoginComponent } from './login/login.component';
 import {RouterModule} from '@angular/router';
 import {ReactiveFormsModule} from '@angular/forms';
 import {AppRoutingModule} from '../app-routing.module';
+import {AngularFontAwesomeModule} from 'angular-font-awesome';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
     ReactiveFormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    AngularFontAwesomeModule
   ],
   declarations: [LoginComponent]
 })

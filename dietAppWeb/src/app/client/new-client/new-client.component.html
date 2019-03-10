@@ -1,47 +1,58 @@
 <div class="container product-container">
-  <form [formGroup]="clientForm">
-    <div class="row form-group">
-      <div class="col-sm-6">
-        <i class="fas fa-angle-down"></i>
-        <label class="new-product-label">Imię:</label>
-        <input class="form-control" formControlName="firstname" placeholder="Imię...">
-      </div>
-      <div class="col-sm-6 align-self-end ">
-        <label class="new-product-label">Nazwisko:</label>
-        <input class="form-control" formControlName="lastname" placeholder="Nazwisko...">
-      </div>
+  <div class="accordion-panel">
+    <div class="accordion-header" (click)="showInfo = !showInfo">
+      <h3>
+        <i class="fa " [ngClass]="{'fa-angle-down': showInfo === true, 'fa-angle-right': showInfo === false}"></i>
+        <span>Informacje</span>
+      </h3>
     </div>
-    <div class="row form-group">
-      <div class="col-sm-4">
-        <label class="new-product-label">Wiek:</label>
-        <input class="form-control" formControlName="age" placeholder="Wiek...">
-      </div>
-      <div class="col-sm-4">
-        <label class="new-product-label">Waga:</label>
-        <input class="form-control" formControlName="weight" placeholder="Waga...">
-      </div>
-      <div class="col-sm-4 align-self-end">
-        <label class="new-product-label">Wzrost:</label>
-        <input class="form-control" formControlName="height" placeholder="Wzrost...">
-      </div>
+    <div class="accordion-body" *ngIf="showInfo">
+      <form [formGroup]="clientForm">
+        <div class="row form-group">
+          <div class="col-sm-6">
+            <label class="new-product-label">Imię:</label>
+            <input class="form-control" formControlName="firstname" placeholder="Imię...">
+          </div>
+          <div class="col-sm-6 align-self-end ">
+            <label class="new-product-label">Nazwisko:</label>
+            <input class="form-control" formControlName="lastname" placeholder="Nazwisko...">
+          </div>
+        </div>
+        <div class="row form-group">
+          <div class="col-sm-4">
+            <label class="new-product-label">Wiek:</label>
+            <input class="form-control" formControlName="age" placeholder="Wiek...">
+          </div>
+          <div class="col-sm-4">
+            <label class="new-product-label">Waga:</label>
+            <input class="form-control" formControlName="weight" placeholder="Waga...">
+          </div>
+          <div class="col-sm-4 align-self-end">
+            <label class="new-product-label">Wzrost:</label>
+            <input class="form-control" formControlName="height" placeholder="Wzrost...">
+          </div>
+        </div>
+        <div class="row form-group">
+          <div class="col-sm-6">
+            <label class="new-product-label">Email:</label>
+            <input class="form-control" formControlName="email" placeholder="Email...">
+          </div>
+          <div class="col-sm-6 align-self-end ">
+            <label class="new-product-label">Nazwisko:</label>
+            <input class="form-control" formControlName="telephone" placeholder="Telefon...">
+          </div>
+        </div>
+        <div class="row form-group">
+          <div class="col-sm-12 text-right">
+            <button class="btn btn-primary btn-md" style="margin-right: 2%" [disabled]="clientForm.invalid"
+                    data-toggle="modal" data-target="#saveModal">Zapisz
+            </button>
+            <button class="btn btn-danger btn-md" type="submit" [routerLink]="['/manage-client']">Wróć</button>
+          </div>
+        </div>
+      </form>
     </div>
-    <div class="row form-group">
-      <div class="col-sm-6">
-        <label class="new-product-label">Email:</label>
-        <input class="form-control" formControlName="email" placeholder="Email...">
-      </div>
-      <div class="col-sm-6 align-self-end ">
-        <label class="new-product-label">Nazwisko:</label>
-        <input class="form-control" formControlName="telephone" placeholder="Telefon...">
-      </div>
-    </div>
-    <div class="row form-group">
-      <div class="col-sm-12">
-        <button class="btn btn-primary btn-md" style="margin-right: 2%" [disabled]="clientForm.invalid" data-toggle="modal" data-target="#saveModal">Zapisz</button>
-        <button class="btn btn-danger btn-md" type="submit" [routerLink]="['/manage-client']">Wróć</button>
-      </div>
-    </div>
-  </form>
+  </div>
 </div>
 
 

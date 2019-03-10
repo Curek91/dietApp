@@ -2,3 +2,13 @@
 {
   font-weight: 900;
 }
+
+.accordion-header
+{
+  border-top: 2px solid black;
+}
+
+.accordion-panel
+{
+  margin-bottom: 4%;
+}
