@@ -26,8 +26,10 @@ public class HibernateProductRepository implements ProductRepository {
     }
 
     @Override
-    public void save(Product product) {
+    public Product save(Product product) {
         entityManager.persist(product);
+        entityManager.flush();
+        return product;
     }
 
     @Override

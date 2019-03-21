@@ -13,6 +13,5 @@ public class DietAppApplication {
         SpringApplication.run(DietAppApplication.class, args);
         System.out.println("Aplikacja wystartowala");
 
-
     }
 }

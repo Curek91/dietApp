@@ -1,6 +1,6 @@
 <div class="product-container container">
   <div class="row image-row">
-    <div class="col-sm-12" title="{{ getTooltipText(productInput) }}" data-toggle="tooltip"><img src="../../../assets/{{ productInput.name }}.jpg" class="product-image"/></div>
+    <div class="col-sm-12" title="{{ getTooltipText(productInput) }}" data-toggle="tooltip"><img [src]="imageToShow" class="product-image"/></div>
   </div>
   <div class="row">
     <div class="col-sm-12 text-center">{{productInput.name}}</div>

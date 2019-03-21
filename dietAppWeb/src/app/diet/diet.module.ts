@@ -11,7 +11,7 @@ import {NewProductComponent} from './new-product/new-product.component';
 import {EditProductComponent} from './edit-product/edit-product.component';
 import {CanActivateAuthGuard} from '../can-activate.authguard';
 import {AngularFontAwesomeModule} from 'angular-font-awesome';
-import {ImageUploadModule} from 'angular2-image-upload';
+import {AngularFileUploaderModule} from 'angular-file-uploader';
 
 
 @NgModule({
@@ -21,7 +21,7 @@ import {ImageUploadModule} from 'angular2-image-upload';
     RouterModule,
     ReactiveFormsModule,
     AngularFontAwesomeModule,
-    ImageUploadModule.forRoot()
+    AngularFileUploaderModule
   ],
   providers: [CanActivateAuthGuard],
   exports: [NewDietComponent, ProductComponent, ManageProductComponent],

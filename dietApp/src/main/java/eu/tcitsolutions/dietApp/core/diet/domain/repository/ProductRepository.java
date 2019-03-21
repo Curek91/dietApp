@@ -10,7 +10,7 @@ public interface ProductRepository {
 
     public Product getProduct(Long id);
 
-    public void save(Product product);
+    public Product save(Product product);
 
     public void delete(Product product);
 

@@ -14,6 +14,10 @@ export class DietService {
     'Content-Type': 'application/json',
     'Authorization': 'Bearer ' + this.authService.getToken()
   });
+  private headersImage = new HttpHeaders({
+    'Content-Type': 'image/jpeg',
+    'Authorization': 'Bearer ' + this.authService.getToken()
+  });
   constructor(private http: HttpClient, private authService: AuthService) {
   }
 
@@ -34,10 +38,15 @@ export class DietService {
   }
 
   modifyProduct(data): Observable<Product> {
+    console.log(data);
     return this.http.put<Product>(this.apiUrl + 'product/modify/' + data.id, data, {headers: this.headers});
   }
 
   deleteProduct(id: number): any {
     return this.http.delete<any>(this.apiUrl + 'product/delete/' + id, {headers: this.headers});
+  }
+
+  getImage(id: number): Observable<Blob> {
+    return this.http.get(this.apiUrl + 'getImage/' + id, { responseType: 'blob', headers: this.headersImage });
   }
 }

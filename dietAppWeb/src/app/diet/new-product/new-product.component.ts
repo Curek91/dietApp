@@ -4,6 +4,7 @@ import {ProductType} from '../models/ProductType';
 import {DietService} from '../diet.service';
 import {Product} from '../models/Product';
 import {ActivatedRoute, Router} from '@angular/router';
+import {FileHolder} from 'angular2-image-upload';
 
 
 @Component({
@@ -13,7 +14,9 @@ import {ActivatedRoute, Router} from '@angular/router';
 })
 export class NewProductComponent implements OnInit {
 
+
   productForm: FormGroup;
+  image: String;
   types: ProductType[] = new Array();
   constructor(private formBuilder: FormBuilder, private dietService: DietService, private router: Router, private route: ActivatedRoute) { }
 
@@ -27,6 +30,14 @@ export class NewProductComponent implements OnInit {
        kcal: ['', Validators.required]
      });
      this.loadProductTypes();
+  }
+
+  onUploadStateChanged(state: boolean) {
+    console.log('asdasdas');
+  }
+  onRemoved(file: FileHolder) {
+    console.log(file);
+    console.log(this.image);
   }
 
   loadProductTypes(): void {
@@ -64,11 +75,11 @@ export class NewProductComponent implements OnInit {
 
   addProduct() {
     console.log(this.parseFormToEntity());
-    this.dietService.addProduct(this.parseFormToEntity()).subscribe(() => {
+    this.dietService.addProduct(this.parseFormToEntity()).subscribe((product) => {
       console.log('dodaje produkt');
+      console.log('product.id: ' + product.id);
 
-      this.router.navigate(['../manage-products']);
+      this.router.navigate(['/product', product.id]);
     });
   }
-
 }

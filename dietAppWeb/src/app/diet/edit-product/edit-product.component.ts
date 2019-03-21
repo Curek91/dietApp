@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ProductType} from '../models/ProductType';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DietService} from '../diet.service';
 import {Product} from '../models/Product';
+import {AuthService} from '../../auth/auth.service';
 
 @Component({
   selector: 'app-edit-product',
@@ -14,9 +15,38 @@ export class EditProductComponent implements OnInit {
 
   productForm: FormGroup;
   types: ProductType[] = new Array();
+  afuConfig = {
+    multiple: false,
+    formatsAllowed: '.jpg,.png,.gif',
+    maxSize: '20',
+    hideResetBtn: true,
+    theme: 'dragNDrop',
+    replaceTexts: {
+      selectFileBtn: 'Wybierz pliki',
+      resetBtn: 'Reset',
+      uploadBtn: 'Wyślij',
+      dragNDropBox: 'Drag N Drop',
+      attachPinBtn: 'Attach Files...',
+      afterUploadMsg_success: 'Przesłano pomyślnie',
+      afterUploadMsg_error: 'Przesłano błędnie'
+    },
+    uploadAPI: {
+      url: 'http://localhost:8091/addImage/' + this.route.snapshot.params['id'],
+      headers: {
+        'Authorization': 'Bearer ' + this.authService.getToken()
+      }
+    }
+  };
 
+  imageToShow: any;
+  isImageLoading: boolean;
 
-  constructor(private formBuilder: FormBuilder, private dietService: DietService, private router: Router, private route: ActivatedRoute) { }
+  constructor(private formBuilder: FormBuilder,
+              private dietService: DietService,
+              private router: Router,
+              private route: ActivatedRoute,
+              private authService: AuthService) {
+  }
 
   ngOnInit() {
     this.productForm = this.formBuilder.group({
@@ -29,6 +59,36 @@ export class EditProductComponent implements OnInit {
     });
     this.loadProduct();
     this.loadProductTypes();
+  }
+
+  createImageFromBlob(image: Blob) {
+    const reader = new FileReader();
+    reader.addEventListener('load', () => {
+      this.imageToShow = reader.result;
+    }, false);
+
+    if (image) {
+      reader.readAsDataURL(image);
+    }
+  }
+
+  uploadFile(event: any) {
+    const id = +this.route.snapshot.params['id'];
+    this.dietService.modifyProduct(this.parseFormToEntity()).subscribe(() => {
+      console.log('modyfikuje produkt');
+    });
+    window.location.reload();
+  }
+
+  getImageFromService(id: number) {
+    this.isImageLoading = true;
+    this.dietService.getImage(id).subscribe(data => {
+      this.createImageFromBlob(data);
+      this.isImageLoading = false;
+    }, error => {
+      this.isImageLoading = false;
+      console.log(error);
+    });
   }
 
   loadProductTypes(): void {
@@ -45,6 +105,7 @@ export class EditProductComponent implements OnInit {
       });
     });
   }
+
   parseFormToEntity(): Product {
     let product: Product;
 
@@ -63,12 +124,12 @@ export class EditProductComponent implements OnInit {
   }
 
   modifyProduct() {
+    const id = +this.route.snapshot.params['id'];
     console.log(this.parseFormToEntity());
     this.dietService.modifyProduct(this.parseFormToEntity()).subscribe(() => {
       console.log('modyfikuje produkt');
-
-      this.router.navigate(['../manage-products']);
     });
+    this.router.navigate(['/manage-products']);
   }
 
   loadProduct() {
@@ -83,6 +144,7 @@ export class EditProductComponent implements OnInit {
         kcal: [product.kcal, Validators.required]
       });
     });
+    this.getImageFromService(id);
   }
 
 }

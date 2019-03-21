@@ -35,9 +35,6 @@
       </div>
     </div>
     <div class="row form-group">
-      <image-upload url="http://mockbin.org/request" [uploadedFiles]="images" [max]="1"></image-upload>
-    </div>
-    <div class="row form-group">
       <div class="col-sm-12">
         <button class="btn btn-primary btn-md" style="margin-right: 2%" [disabled]="productForm.invalid" data-toggle="modal" data-target="#saveModal">Zapisz</button>
         <button class="btn btn-danger btn-md" type="submit" [routerLink]="['/manage-products']">Wróć</button>
