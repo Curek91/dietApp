@@ -16,9 +16,9 @@ public interface DTOMappingService {
 
     public ProductDTO createDTO(Product source);
 
-    public MealDTO createDTO(Meal source);
+/*    public MealDTO createDTO(Meal source);
 
-    public DietDTO createDTO(Diet source);
+    public DietDTO createDTO(Diet source);*/
 
 
     //create Entities

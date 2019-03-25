@@ -16,20 +16,39 @@ export class NewDietComponent implements OnInit {
   diet: Diet = new Diet();
   products: Product[] = new Array();
   activeMeal: number;
-  filter: String;
-
+  filter: String = '';
+  productTypeSelected: String = null;
+  types: ProductType[] = new Array();
+  suplements: string = '';
 
   constructor(private dietService: DietService) {
   }
 
   ngOnInit() {
     this.loadProducts();
+    this.loadProductTypes();
+  }
+
+  loadProductTypes(): void {
+    let typeTemp: ProductType;
+    this.dietService.getTypes().subscribe((types) => {
+      console.log(types);
+      types.forEach((type) => {
+
+        typeTemp = {
+          id: type.id,
+          name: type.name,
+        };
+        this.types.push(typeTemp);
+      });
+      console.log('koiec');
+      console.log(this.types);
+    });
   }
 
   loadProducts(): void {
     let prodTemp: Product;
     this.dietService.getProducts().subscribe((products) => {
-      console.log(products);
       products.forEach((product) => {
 
         prodTemp = {
@@ -48,16 +67,22 @@ export class NewDietComponent implements OnInit {
         };
         this.products.push(prodTemp);
       });
-      console.log('koneic');
-      console.log(this.products);
     });
   }
 
   addToMeal(product: Product): void {
+    console.log('productTypeSelected: ' + this.productTypeSelected);
     const prod: Product = new Product(product);
     this.diet.meals[this.activeMeal - 1].products.push(prod);
-    console.log(this.activeMeal);
-    console.log(product);
+  }
+
+  moveToMeal($event: any, id: number) {
+    console.log(id);
+    console.log(this.diet);
+    const prod: Product = new Product($event.dragData);
+    console.log(prod.name);
+    this.diet.meals[id - 1].products.push(prod);
+
   }
 
   addMeal(): void {
@@ -77,14 +102,11 @@ export class NewDietComponent implements OnInit {
   }
 
   deleteFromMeal(index: number): void {
-    console.log('usuwam produkt z posiłku' + index);
     this.diet.meals[this.activeMeal - 1].products.splice(index, 1);
   }
 
   deleteMeal(): void {
-    console.log('usuwam posilek');
     const active = this.activeMeal;
-    console.log('active: ' + active);
     this.diet.meals.map(function (item) {
       if (item.id > active) {
         item.id -= 1;
@@ -93,7 +115,6 @@ export class NewDietComponent implements OnInit {
     this.diet.meals.splice(this.diet.meals.findIndex(function (element) {
       return element.id === active;
     }), 1);
-    console.log('actif: ' + active);
     if (active === this.diet.meals.length + 1) {
       this.activeMeal -= 1;
     }
@@ -106,7 +127,7 @@ export class NewDietComponent implements OnInit {
   getProteinsForMeal(meal: Meal): number {
     if (meal.products.length > 0) {
       return meal.products
-        .map((product) => +product.protein)
+        .map((product) => +product.protein * (product.weight / 100))
         .reduce((prev, next) => prev + next);
     } else {
       return 0;
@@ -116,7 +137,7 @@ export class NewDietComponent implements OnInit {
   getCarbsForMeal(meal: Meal): number {
     if (meal.products.length > 0) {
       return meal.products
-        .map((product) => +product.carbs)
+        .map((product) => +product.carbs  * (product.weight / 100))
         .reduce((prev, next) => prev + next);
     } else {
       return 0;
@@ -126,7 +147,7 @@ export class NewDietComponent implements OnInit {
   getFatsForMeal(meal: Meal): number {
     if (meal.products.length > 0) {
       return meal.products
-        .map((product) => +product.fat)
+        .map((product) => +product.fat  * (product.weight / 100))
         .reduce((prev, next) => prev + next);
     } else {
       return 0;
@@ -136,7 +157,7 @@ export class NewDietComponent implements OnInit {
   getEnergyForMeal(meal: Meal): number {
     if (meal.products.length > 0) {
       return meal.products
-        .map((product) => +product.kcal)
+        .map((product) => +product.kcal * (product.weight / 100))
         .reduce((prev, next) => prev + next);
     } else {
       return 0;
@@ -183,5 +204,8 @@ export class NewDietComponent implements OnInit {
     }
   }
 
-
+  addSuplements(): void {
+    //this.diet.meals[this.activeMeal - 1].suplements = this.suplements;
+    console.log('Suplementy dla posilku ' + this.activeMeal + ': ' + this.diet.meals[this.activeMeal - 1].suplements);
+  }
 }

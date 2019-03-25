@@ -1,4 +1,4 @@
-import {Meal} from "./Meal";
+import {Meal} from './Meal';
 /**
  * Created by tomasz.cur on 11.04.2018.
  */

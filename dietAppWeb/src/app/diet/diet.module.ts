@@ -12,6 +12,8 @@ import {EditProductComponent} from './edit-product/edit-product.component';
 import {CanActivateAuthGuard} from '../can-activate.authguard';
 import {AngularFontAwesomeModule} from 'angular-font-awesome';
 import {AngularFileUploaderModule} from 'angular-file-uploader';
+import {DndModule, DraggableComponent, DraggableHandleComponent} from 'ng2-dnd';
+import {AppComponent} from '../app.component';
 
 
 @NgModule({
@@ -21,8 +23,10 @@ import {AngularFileUploaderModule} from 'angular-file-uploader';
     RouterModule,
     ReactiveFormsModule,
     AngularFontAwesomeModule,
-    AngularFileUploaderModule
+    AngularFileUploaderModule,
+    DndModule.forRoot()
   ],
+  bootstrap: [AppComponent],
   providers: [CanActivateAuthGuard],
   exports: [NewDietComponent, ProductComponent, ManageProductComponent],
   declarations: [NewDietComponent,
@@ -31,7 +35,8 @@ import {AngularFileUploaderModule} from 'angular-file-uploader';
     ProductFilterPipe,
     ManageProductComponent,
     NewProductComponent,
-    EditProductComponent]
+    EditProductComponent
+  ]
 })
 export class DietModule {
 }

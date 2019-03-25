@@ -41,7 +41,7 @@ public class DTOMappingServiceImpl implements DTOMappingService, ApplicationCont
         this.typeRepository = applicationContext.getBean(TypeRepository.class);
     }
 
-    @Override
+/*    @Override
     public MealDTO createDTO(Meal source) {
         return new MealDTO(source.getProducts().stream().map(product -> createDTO(product)).collect(Collectors.toSet()));
     }
@@ -49,7 +49,7 @@ public class DTOMappingServiceImpl implements DTOMappingService, ApplicationCont
     @Override
     public DietDTO createDTO(Diet source) {
         return new DietDTO(source.getMeals().stream().map(meal -> createDTO(meal)).collect(Collectors.toSet()));
-    }
+    }*/
 
     @Override
     public ProductDTO createDTO(Product source) {

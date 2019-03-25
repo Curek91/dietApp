@@ -3,7 +3,8 @@
   <div class="table">
     <div class="row">
       <div class="col-sm-6" style="height: 100%">
-        <div class="row dietRow" [ngClass]="{'active-row': mealOnDiet.id == activeMeal}" *ngFor="let mealOnDiet of diet.meals" (click)="setActiveMeal(mealOnDiet.id)">
+        <div class="row dietRow" [ngClass]="{'active-row': mealOnDiet.id == activeMeal}" *ngFor="let mealOnDiet of diet.meals" (click)="setActiveMeal(mealOnDiet.id)"
+             dnd-droppable (onDropSuccess)="moveToMeal($event, mealOnDiet.id)">
           <div class="col-sm-1">
             <p>{{ mealOnDiet.id }}</p>
           </div>
@@ -19,7 +20,7 @@
                 Węglowodany: <br/>
                 Tłuszcze: <br/>
                 <b>Kcal:</b> <br/>
-                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#suplementsModal">Suplementy</button>
+                <button class="btn btn-primary btn-sm" data-toggle="modal"  data-target="#suplementsModal" (click)="setSuplements(mealOnDiet.id)">Suplementy</button>
               </div>
             </div>
           </div>
@@ -68,26 +69,18 @@
       <div class="col-sm-6 product-column">
         <div class="row filter-row">
             <div class="col-sm-6">
-              <input type="text" [(ngModel)]="filter" class="form-control" placeholder="Wpisz nazwę produktu...">
+              <input type="text" [(ngModel)]="filter" class="form-control"  placeholder="Wpisz nazwę produktu...">
             </div>
             <div class="col-sm-6">
-              <select class="form-control" [(ngModel)]="productTypeKcalSelected">
-                <option *ngFor="let optionKcal of productTypeKcal" [value]="optionKcal">{{ optionKcal }}</option>
+              <select id="type" [(ngModel)]="productTypeSelected" class="form-control">
+                <option [ngValue]="null">Każdy typ</option>
+                <option *ngFor="let item of types" value="{{ item.name }}">{{item.name}}</option>
               </select>
             </div>
         </div>
-<!--        <div class="row filter-row">
-          <div class="col-sm-6">
-          </div>
-          <div class="col-sm-6">
-            <select class="form-control" [(ngModel)]="productTypeSelected">
-              <option *ngFor="let option of productType" [value]="option">{{ option }}</option>
-            </select>
-          </div>
-        </div>-->
         <div class="row products-row">
           <div class="col-sm-12 text-sm-center">
-            <div *ngFor="let product of products" (dblclick)="addToMeal(product)">
+            <div *ngFor="let product of products | productFilter:filter:productTypeSelected" (dblclick)="addToMeal(product)" dnd-draggable [dragEnabled]="true" [dragData]="product">
               <app-product [productInput]="product"></app-product>
             </div>
           </div>
@@ -105,6 +98,11 @@
   <div class="col-sm-12 text-center">
     Copyright by Curek, 2018
   </div>
+  <div>
+    <pre>
+    {{diet | json}}
+    </pre>
+  </div>
 </div>
 
 <div class="modal fade" tabindex="-1" role="dialog" id="suplementsModal">
@@ -117,13 +115,13 @@
         </button>
       </div>
       <div class="modal-body">
-        <textarea class="form-control" rows="5">
-          Wpisz suplementy...
+        <textarea [(ngModel)]="diet.meals[activeMeal - 1].suplements" class="form-control" rows="5">
+
         </textarea>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Anuluj</button>
-        <button type="button" class="btn btn-success btn-sm" data-dismiss="modal">Zapisz</button>
+        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal" (click)="addSuplements()">Anuluj</button>
+        <button type="button" class="btn btn-success btn-sm" data-dismiss="modal" >Zapisz</button>
       </div>
     </div>
   </div>
