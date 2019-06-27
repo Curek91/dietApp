@@ -47,6 +47,7 @@ export class DietService {
   }
 
   getImage(id: number): Observable<Blob> {
+    console.log('getImage' + id);
     return this.http.get(this.apiUrl + 'getImage/' + id, { responseType: 'blob', headers: this.headersImage });
   }
 }

@@ -87,7 +87,7 @@
         </div>
         <div class="row">
           <div class="col-sm-12">
-            <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#productModal" [routerLink]="['/manage-products']">Zarządzaj produktami</button>
+            <button class="btn btn-success btn-sm" [routerLink]="['/manage-products']">Zarządzaj produktami</button>
           </div>
         </div>
       </div>
@@ -99,9 +99,7 @@
     Copyright by Curek, 2018
   </div>
   <div>
-    <pre>
-    {{diet | json}}
-    </pre>
+    {{activeMeal}}
   </div>
 </div>
 
@@ -115,9 +113,9 @@
         </button>
       </div>
       <div class="modal-body">
-        <textarea [(ngModel)]="diet.meals[activeMeal - 1].suplements" class="form-control" rows="5">
+<!--        <textarea [(ngModel)]="diet.meals[activeMeal - 1].suplements" class="form-control" rows="5">
 
-        </textarea>
+        </textarea>-->
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal" (click)="addSuplements()">Anuluj</button>

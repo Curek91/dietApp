@@ -32,7 +32,6 @@ export class NewDietComponent implements OnInit {
   loadProductTypes(): void {
     let typeTemp: ProductType;
     this.dietService.getTypes().subscribe((types) => {
-      console.log(types);
       types.forEach((type) => {
 
         typeTemp = {
@@ -41,8 +40,6 @@ export class NewDietComponent implements OnInit {
         };
         this.types.push(typeTemp);
       });
-      console.log('koiec');
-      console.log(this.types);
     });
   }
 
