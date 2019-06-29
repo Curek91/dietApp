@@ -53,7 +53,7 @@ public class DTOMappingServiceImpl implements DTOMappingService, ApplicationCont
 
     @Override
     public ProductDTO createDTO(Product source) {
-        return new ProductDTO(createDTO(source.getType()), source.getName(), source.getProtein(), source.getCarbs(), source.getFat(), source.getKcal(), source.getImageName());
+        return new ProductDTO(createDTO(source.getType()), source.getName(), source.getProtein(), source.getCarbs(), source.getFat(), source.getKcal());
     }
 
     @Override
@@ -77,11 +77,11 @@ public class DTOMappingServiceImpl implements DTOMappingService, ApplicationCont
 
     @Override
     public Product createEntity(ProductDTO source){
-        return new Product(source.getName(), source.getProtein(), source.getCarbs(), source.getFat(), source.getKcal(), createEntity(source.getType()), source.getImageName());
+        return new Product(source.getName(), source.getProtein(), source.getCarbs(), source.getFat(), source.getKcal(), createEntity(source.getType()));
     }
 
     @Override
     public Product createEntity(Long id, ProductDTO source){
-        return new Product(id, source.getName(), source.getProtein(), source.getCarbs(), source.getFat(), source.getKcal(), createEntity(source.getType()), source.getImageName());
+        return new Product(id, source.getName(), source.getProtein(), source.getCarbs(), source.getFat(), source.getKcal(), createEntity(source.getType()));
     }
 }

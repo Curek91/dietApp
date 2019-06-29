@@ -59,8 +59,7 @@ export class NewDietComponent implements OnInit {
           carbs: product.carbs,
           fat: product.fat,
           kcal: product.kcal,
-          weight: 0,
-          imageName: product.imageName
+          weight: 0
         };
         this.products.push(prodTemp);
       });

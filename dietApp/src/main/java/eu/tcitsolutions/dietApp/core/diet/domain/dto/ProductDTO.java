@@ -17,6 +17,5 @@ public class ProductDTO {
     private Long carbs;
     private Long fat;
     private Long kcal;
-    private String imageName;
 
 }

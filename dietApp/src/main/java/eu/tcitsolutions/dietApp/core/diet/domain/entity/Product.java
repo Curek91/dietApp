@@ -21,23 +21,21 @@ public class Product extends BaseLogEntity implements Serializable {
     private Long carbs;
     private Long fat;
     private Long kcal;
-    private String imageName;
 
     @OneToOne
     private Type type;
 
-    public Product(String name, Long protein, Long carbs, Long fat, Long kcal, Type type, String imageName) {
+    public Product(String name, Long protein, Long carbs, Long fat, Long kcal, Type type) {
         this.name = name;
         this.protein = protein;
         this.carbs = carbs;
         this.fat = fat;
         this.kcal = kcal;
         this.type = type;
-        this.imageName = imageName;
 
     }
 
-    public Product(Long id, String name, Long protein, Long carbs, Long fat, Long kcal, Type type, String imageName) {
+    public Product(Long id, String name, Long protein, Long carbs, Long fat, Long kcal, Type type) {
         this.id = id;
         this.name = name;
         this.protein = protein;
@@ -45,6 +43,5 @@ public class Product extends BaseLogEntity implements Serializable {
         this.fat = fat;
         this.kcal = kcal;
         this.type = type;
-        this.imageName = imageName;
     }
 }

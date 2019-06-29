@@ -11,5 +11,4 @@ export interface IProduct {
   fat: number;
   kcal: number;
   weight: number;
-  imageName: string;
 }
