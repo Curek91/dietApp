@@ -6,6 +6,7 @@ import {RouterModule} from '@angular/router';
 import { NewClientComponent } from './new-client/new-client.component';
 import { ShowClientComponent } from './show-client/show-client.component';
 import {AngularFontAwesomeModule} from 'angular-font-awesome';
+import {DietModule} from "../diet/diet.module";
 
 @NgModule({
   imports: [
@@ -13,7 +14,8 @@ import {AngularFontAwesomeModule} from 'angular-font-awesome';
     FormsModule,
     RouterModule,
     ReactiveFormsModule,
-    AngularFontAwesomeModule
+    AngularFontAwesomeModule,
+    DietModule
   ],
   declarations: [ManageClientComponent, NewClientComponent, ShowClientComponent]
 })

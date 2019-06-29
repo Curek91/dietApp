@@ -4,14 +4,14 @@ import {Product} from "./Product";
  * Created by tomasz.cur on 14.04.2018.
  */
 export class Meal implements IMeal {
-  id: number;
+  mealNo: number;
   products: Product[];
   kcal: number;
   suplements: string;
 
-  constructor(id: number) {
+  constructor(mealNo: number) {
     this.products = [];
-    this.id = id;
+    this.mealNo = mealNo;
     this.kcal = 0;
     this.suplements = '';
   }

@@ -5,6 +5,7 @@ import {ProductType} from './models/ProductType';
 import 'rxjs/add/operator/map';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {AuthService} from '../auth/auth.service';
+import {Diet} from "./models/Diet";
 
 @Injectable()
 export class DietService {
@@ -49,5 +50,9 @@ export class DietService {
   getImage(id: number): Observable<Blob> {
     console.log('getImage' + id);
     return this.http.get(this.apiUrl + 'getImage/' + id, { responseType: 'blob', headers: this.headersImage });
+  }
+
+  addDiet(data): Observable<Diet> {
+    return this.http.post<Diet>(this.apiUrl + 'diet/create', data, {headers: this.headers});
   }
 }

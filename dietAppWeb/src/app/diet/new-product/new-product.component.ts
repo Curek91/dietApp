@@ -67,8 +67,7 @@ export class NewProductComponent implements OnInit {
       carbs: +this.productForm.value['carbs'],
       fat: +this.productForm.value['fat'],
       kcal: +this.productForm.value['kcal'],
-      weight: null,
-      imageName: null
+      weight: null
     };
     return product;
   }

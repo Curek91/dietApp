@@ -8,10 +8,12 @@ import eu.tcitsolutions.dietApp.core.diet.domain.entity.Diet;
 import eu.tcitsolutions.dietApp.core.diet.domain.entity.Meal;
 import eu.tcitsolutions.dietApp.core.diet.domain.entity.Product;
 import eu.tcitsolutions.dietApp.core.diet.domain.entity.Type;
+import eu.tcitsolutions.dietApp.core.diet.domain.repository.MealRepository;
 import eu.tcitsolutions.dietApp.core.diet.domain.repository.ProductRepository;
 import eu.tcitsolutions.dietApp.core.diet.domain.repository.TypeRepository;
 import eu.tcitsolutions.dietApp.core.diet.service.DTOMappingService;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Lazy;
@@ -19,6 +21,8 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Lazy
@@ -28,6 +32,9 @@ public class DTOMappingServiceImpl implements DTOMappingService, ApplicationCont
 
     private ProductRepository productRepository;
     private TypeRepository typeRepository;
+
+    @Autowired
+    private MealRepository mealRepository;
 
     private ApplicationContext applicationContext;
 
@@ -43,17 +50,19 @@ public class DTOMappingServiceImpl implements DTOMappingService, ApplicationCont
 
 /*    @Override
     public MealDTO createDTO(Meal source) {
-        return new MealDTO(source.getProducts().stream().map(product -> createDTO(product)).collect(Collectors.toSet()));
-    }
+        return new MealDTO(source.getProducts().stream().map(product -> createDTO(product.getProduct())).collect(Collectors.toSet()));
+    }*/
 
+/*
     @Override
     public DietDTO createDTO(Diet source) {
         return new DietDTO(source.getMeals().stream().map(meal -> createDTO(meal)).collect(Collectors.toSet()));
-    }*/
+    }
+*/
 
     @Override
     public ProductDTO createDTO(Product source) {
-        return new ProductDTO(createDTO(source.getType()), source.getName(), source.getProtein(), source.getCarbs(), source.getFat(), source.getKcal(), source.getImageName());
+        return new ProductDTO(createDTO(source.getType()), source.getName(), source.getProtein(), source.getCarbs(), source.getFat(), source.getKcal());
     }
 
     @Override
@@ -77,11 +86,43 @@ public class DTOMappingServiceImpl implements DTOMappingService, ApplicationCont
 
     @Override
     public Product createEntity(ProductDTO source){
-        return new Product(source.getName(), source.getProtein(), source.getCarbs(), source.getFat(), source.getKcal(), createEntity(source.getType()), source.getImageName());
+        return new Product(source.getName(), source.getProtein(), source.getCarbs(), source.getFat(), source.getKcal(), createEntity(source.getType()));
     }
 
     @Override
     public Product createEntity(Long id, ProductDTO source){
-        return new Product(id, source.getName(), source.getProtein(), source.getCarbs(), source.getFat(), source.getKcal(), createEntity(source.getType()), source.getImageName());
+        return new Product(id, source.getName(), source.getProtein(), source.getCarbs(), source.getFat(), source.getKcal(), createEntity(source.getType()));
     }
+
+    @Override
+    public Diet createEntity(Long id, DietDTO source) {
+        return null;
+    }
+
+    @Override
+    public Diet createEntity(DietDTO source) {
+        Diet diet = new Diet();
+
+        return new Diet();
+    }
+
+    @Override
+    public Meal createEntity(MealDTO source) {
+        return null;
+    }
+
+    @Override
+    public Meal createEntity(Long id, MealDTO source) {
+        return null;
+    }
+
+/*    @Override
+    public Diet createEntity(Long id, DietDTO source){
+        return new Diet(id, source.getMeals());
+    }
+
+    @Override
+    public Meal createEntity(Long id, MealDTO source){
+        return new Meal(id, source.getMealNo(), source.getProducts().stream().map(productDTO -> createEntity(productDTO)));
+    }*/
 }

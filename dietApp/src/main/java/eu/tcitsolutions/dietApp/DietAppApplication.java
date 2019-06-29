@@ -11,7 +11,7 @@ public class DietAppApplication {
     public static void main(String[] args) {
 
         SpringApplication.run(DietAppApplication.class, args);
-        System.out.println("Aplikacja wystartowala");
+        System.out.println("Application has started");
 
     }
 }

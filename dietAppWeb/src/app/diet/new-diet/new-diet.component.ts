@@ -59,8 +59,7 @@ export class NewDietComponent implements OnInit {
           carbs: product.carbs,
           fat: product.fat,
           kcal: product.kcal,
-          weight: 0,
-          imageName: product.imageName
+          weight: 0
         };
         this.products.push(prodTemp);
       });
@@ -88,13 +87,13 @@ export class NewDietComponent implements OnInit {
       this.activeMeal = 1;
     } else {
       for (const x of this.diet.meals) {
-        if (x.id > this.activeMeal) {
-          x.id += 1;
+        if (x.mealNo > this.activeMeal) {
+          x.mealNo += 1;
         }
       }
       this.diet.meals.push(new Meal(this.activeMeal + 1));
       this.activeMeal = this.activeMeal + 1;
-      this.diet.meals.sort((n1, n2) => (n1.id - n2.id));
+      this.diet.meals.sort((n1, n2) => (n1.mealNo - n2.mealNo));
     }
   }
 
@@ -105,12 +104,12 @@ export class NewDietComponent implements OnInit {
   deleteMeal(): void {
     const active = this.activeMeal;
     this.diet.meals.map(function (item) {
-      if (item.id > active) {
-        item.id -= 1;
+      if (item.mealNo > active) {
+        item.mealNo -= 1;
       }
     });
     this.diet.meals.splice(this.diet.meals.findIndex(function (element) {
-      return element.id === active;
+      return element.mealNo === active;
     }), 1);
     if (active === this.diet.meals.length + 1) {
       this.activeMeal -= 1;
@@ -201,8 +200,15 @@ export class NewDietComponent implements OnInit {
     }
   }
 
+  addDiet() {
+    console.log(this.diet);
+    this.dietService.addDiet(this.diet).subscribe((diet) => {
+      console.log('dodaje diet');
+    });
+  }
+
   addSuplements(): void {
-    //this.diet.meals[this.activeMeal - 1].suplements = this.suplements;
+    // this.diet.meals[this.activeMeal - 1].suplements = this.suplements;
     console.log('Suplementy dla posilku ' + this.activeMeal + ': ' + this.diet.meals[this.activeMeal - 1].suplements);
   }
 }

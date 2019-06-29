@@ -20,6 +20,5 @@ import java.util.List;
 public class Authority extends BaseLogEntity implements Serializable {
     private AuthorityName name;
 
-    @ManyToMany
-    private List<LoginUser> users;
+
 }

@@ -24,7 +24,6 @@ public class Meal extends BaseLogEntity implements Serializable {
     @OneToMany(mappedBy = "meal", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MealProduct> products = new ArrayList<>();
 
-    @NaturalId
     private int mealNo;
 
     public Meal(){
@@ -34,8 +33,19 @@ public class Meal extends BaseLogEntity implements Serializable {
         this.mealNo = mealNo;
     }
 
-    public void addProduct(Product product){
-        MealProduct mealProduct = new MealProduct(this, product);
+    public Meal(Long id, int mealNo){
+        this.id = id;
+        this.mealNo = mealNo;
+    }
+
+    public Meal(Long id, int mealNo, List<MealProduct> products){
+        this.id = id;
+        this.mealNo = mealNo;
+        this.products = products;
+    }
+
+    public void addProduct(Product product, int weight){
+        MealProduct mealProduct = new MealProduct(this, product, weight);
         products.add(mealProduct);
     }
 

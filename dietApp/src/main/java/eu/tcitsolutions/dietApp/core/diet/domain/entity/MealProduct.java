@@ -1,12 +1,20 @@
 package eu.tcitsolutions.dietApp.core.diet.domain.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.Table;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Objects;
 
 @Entity(name = "meal_product")
+@EntityListeners(AuditingEntityListener.class)
+@Getter
+@Setter
+@AllArgsConstructor
 public class MealProduct {
 
     @EmbeddedId
@@ -20,16 +28,16 @@ public class MealProduct {
     @MapsId("productId")
     private Product product;
 
-    @Column(name = "weight")
     private int weight = 0;
 
     public MealProduct(){
 
     }
 
-    public MealProduct(Meal meal, Product product){
+    public MealProduct(Meal meal, Product product, int weight){
         this.meal = meal;
         this.product = product;
+        this.weight = weight;
         this.id = new MealProductId(meal.getId(), product.getId());
     }
 

@@ -3,10 +3,10 @@
   <div class="table">
     <div class="row">
       <div class="col-sm-6" style="height: 100%">
-        <div class="row dietRow" [ngClass]="{'active-row': mealOnDiet.id == activeMeal}" *ngFor="let mealOnDiet of diet.meals" (click)="setActiveMeal(mealOnDiet.id)"
-             dnd-droppable (onDropSuccess)="moveToMeal($event, mealOnDiet.id)">
+        <div class="row dietRow" [ngClass]="{'active-row': mealOnDiet.mealNo == activeMeal}" *ngFor="let mealOnDiet of diet.meals" (click)="setActiveMeal(mealOnDiet.mealNo)"
+             dnd-droppable (onDropSuccess)="moveToMeal($event, mealOnDiet.mealNo)">
           <div class="col-sm-1">
-            <p>{{ mealOnDiet.id }}</p>
+            <p>{{ mealOnDiet.mealNo }}</p>
           </div>
           <div class="col-sm-7 text-sm-center">
             <div *ngFor="let productOnMeal of mealOnDiet.products; let i = index">
@@ -20,7 +20,7 @@
                 Węglowodany: <br/>
                 Tłuszcze: <br/>
                 <b>Kcal:</b> <br/>
-                <button class="btn btn-primary btn-sm" data-toggle="modal"  data-target="#suplementsModal" (click)="setSuplements(mealOnDiet.id)">Suplementy</button>
+                <button class="btn btn-primary btn-sm" data-toggle="modal"  data-target="#suplementsModal" (click)="setSuplements(mealOnDiet.mealNo)">Suplementy</button>
               </div>
             </div>
           </div>
@@ -62,7 +62,7 @@
           <div class="col-sm-12 center-block">
             <button *ngIf="diet.meals && diet.meals.length > 0" type="button" class="btn btn-sm btn-danger addDietBtn text-center" (click)="deleteMeal()">Usuń posiłek</button>
             <button type="button" class="btn btn-sm btn-success addDietBtn center" (click)="addMeal()">Dodaj posiłek</button>
-            <button *ngIf="diet.meals && diet.meals.length > 0" type="button" class="btn btn-sm btn-success addDietBtn text-right">Zapisz Diete</button>
+            <button *ngIf="diet.meals && diet.meals.length > 0" type="button" (click)="addDiet()" class="btn btn-sm btn-success addDietBtn text-right">Zapisz Diete</button>
           </div>
         </div>
       </div>
@@ -98,8 +98,10 @@
   <div class="col-sm-12 text-center">
     Copyright by Curek, 2018
   </div>
-  <div>
-    {{activeMeal}}
+  <div class="box box-default">
+    <code>
+      <pre>{{diet | json}}</pre>
+    </code>
   </div>
 </div>
 
@@ -124,6 +126,7 @@
     </div>
   </div>
 </div>
+
 
 
 

@@ -14,5 +14,6 @@ import java.util.Set;
 public class DietDTO {
 
     private Set<MealDTO> meals;
+    private Double kcal;
 
 }

@@ -25,6 +25,12 @@ public class Diet extends BaseLogEntity implements Serializable {
         this.meals = new HashSet<>();
     }
 
+
+    public Diet(Long id, Set<Meal> meals){
+        this.id = id;
+        this.meals = meals;
+    }
+
     public void addMeal(Meal meal){
         meals.add(meal);
     }

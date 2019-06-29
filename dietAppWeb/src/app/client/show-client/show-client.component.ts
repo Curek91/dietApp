@@ -15,6 +15,7 @@ export class ShowClientComponent implements OnInit {
   showInfo: boolean;
   showDiets: boolean;
   showTrainings: boolean;
+  showNewDiet: boolean;
 
   constructor(private formBuilder: FormBuilder,
               private clientService: ClientService,

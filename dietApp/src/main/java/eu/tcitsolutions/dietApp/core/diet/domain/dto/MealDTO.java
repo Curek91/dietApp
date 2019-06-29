@@ -14,5 +14,8 @@ import java.util.Set;
 public class MealDTO {
 
     private Set<ProductDTO> products;
+    private int mealNo;
+    private int kcal;
+    private String suplements;
 
 }
