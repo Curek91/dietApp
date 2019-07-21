@@ -33,7 +33,7 @@ public class DTOClientMappingServiceImpl implements DTOClientMappingService, App
 
     @Override
     public ClientDTO createDTO(Client source) {
-        return new ClientDTO(source.getFirstname(), source.getLastname(), source.getAge(), source.getWeight(), source.getHeight(), source.getEmail(), source.getTelephone());
+        return new ClientDTO(source.getFirstname(), source.getLastname(), source.getAge(), source.getWeight(), source.getHeight(), source.getEmail(), source.getTelephone(), null);
     }
 
     @Override

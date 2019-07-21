@@ -2,58 +2,50 @@ package eu.tcitsolutions.dietApp.core.diet.domain.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Table;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.io.Serializable;
 import java.util.Objects;
 
-@Entity(name = "meal_product")
-@EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
+@NoArgsConstructor
 @AllArgsConstructor
-public class MealProduct {
+@Entity
+@Table(name = "meal_product")
+public class MealProduct implements Serializable {
 
-    @EmbeddedId
-    private MealProductId id;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("mealId")
+    @Id
+    @ManyToOne
+    @JoinColumn
     private Meal meal;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("productId")
+    @Id
+    @ManyToOne
+    @JoinColumn
     private Product product;
 
-    private int weight = 0;
+    private int weight;
 
-    public MealProduct(){
-
-    }
-
-    public MealProduct(Meal meal, Product product, int weight){
-        this.meal = meal;
+    public MealProduct(Product product, int weight){
         this.product = product;
         this.weight = weight;
-        this.id = new MealProductId(meal.getId(), product.getId());
     }
 
     @Override
-    public boolean equals(Object o){
+    public boolean equals(Object o) {
         if (this == o) return true;
-
-        if (o == null || getClass() != o.getClass())
-            return false;
-
+        if (!(o instanceof MealProduct)) return false;
         MealProduct that = (MealProduct) o;
-        return Objects.equals(meal, that.product) && Objects.equals(product, that.meal);
+        return Objects.equals(meal.getMealNo(), that.meal.getMealNo()) &&
+                Objects.equals(product.getName(), that.product.getName()) &&
+                Objects.equals(weight, that.weight);
     }
 
     @Override
-    public int hashCode(){
-        return Objects.hash(meal, product);
+    public int hashCode() {
+        return Objects.hash(meal.getMealNo(), product.getName(), weight);
     }
 }

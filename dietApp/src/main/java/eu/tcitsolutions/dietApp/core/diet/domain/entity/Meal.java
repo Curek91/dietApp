@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -21,33 +23,24 @@ import java.util.Set;
 @AllArgsConstructor
 public class Meal extends BaseLogEntity implements Serializable {
 
-    @OneToMany(mappedBy = "meal", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<MealProduct> products = new ArrayList<>();
 
     private int mealNo;
+    private String suplements;
+
+    @OneToMany(mappedBy = "meal", cascade = CascadeType.ALL)
+    private Set<MealProduct> mealProducts = new HashSet<>();
 
     public Meal(){
     }
 
-    public Meal(int mealNo){
+    public Meal(int mealNo, String suplements, MealProduct... mealProducts) {
         this.mealNo = mealNo;
-    }
-
-    public Meal(Long id, int mealNo){
-        this.id = id;
-        this.mealNo = mealNo;
-    }
-
-    public Meal(Long id, int mealNo, List<MealProduct> products){
-        this.id = id;
-        this.mealNo = mealNo;
-        this.products = products;
+        this.suplements = suplements;
+        for(MealProduct mealProduct : mealProducts) mealProduct.setMeal(this);
+        this.mealProducts = Stream.of(mealProducts).collect(Collectors.toSet());
     }
 
     public void addProduct(Product product, int weight){
-        MealProduct mealProduct = new MealProduct(this, product, weight);
-        products.add(mealProduct);
+        this.mealProducts.add(new MealProduct(this, product, weight));
     }
-
-
 }

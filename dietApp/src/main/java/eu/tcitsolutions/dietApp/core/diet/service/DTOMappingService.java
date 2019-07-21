@@ -12,26 +12,26 @@ import eu.tcitsolutions.dietApp.core.diet.domain.entity.Type;
 public interface DTOMappingService {
 
     //Create DTO's
-    public TypeDTO createDTO(Type source);
+    public DietDTO createDTO(Diet source);
+
+    public MealDTO createDTO(Meal source);
 
     public ProductDTO createDTO(Product source);
 
-/*    public MealDTO createDTO(Meal source);
-
-    public DietDTO createDTO(Diet source);*/
-
+    public TypeDTO createDTO(Type source);
 
 
     //create Entities
-    public Type createEntity(TypeDTO source);
-    public Type createEntity(Long id, TypeDTO source);
+    public Diet createEntity(DietDTO source);
+    //public Diet createEntity(Long id, DietDTO source);
+
+    public Meal createEntity(MealDTO source);
+    //public Meal createEntity(Long id, MealDTO source);
 
     public Product createEntity(ProductDTO source);
     public Product createEntity(Long id, ProductDTO source);
 
-    public Diet createEntity(DietDTO source);
-    public Diet createEntity(Long id, DietDTO source);
+    public Type createEntity(TypeDTO source);
+    public Type createEntity(Long id, TypeDTO source);
 
-    public Meal createEntity(MealDTO source);
-    public Meal createEntity(Long id, MealDTO source);
 }

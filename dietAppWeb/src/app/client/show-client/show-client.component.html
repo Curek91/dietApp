@@ -63,7 +63,7 @@
             <span >Diety</span>
           </div>
           <div class="col-sm-2">
-            <button class="btn btn-sm btn-success">Dodaj Diete</button>
+            <button class="btn btn-sm btn-success" (click)="showNewDiet = !showNewDiet">Dodaj Diete</button>
           </div>
         </div>
       </h3>
@@ -76,7 +76,7 @@
     </div>
   </div>
 
-<app-new-diet></app-new-diet>
+<app-new-diet *ngIf="showNewDiet"></app-new-diet>
 
 </div>
 

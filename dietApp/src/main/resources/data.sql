@@ -3,7 +3,7 @@ INSERT INTO loginuser(
             id, created_by, creation_timestamp, modification_timestamp, modified_by,
             email, enabled, firstname, lastpasswordresetdate, lastname,
             password, username)
-    VALUES (1, 'Curek', now(), now(), 'Curek',
+    VALUES (nextval('hibernate_sequence'), 'Curek', now(), now(), 'Curek',
             'Curek', true, 'Curek', now(), 'Curek',
             '$2a$08$lDnHPz7eUkSi6ao14Twuau08mzhWrL4kyZGGU5xfiGALO/Vxd5DOi', 'Rafal');
 
@@ -11,7 +11,7 @@ INSERT INTO loginuser(
             id, created_by, creation_timestamp, modification_timestamp, modified_by,
             email, enabled, firstname, lastpasswordresetdate, lastname,
             password, username)
-    VALUES (2, 'Curek', now(), now(), 'Curek',
+    VALUES (nextval('hibernate_sequence'), 'Curek', now(), now(), 'Curek',
             'Curek', true, 'Curek', now(), 'Curek',
             '$2a$08$lDnHPz7eUkSi6ao14Twuau08mzhWrL4kyZGGU5xfiGALO/Vxd5DOi', 'Curek');
 
@@ -45,7 +45,13 @@ insert into product (id,created_by,creation_timestamp,modification_timestamp,mod
 insert into product (id,created_by,creation_timestamp,modification_timestamp,modified_by,carbs,fat,kcal,name,protein,type_id) values (19,'Curek','2019-06-29 18:51:46.662','2019-06-29 18:51:53.905','Curek',3,0,19,'Pomidor',1,2);
 insert into product (id,created_by,creation_timestamp,modification_timestamp,modified_by,carbs,fat,kcal,name,protein,type_id) values (20,'Curek','2019-06-29 18:53:07.897','2019-06-29 18:53:20.514','Curek',76,1,345,'Ryż biały',7,2);
 
+/*CREATE TRIGGER client_on_insert
+  BEFORE INSERT
+  ON client
+  FOR EACH ROW
+  EXECUTE PROCEDURE set_client_seq_no();*/
+
 -- clients sqls
-insert into client (id,created_by,creation_timestamp,modification_timestamp,modified_by,age,email,firstname,height,lastname,telephone,weight) values (1,'Curek','2019-06-29 19:29:19.799','2019-06-29 19:29:19.796','',27,'tomasz.cur.91@gmail.com','Tomasz',163,'Cur','796455725',68);
-insert into client (id,created_by,creation_timestamp,modification_timestamp,modified_by,age,email,firstname,height,lastname,telephone,weight) values (2,'Curek','2019-06-29 19:29:19.799','2019-06-29 19:29:19.796','',27,'tomasz.cur.91@gmail.com','Rafał',163,'Czerski','796455725',68);
+insert into client (id,created_by,creation_timestamp,modification_timestamp,modified_by,age,email,firstname,height,lastname,telephone,weight) values (nextval('hibernate_sequence'),'Curek','2019-06-29 19:29:19.799','2019-06-29 19:29:19.796','',27,'tomasz.cur.91@gmail.com','Tomasz',163,'Cur','796455725',68);
+insert into client (id,created_by,creation_timestamp,modification_timestamp,modified_by,age,email,firstname,height,lastname,telephone,weight) values (nextval('hibernate_sequence'),'Curek','2019-06-29 19:29:19.799','2019-06-29 19:29:19.796','',27,'tomasz.cur.91@gmail.com','Rafał',163,'Czerski','796455725',68);
 

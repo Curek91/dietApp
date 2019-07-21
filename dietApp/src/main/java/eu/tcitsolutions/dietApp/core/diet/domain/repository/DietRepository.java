@@ -10,7 +10,7 @@ public interface DietRepository {
 
     public Diet getDiet(Long id);
 
-    public void save(Diet diet);
+    public Diet save(Diet diet);
 
     public void delete(Diet diet);
 

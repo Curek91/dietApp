@@ -28,9 +28,10 @@ public class HibernateDietRepository implements DietRepository {
     }
 
     @Override
-    public void save(Diet diet) {
+    public Diet save(Diet diet) {
         entityManager.persist(diet);
         entityManager.flush();
+        return diet;
     }
 
     @Override

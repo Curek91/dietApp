@@ -14,7 +14,7 @@ public interface DietService {
 
     public Diet getDiet(Long id);
 
-    public void saveDiet(DietDTO source);
+    public Diet saveDiet(DietDTO source);
 
     public void removeDiet(Long id);
 

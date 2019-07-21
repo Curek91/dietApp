@@ -18,7 +18,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class Diet extends BaseLogEntity implements Serializable {
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<Meal> meals;
 
     public Diet(){

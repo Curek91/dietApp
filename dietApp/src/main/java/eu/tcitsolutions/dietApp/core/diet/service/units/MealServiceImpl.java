@@ -34,10 +34,10 @@ public class MealServiceImpl implements MealService {
     public Meal getMeal(Long id) {return mealRepository.getMeal(id);
     }
 
-/*    @Override
-    public void saveMeal(MealDTO source) {
-        mealRepository.save(dtoMappingService.createEntity(source));
-    }*/
+    @Override
+    public void saveMeal(Meal meal) {
+        mealRepository.save(meal);
+    }
 
     @Override
     public void removeMeal(Long id) {

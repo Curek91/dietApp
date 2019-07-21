@@ -1,3 +1,4 @@
+import {Diet} from "../../diet/models/Diet";
 export interface IClient {
   id: number;
   firstname: string;
@@ -7,4 +8,5 @@ export interface IClient {
   height: number;
   email: string;
   telephone: string;
+  diets: Diet[];
 }

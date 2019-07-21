@@ -18,19 +18,19 @@ public class BaseLogEntity extends BaseEntity{
 
     @CreatedBy
     @Column(name = "CREATED_BY", updatable = false)
-    private String createdBy;
+    public String createdBy;
 
     @LastModifiedBy
     @Column(name = "MODIFIED_BY")
-    private String modifiedBy;
+    public String modifiedBy;
 
     @CreatedDate
     @Column(name = "CREATION_TIMESTAMP", updatable = false)
-    private LocalDateTime creationTime;
+    public LocalDateTime creationTime;
 
     @LastModifiedDate
     @Column(name = "MODIFICATION_TIMESTAMP")
-    private LocalDateTime modificationTime;
+    public LocalDateTime modificationTime;
 
     @PrePersist
     public void prePersist(){

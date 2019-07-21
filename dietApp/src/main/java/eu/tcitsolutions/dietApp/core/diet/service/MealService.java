@@ -12,7 +12,7 @@ public interface MealService {
 
     public Meal getMeal(Long id);
 
-/*    public Meal saveMeal(MealDTO source);*/
+    public void saveMeal(Meal meal);
 
     public void removeMeal(Long id);
 

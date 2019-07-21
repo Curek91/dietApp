@@ -1,9 +1,12 @@
 package eu.tcitsolutions.dietApp.core.client.domain.dto;
 
+import eu.tcitsolutions.dietApp.core.diet.domain.entity.Diet;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.Set;
 
 @Builder
 @Getter
@@ -18,6 +21,7 @@ public class ClientDTO {
     private Integer height;
     private String email;
     private String telephone;
+    private Set<Diet> diets;
 
 
 }

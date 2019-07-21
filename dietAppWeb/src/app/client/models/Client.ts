@@ -1,4 +1,5 @@
 import {IClient} from './IClient';
+import {Diet} from "../../diet/models/Diet";
 /**
  * Created by tomasz.cur on 04.03.2019.
  */
@@ -13,6 +14,7 @@ export class Client implements IClient {
   height: number;
   email: string;
   telephone: string;
+  diets: Diet[];
 
   constructor(client: Client) {
     this.id = client.id;
@@ -23,5 +25,6 @@ export class Client implements IClient {
     this.height = client.height;
     this.email = client.email;
     this.telephone = client.telephone;
+    this.diets = client.diets;
   }
 }

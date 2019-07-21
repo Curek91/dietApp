@@ -49,18 +49,9 @@ public class DietServiceImpl implements DietService {
     }
 
     @Override
-    public void saveDiet(DietDTO source) {
-        Set<Meal> meals = new HashSet<Meal>();
-        source.getMeals().stream().forEach((MealDTO mealDTO) -> {
-            Meal mealEnt = mealRepository.save(new Meal(mealDTO.getMealNo()));
-            mealDTO.getProducts().stream().forEach(productDTO ->  {
-                mealEnt.addProduct(productRepository.getProduct(Long.valueOf(productDTO.getId())), productDTO.getWeight());
-            });
-            mealRepository.update(mealEnt);
-            meals.add(mealEnt);
-        });
-
-        dietRepository.save(new Diet(meals));
+    public Diet saveDiet(DietDTO source) {
+       return dietRepository.save(dtoMappingService.createEntity(source));
+       //return dietRepository.save(source);
     }
 
     @Override
