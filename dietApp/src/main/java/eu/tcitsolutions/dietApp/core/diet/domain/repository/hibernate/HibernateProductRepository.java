@@ -16,7 +16,7 @@ public class HibernateProductRepository implements ProductRepository {
 
     @Override
     public List<Product> getProducts() {
-        String hql = "select p from Product p";
+        String hql = "select p from product p";
         return (List<Product>) entityManager.createQuery(hql).getResultList();
     }
 

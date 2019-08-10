@@ -21,7 +21,4 @@ public class ClientDTO {
     private Integer height;
     private String email;
     private String telephone;
-    private Set<Diet> diets;
-
-
 }

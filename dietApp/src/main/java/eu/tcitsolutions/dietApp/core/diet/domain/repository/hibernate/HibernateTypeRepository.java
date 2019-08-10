@@ -16,7 +16,7 @@ public class HibernateTypeRepository implements TypeRepository {
 
     @Override
     public List<Type> getTypes() {
-        String hql = "select t from Type t";
+        String hql = "select t from type t";
         return (List<Type>) entityManager.createQuery(hql).getResultList();
     }
 

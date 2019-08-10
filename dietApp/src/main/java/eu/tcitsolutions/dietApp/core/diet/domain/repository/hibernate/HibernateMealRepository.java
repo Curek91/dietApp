@@ -18,7 +18,7 @@ public class HibernateMealRepository implements MealRepository {
 
     @Override
     public List<Meal> getMeals() {
-        String hql = "select m from Meal m";
+        String hql = "select m from meal m";
         return (List<Meal>) entityManager.createQuery(hql).getResultList();
     }
 

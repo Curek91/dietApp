@@ -15,7 +15,7 @@ public class HibernateClientRepository implements ClientRepository {
 
     @Override
     public List<Client> getClients() {
-        String hql = "select c from Client c";
+        String hql = "select c from client c";
         return (List<Client>) entityManager.createQuery(hql).getResultList();
     }
 

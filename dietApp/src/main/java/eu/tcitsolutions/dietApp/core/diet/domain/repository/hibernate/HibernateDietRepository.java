@@ -18,7 +18,7 @@ public class HibernateDietRepository implements DietRepository {
 
     @Override
     public List<Diet> getDiets() {
-        String hql = "select d from Diet d";
+        String hql = "select d from diet d";
         return (List<Diet>) entityManager.createQuery(hql).getResultList();
     }
 

@@ -1,9 +1,9 @@
 -- login user admin admin
-/*INSERT INTO loginuser(
+INSERT INTO loginuser(
             id, created_by, creation_timestamp, modification_timestamp, modified_by,
             email, enabled, firstname, lastpasswordresetdate, lastname,
             password, username)
-    VALUES (nextval('hibernate_sequence'), 'Curek', now(), now(), 'Curek',
+    VALUES (1, 'Curek', now(), now(), 'Curek',
             'Curek', true, 'Curek', now(), 'Curek',
             '$2a$08$lDnHPz7eUkSi6ao14Twuau08mzhWrL4kyZGGU5xfiGALO/Vxd5DOi', 'Rafal');
 
@@ -11,9 +11,9 @@ INSERT INTO loginuser(
             id, created_by, creation_timestamp, modification_timestamp, modified_by,
             email, enabled, firstname, lastpasswordresetdate, lastname,
             password, username)
-    VALUES (nextval('hibernate_sequence'), 'Curek', now(), now(), 'Curek',
+    VALUES (2, 'Curek', now(), now(), 'Curek',
             'Curek', true, 'Curek', now(), 'Curek',
-            '$2a$08$lDnHPz7eUkSi6ao14Twuau08mzhWrL4kyZGGU5xfiGALO/Vxd5DOi', 'Curek');*/
+            '$2a$08$lDnHPz7eUkSi6ao14Twuau08mzhWrL4kyZGGU5xfiGALO/Vxd5DOi', 'Curek');
 
 -- Types sqls
 insert into type (id, created_by, creation_timestamp, modification_timestamp, modified_by, name) values (1, 'Curek', now(), now(), 'Curek', 'Białko');
@@ -52,6 +52,6 @@ insert into product (id,created_by,creation_timestamp,modification_timestamp,mod
   EXECUTE PROCEDURE set_client_seq_no();*/
 
 -- clients sqls
-/*insert into client (id,created_by,creation_timestamp,modification_timestamp,modified_by,age,email,firstname,height,lastname,telephone,weight) values (nextval('hibernate_sequence'),'Curek','2019-06-29 19:29:19.799','2019-06-29 19:29:19.796','',27,'tomasz.cur.91@gmail.com','Tomasz',163,'Cur','796455725',68);
-insert into client (id,created_by,creation_timestamp,modification_timestamp,modified_by,age,email,firstname,height,lastname,telephone,weight) values (nextval('hibernate_sequence'),'Curek','2019-06-29 19:29:19.799','2019-06-29 19:29:19.796','',27,'tomasz.cur.91@gmail.com','Rafał',163,'Czerski','796455725',68);
-*/
+insert into client (id,created_by,creation_timestamp,modification_timestamp,modified_by,age,email,firstname,height,lastname,telephone,weight) values (1,'Curek','2019-06-29 19:29:19.799','2019-06-29 19:29:19.796','',27,'tomasz.cur.91@gmail.com','Tomasz',163,'Cur','796455725',68);
+insert into client (id,created_by,creation_timestamp,modification_timestamp,modified_by,age,email,firstname,height,lastname,telephone,weight) values (2,'Curek','2019-06-29 19:29:19.799','2019-06-29 19:29:19.796','',27,'tomasz.cur.91@gmail.com','Rafał',163,'Czerski','796455725',68);
+

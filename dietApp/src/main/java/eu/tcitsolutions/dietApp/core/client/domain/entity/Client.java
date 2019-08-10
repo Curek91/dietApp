@@ -30,8 +30,8 @@ public class Client extends BaseLogEntity implements Serializable {
     private String email;
     private String telephone;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private Set<Diet> diets;
+/*    @OneToMany(cascade = CascadeType.ALL)
+    private Set<Diet> diets;*/
 
     public Client(String firstname, String lastname, Integer age, Float weight, Integer height, String email, String telephone) {
         this.firstname = firstname;
