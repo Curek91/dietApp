@@ -12,7 +12,7 @@ import javax.persistence.ManyToMany;
 import java.io.Serializable;
 import java.util.List;
 
-@Entity
+@Entity(name = "authority")
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter

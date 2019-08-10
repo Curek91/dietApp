@@ -8,5 +8,4 @@ export interface IClient {
   height: number;
   email: string;
   telephone: string;
-  diets: Diet[];
 }

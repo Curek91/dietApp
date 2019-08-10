@@ -15,7 +15,7 @@ import javax.persistence.OneToMany;
 import java.io.Serializable;
 import java.util.Set;
 
-@Entity
+@Entity(name = "client")
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter

@@ -13,7 +13,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-@Entity
+@Entity(name = "loginuser")
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
