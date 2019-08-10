@@ -14,7 +14,6 @@ export class Client implements IClient {
   height: number;
   email: string;
   telephone: string;
-  diets: Diet[];
 
   constructor(client: Client) {
     this.id = client.id;
@@ -25,6 +24,5 @@ export class Client implements IClient {
     this.height = client.height;
     this.email = client.email;
     this.telephone = client.telephone;
-    this.diets = client.diets;
   }
 }
