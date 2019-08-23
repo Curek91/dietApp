@@ -4,6 +4,7 @@ import eu.tcitsolutions.dietApp.core.common.entity.BaseLogEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.NaturalId;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -19,6 +20,12 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class LoginUser extends BaseLogEntity implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "loginuser_seq_generator")
+    @SequenceGenerator(name="loginuser_seq_generator", sequenceName = "loginuser_seq", allocationSize=1)
+    @NaturalId
+    private Long id;
 
     @Column(length = 50, unique = true)
     @NotNull

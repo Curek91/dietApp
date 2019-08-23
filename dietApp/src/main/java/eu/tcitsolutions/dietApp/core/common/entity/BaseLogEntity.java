@@ -5,6 +5,7 @@ import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
@@ -14,33 +15,33 @@ import java.time.LocalDateTime;
 
 @Getter
 @MappedSuperclass
-public class BaseLogEntity extends BaseEntity{
+public class BaseLogEntity{
 
     @CreatedBy
-    @Column(name = "CREATED_BY", updatable = false)
+    @Column(name = "created_by", updatable = false)
     public String createdBy;
 
     @LastModifiedBy
-    @Column(name = "MODIFIED_BY")
+    @Column(name = "modified_by")
     public String modifiedBy;
 
     @CreatedDate
-    @Column(name = "CREATION_TIMESTAMP", updatable = false)
+    @Column(name = "creation_timestamp", updatable = false)
     public LocalDateTime creationTime;
 
     @LastModifiedDate
-    @Column(name = "MODIFICATION_TIMESTAMP")
+    @Column(name = "modification_timestamp")
     public LocalDateTime modificationTime;
 
     @PrePersist
     public void prePersist(){
         this.creationTime = LocalDateTime.now();
-        this.createdBy = "Curek";
+        this.createdBy = SecurityContextHolder.getContext().getAuthentication().getName();
     }
 
     @PreUpdate
     public void preUpdate() {
         this.modificationTime = LocalDateTime.now();
-        this.modifiedBy = "Curek";
+        this.modifiedBy = SecurityContextHolder.getContext().getAuthentication().getName();
     }
 }

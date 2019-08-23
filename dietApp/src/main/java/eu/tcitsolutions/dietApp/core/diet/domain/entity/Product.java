@@ -4,6 +4,7 @@ import eu.tcitsolutions.dietApp.core.common.entity.BaseLogEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.NaturalId;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -20,6 +21,11 @@ import java.util.stream.Stream;
 @NoArgsConstructor
 public class Product extends BaseLogEntity implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_seq_generator")
+    @SequenceGenerator(name="product_seq_generator", sequenceName = "product_seq", allocationSize=1)
+    @NaturalId
+    private Long id;
     private String name;
     private Long protein;
     private Long carbs;

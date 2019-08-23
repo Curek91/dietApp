@@ -23,7 +23,11 @@ import java.util.stream.Stream;
 @AllArgsConstructor
 public class Meal extends BaseLogEntity implements Serializable {
 
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "meal_seq_generator")
+    @SequenceGenerator(name="meal_seq_generator", sequenceName = "meal_seq", allocationSize=1)
+    @NaturalId
+    private Long id;
     private int mealNo;
     private String suplements;
 
