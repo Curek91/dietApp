@@ -202,6 +202,7 @@ export class NewDietComponent implements OnInit {
 
   addDiet() {
     console.log(this.diet);
+    this.diet.clientId = 1;
     this.dietService.addDiet(this.diet).subscribe((diet) => {
       console.log('dodaje diet');
     });

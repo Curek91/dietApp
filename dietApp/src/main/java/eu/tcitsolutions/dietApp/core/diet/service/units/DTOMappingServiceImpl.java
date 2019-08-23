@@ -1,5 +1,7 @@
 package eu.tcitsolutions.dietApp.core.diet.service.units;
 
+import eu.tcitsolutions.dietApp.core.client.domain.repository.ClientRepository;
+import eu.tcitsolutions.dietApp.core.client.service.DTOClientMappingService;
 import eu.tcitsolutions.dietApp.core.diet.domain.dto.DietDTO;
 import eu.tcitsolutions.dietApp.core.diet.domain.dto.MealDTO;
 import eu.tcitsolutions.dietApp.core.diet.domain.dto.ProductDTO;
@@ -30,9 +32,13 @@ public class DTOMappingServiceImpl implements DTOMappingService, ApplicationCont
 
     private ProductRepository productRepository;
     private TypeRepository typeRepository;
+    private ClientRepository clientRepository;
 
     @Autowired
     private MealRepository mealRepository;
+
+    @Autowired
+    private DTOClientMappingService dtoClientMappingService;
 
     private ApplicationContext applicationContext;
 
@@ -52,7 +58,7 @@ public class DTOMappingServiceImpl implements DTOMappingService, ApplicationCont
 
     @Override
     public DietDTO createDTO(Diet source){
-        return new DietDTO(source.getMeals().stream().map(meal -> createDTO(meal)).collect(Collectors.toSet()), 0.0);
+        return new DietDTO(source.getMeals().stream().map(meal -> createDTO(meal)).collect(Collectors.toSet()), 0.0, null);
     }
 
     @Override
@@ -77,7 +83,7 @@ public class DTOMappingServiceImpl implements DTOMappingService, ApplicationCont
 
     @Override
     public Diet createEntity(DietDTO source) {
-        Diet diet = new Diet(source.getMeals().stream().map(mealDTO -> createEntity(mealDTO)).collect(Collectors.toSet()));
+        Diet diet = new Diet(source.getMeals().stream().map(mealDTO -> createEntity(mealDTO)).collect(Collectors.toSet()), dtoClientMappingService.createEntity(source.getClientId()));
         return diet;
     }
 

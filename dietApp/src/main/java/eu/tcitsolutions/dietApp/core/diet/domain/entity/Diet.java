@@ -1,5 +1,6 @@
 package eu.tcitsolutions.dietApp.core.diet.domain.entity;
 
+import eu.tcitsolutions.dietApp.core.client.domain.entity.Client;
 import eu.tcitsolutions.dietApp.core.common.entity.BaseLogEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,6 +25,9 @@ public class Diet extends BaseLogEntity implements Serializable {
     @NaturalId
     private Long id;
 
+    @OneToOne
+    private Client client;
+
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Meal> meals;
 
@@ -32,13 +36,15 @@ public class Diet extends BaseLogEntity implements Serializable {
     }
 
 
-    public Diet(Long id, Set<Meal> meals){
+    public Diet(Long id, Set<Meal> meals, Client client){
         this.id = id;
         this.meals = meals;
+        this.client = client;
     }
 
-    public Diet(Set<Meal> meals){
+    public Diet(Set<Meal> meals, Client client){
         this.meals = meals;
+        this.client = client;
     }
 
     public void addMeal(Meal meal){

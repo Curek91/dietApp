@@ -4,6 +4,7 @@ import eu.tcitsolutions.dietApp.core.client.domain.dto.ClientDTO;
 import eu.tcitsolutions.dietApp.core.client.domain.entity.Client;
 import eu.tcitsolutions.dietApp.core.client.domain.repository.ClientRepository;
 import eu.tcitsolutions.dietApp.core.client.service.DTOClientMappingService;
+import eu.tcitsolutions.dietApp.core.diet.domain.entity.Type;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -44,5 +45,10 @@ public class DTOClientMappingServiceImpl implements DTOClientMappingService, App
     @Override
     public Client createEntity(Long id, ClientDTO source){
         return new Client(id, source.getFirstname(), source.getLastname(), source.getAge(), source.getWeight(), source.getHeight(), source.getEmail(), source.getTelephone());
+    }
+
+    @Override
+    public Client createEntity(Long id){
+        return clientRepository.getClient(id);
     }
 }
