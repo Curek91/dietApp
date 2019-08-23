@@ -17,6 +17,13 @@
 }
 
 .products-row{
+   height: 30vh;
+   overflow: hidden;
+   overflow-y: scroll;
+   margin-top: 3%;
+ }
+
+.products-row-2{
   margin-top: 3%;
 }
 

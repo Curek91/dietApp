@@ -9,8 +9,10 @@
             <p>{{ mealOnDiet.mealNo }}</p>
           </div>
           <div class="col-sm-7 text-sm-center">
-            <div *ngFor="let productOnMeal of mealOnDiet.products; let i = index">
+            <div class="row products-row-2">
+            <div *ngFor="let productOnMeal of mealOnDiet.products; let i = index" class="col-sm-4">
               <app-product-on-diet [productInput]="productOnMeal" (dblclick)="deleteFromMeal(i)"></app-product-on-diet>
+            </div>
             </div>
           </div>
           <div class="col-sm-2 meal-summary">
@@ -79,11 +81,9 @@
             </div>
         </div>
         <div class="row products-row">
-          <div class="col-sm-12 text-sm-center">
-            <div *ngFor="let product of products | productFilter:filter:productTypeSelected" (dblclick)="addToMeal(product)" dnd-draggable [dragEnabled]="true" [dragData]="product">
+            <div *ngFor="let product of products | productFilter:filter:productTypeSelected" (dblclick)="addToMeal(product)" dnd-draggable [dragEnabled]="true" [dragData]="product" class="col-sm-3">
               <app-product [productInput]="product"></app-product>
             </div>
-          </div>
         </div>
         <div class="row">
           <div class="col-sm-12">

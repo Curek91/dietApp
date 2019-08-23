@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Product} from '../models/Product';
 import {Diet} from '../models/Diet';
 import {DietService} from '../diet.service';
@@ -12,6 +12,8 @@ import {IProduct} from '../models/IProduct';
   styleUrls: ['./new-diet.component.css']
 })
 export class NewDietComponent implements OnInit {
+
+  @Input() clientId : number;
 
   diet: Diet = new Diet();
   products: Product[] = new Array();
@@ -202,7 +204,8 @@ export class NewDietComponent implements OnInit {
 
   addDiet() {
     console.log(this.diet);
-    this.diet.clientId = 1;
+    console.log("----------------------" + this.clientId);
+    this.diet.clientId = this.clientId;
     this.dietService.addDiet(this.diet).subscribe((diet) => {
       console.log('dodaje diet');
     });

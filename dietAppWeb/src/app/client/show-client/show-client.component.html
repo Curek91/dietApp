@@ -76,7 +76,7 @@
     </div>
   </div>
 
-<app-new-diet *ngIf="showNewDiet"></app-new-diet>
+<app-new-diet *ngIf="showNewDiet" [clientId]="route.snapshot.params['id']"></app-new-diet>
 
 </div>
 
