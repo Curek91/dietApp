@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 public interface DietService {
-    public List<Diet> getDiets();
+    public List<Diet> getDiets(Long clientId);
 
     public Diet getDiet(Long id);
 

@@ -72,7 +72,45 @@
 
 
     <div class="accordion-body" *ngIf="showDiets">
-      TUTAJ BĘDĄ DIETY KLIENTA
+      <div class="row">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>Lp</th>
+            <th>Utworzona przez</th>
+            <th>Data utworzenia</th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let clientDiet of diets">
+            <td >{{clientDiet.id}}</td>
+            <td >{{clientDiet.createdBy}}</td>
+            <td >{{clientDiet.creationTime}} </td>
+            <td><button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal" (click)="setClientToDelete(client.id)">Usuń</button></td>
+
+            <div class="modal fade" tabindex="-1" role="dialog" id="deleteModal">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Czy napewno chcesz usunąć klienta?</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                      <span></span>
+                    </button>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-success btn-sm" data-dismiss="modal" (click)="deleteDiet(clientToDelete)">Usuń</button>
+                    <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Anuluj</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+          </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 

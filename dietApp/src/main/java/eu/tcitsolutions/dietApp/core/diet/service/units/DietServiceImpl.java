@@ -33,8 +33,8 @@ public class DietServiceImpl implements DietService {
     DTOMappingService dtoMappingService;
 
     @Override
-    public List<Diet> getDiets() {
-        return dietRepository.getDiets();
+    public List<Diet> getDiets(Long clientId) {
+        return dietRepository.getDiets(clientId);
     }
 
     @Override

@@ -3,6 +3,8 @@ import {ClientService} from '../client.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Client} from '../models/Client';
+import {Diet} from "../../diet/models/Diet";
+import {DietService} from "../../diet/diet.service";
 
 @Component({
   selector: 'app-show-client',
@@ -16,9 +18,11 @@ export class ShowClientComponent implements OnInit {
   showDiets: boolean;
   showTrainings: boolean;
   showNewDiet: boolean;
+  diets: Diet[] = new Array();
 
   constructor(private formBuilder: FormBuilder,
               private clientService: ClientService,
+              private dietService: DietService,
               private router: Router,
               private route: ActivatedRoute) { }
 
@@ -36,6 +40,7 @@ export class ShowClientComponent implements OnInit {
       telephone: ['', Validators.required]
     });
     this.loadClient();
+    this.loadClientDiets();
   }
 
   parseFormToEntity(): Client {
@@ -63,7 +68,23 @@ export class ShowClientComponent implements OnInit {
     });
   }
 
-  loadClient() {
+  loadClientDiets() {
+    const id = +this.route.snapshot.params['id'];
+    let dietTemp: Diet;
+    this.clientService.getClientDiets(id).subscribe((diets) => {
+      this.diets = [];
+      diets.forEach((diet) => {
+        dietTemp = new Diet();
+        dietTemp.id = diet.id;
+        dietTemp.createdBy = diet.createdBy;
+        dietTemp.creationTime = diet.creationTime;
+        this.diets.push(dietTemp);
+      });
+    })
+  }
+
+
+  loadClient(){
     const id = +this.route.snapshot.params['id'];
     this.clientService.getClient(id).subscribe((client) => {
       this.clientForm = this.formBuilder.group({

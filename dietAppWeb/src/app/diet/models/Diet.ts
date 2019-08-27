@@ -6,13 +6,18 @@ import {Client} from "../../client/models/Client";
  */
 
 export class Diet implements IDiet {
+  id: number;
   meals: Meal[];
   kcal: number;
   clientId: number;
+  creationTime: Date;
+  createdBy: string;
 
   constructor() {
     this.meals = [];
     this.kcal = 0;
     this.clientId = null;
+    this.createdBy = null;
+    this.creationTime = null;
   }
 }

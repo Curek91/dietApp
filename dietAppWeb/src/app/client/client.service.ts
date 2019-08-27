@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {AuthService} from '../auth/auth.service';
 import {Client} from './models/Client';
 import {Observable} from 'rxjs/Rx';
+import {Diet} from "../diet/models/Diet";
 
 @Injectable({
   providedIn: 'root'
@@ -34,5 +35,9 @@ export class ClientService {
 
   modifyClient(data): Observable<Client> {
     return this.http.put<Client>(this.apiUrl + 'client/modify/' + data.id, data, {headers: this.headers});
+  }
+
+  getClientDiets(clientId : number): Observable<Diet[]>{
+    return this.http.get<Diet[]>(this.apiUrl + 'diets/' + clientId, {headers: this.headers});
   }
 }
