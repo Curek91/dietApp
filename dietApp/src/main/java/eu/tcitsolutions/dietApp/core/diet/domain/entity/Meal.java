@@ -1,5 +1,7 @@
 package eu.tcitsolutions.dietApp.core.diet.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import eu.tcitsolutions.dietApp.core.common.entity.BaseLogEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,7 +22,6 @@ import java.util.stream.Stream;
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
-@AllArgsConstructor
 public class Meal extends BaseLogEntity implements Serializable {
 
     @Id
@@ -28,16 +29,28 @@ public class Meal extends BaseLogEntity implements Serializable {
     @SequenceGenerator(name="meal_seq_generator", sequenceName = "meal_seq", allocationSize=1)
     @NaturalId
     private Long id;
+
+    @Column
     private int mealNo;
+
+    @Column
     private String suplements;
 
-    @OneToMany(mappedBy = "meal", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "meal", cascade = CascadeType.ALL)
     private Set<MealProduct> mealProducts = new HashSet<>();
 
     public Meal(){
     }
 
     public Meal(int mealNo, String suplements, MealProduct... mealProducts) {
+        this.mealNo = mealNo;
+        this.suplements = suplements;
+        for(MealProduct mealProduct : mealProducts) mealProduct.setMeal(this);
+        this.mealProducts = Stream.of(mealProducts).collect(Collectors.toSet());
+    }
+
+    public Meal(Long id, int mealNo, String suplements, MealProduct... mealProducts) {
+        this.id = id;
         this.mealNo = mealNo;
         this.suplements = suplements;
         for(MealProduct mealProduct : mealProducts) mealProduct.setMeal(this);

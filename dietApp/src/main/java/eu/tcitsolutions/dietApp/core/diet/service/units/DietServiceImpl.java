@@ -30,12 +30,6 @@ public class DietServiceImpl implements DietService {
     private DietRepository dietRepository;
 
     @Autowired
-    private MealRepository mealRepository;
-
-    @Autowired
-    private ProductRepository productRepository;
-
-    @Autowired
     DTOMappingService dtoMappingService;
 
     @Override
@@ -51,7 +45,6 @@ public class DietServiceImpl implements DietService {
     @Override
     public Diet saveDiet(DietDTO source) {
        return dietRepository.save(dtoMappingService.createEntity(source));
-       //return dietRepository.save(source);
     }
 
     @Override
@@ -59,8 +52,8 @@ public class DietServiceImpl implements DietService {
         dietRepository.delete(id);
     }
 
-/*    @Override
+    @Override
     public void updateDiet(Long id, DietDTO source) {
         dietRepository.update(dtoMappingService.createEntity(id ,source));
-    }*/
+    }
 }

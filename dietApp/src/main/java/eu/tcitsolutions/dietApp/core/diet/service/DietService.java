@@ -18,10 +18,6 @@ public interface DietService {
 
     public void removeDiet(Long id);
 
-/*
     public void updateDiet(Long id, DietDTO source);
-*/
-
-    /*    void init();*/
 
 }
