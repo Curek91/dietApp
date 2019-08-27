@@ -55,4 +55,8 @@ export class DietService {
   addDiet(data): Observable<Diet> {
     return this.http.post<Diet>(this.apiUrl + 'diet/create', data, {headers: this.headers});
   }
+
+  deleteDiet(id: number): any {
+    return this.http.delete<any>(this.apiUrl + 'diet/delete/' + id, {headers: this.headers});
+  }
 }

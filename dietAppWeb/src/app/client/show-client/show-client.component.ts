@@ -19,6 +19,7 @@ export class ShowClientComponent implements OnInit {
   showTrainings: boolean;
   showNewDiet: boolean;
   diets: Diet[] = new Array();
+  dietToDelete: number;
 
   constructor(private formBuilder: FormBuilder,
               private clientService: ClientService,
@@ -97,5 +98,15 @@ export class ShowClientComponent implements OnInit {
         telephone: [client.telephone, Validators.required]
       });
     });
+  }
+
+  deleteDiet(id: number): void {
+    this.dietService.deleteDiet(id).subscribe((response) => {
+      this.loadClientDiets();
+    });
+  }
+
+  setDietToDelete(id: number): void{
+    this.dietToDelete = id;
   }
 }
