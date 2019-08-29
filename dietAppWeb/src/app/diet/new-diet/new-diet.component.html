@@ -3,6 +3,7 @@
   <div class="table">
     <div class="row">
       <div class="col-sm-6" style="height: 100%">
+        <p>Diet id {{dietId}}</p>
         <div class="row dietRow" [ngClass]="{'active-row': mealOnDiet.mealNo == activeMeal}" *ngFor="let mealOnDiet of diet.meals" (click)="setActiveMeal(mealOnDiet.mealNo)"
              dnd-droppable (onDropSuccess)="moveToMeal($event, mealOnDiet.mealNo)">
           <div class="col-sm-1">
@@ -62,7 +63,6 @@
         </div>
         <div class="row">
           <div class="col-sm-12 center-block">
-             <p>Diet id {{dietId}}</p>
             <button *ngIf="diet.meals && diet.meals.length > 0" type="button" class="btn btn-sm btn-danger addDietBtn text-center" (click)="deleteMeal()">Usuń posiłek</button>
             <button type="button" class="btn btn-sm btn-success addDietBtn center" (click)="addMeal()">Dodaj posiłek</button>
             <button *ngIf="diet.meals && diet.meals.length > 0 && dietId == null" type="button" (click)="addDiet()" class="btn btn-sm btn-success addDietBtn text-right">Zapisz Diete</button>
@@ -99,11 +99,6 @@
 <div class="row">
   <div class="col-sm-12 text-center">
     Copyright by Curek, 2018
-  </div>
-  <div class="box box-default">
-    <code>
-      <pre>{{diet | json}}</pre>
-    </code>
   </div>
 </div>
 
