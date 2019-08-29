@@ -13,6 +13,7 @@ export class Product implements IProduct {
   fat: number;
   kcal: number;
   weight: number;
+  sortNo: number;
 
   constructor(product: Product) {
     this.id = product.id;
@@ -23,5 +24,6 @@ export class Product implements IProduct {
     this.fat = product.fat;
     this.kcal = product.kcal;
     this.weight = product.weight;
+    this.sortNo = product.sortNo;
   }
 }

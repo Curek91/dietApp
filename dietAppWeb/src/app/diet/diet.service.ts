@@ -6,6 +6,7 @@ import 'rxjs/add/operator/map';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {AuthService} from '../auth/auth.service';
 import {Diet} from "./models/Diet";
+import {Client} from "../client/models/Client";
 
 @Injectable()
 export class DietService {
@@ -24,6 +25,10 @@ export class DietService {
 
   getProducts(): Observable<Product[]> {
     return this.http.get<Product[]>(this.apiUrl + 'products', {headers: this.headers});
+  }
+
+  getDiet(id: number): Observable<Diet>{
+    return this.http.get<Diet>(this.apiUrl + 'diet/' + id, {headers: this.headers});
   }
 
   getProduct(id: number): Observable<Product> {
@@ -58,5 +63,9 @@ export class DietService {
 
   deleteDiet(id: number): any {
     return this.http.delete<any>(this.apiUrl + 'diet/delete/' + id, {headers: this.headers});
+  }
+
+  modifyDiet(data): Observable<Diet> {
+    return this.http.put<Diet>(this.apiUrl + 'diet/modify/' + data.id, data, {headers: this.headers});
   }
 }

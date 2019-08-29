@@ -63,7 +63,7 @@
             <span >Diety</span>
           </div>
           <div class="col-sm-2">
-            <button class="btn btn-sm btn-success" (click)="showNewDiet = !showNewDiet">Dodaj Diete</button>
+            <button class="btn btn-sm btn-success" (click)="createNewDiet()">Utwórz nową diete</button>
           </div>
         </div>
       </h3>
@@ -84,9 +84,9 @@
           </thead>
           <tbody>
           <tr *ngFor="let clientDiet of diets">
-            <td >{{clientDiet.id}}</td>
-            <td >{{clientDiet.createdBy}}</td>
-            <td >{{clientDiet.creationTime}} </td>
+            <td (click)="setDietId(clientDiet.id)">{{clientDiet.id}}</td>
+            <td (click)="setDietId(clientDiet.id)">{{clientDiet.createdBy}}</td>
+            <td (click)="setDietId(clientDiet.id)">{{clientDiet.creationTime}} </td>
             <td><button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal" (click)="setDietToDelete(clientDiet.id)">Usuń</button></td>
 
             <div class="modal fade" tabindex="-1" role="dialog" id="deleteModal">
@@ -109,11 +109,9 @@
           </tbody>
         </table>
       </div>
+      <app-new-diet #newDietRef [clientId]="route.snapshot.params['id']" [dietId]="dietIdToModify"></app-new-diet>
     </div>
   </div>
-
-<app-new-diet *ngIf="showNewDiet" [clientId]="route.snapshot.params['id']"></app-new-diet>
-
 </div>
 
 

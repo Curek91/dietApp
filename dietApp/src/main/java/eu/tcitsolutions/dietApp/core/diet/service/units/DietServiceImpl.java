@@ -32,14 +32,20 @@ public class DietServiceImpl implements DietService {
     @Autowired
     DTOMappingService dtoMappingService;
 
+    @Autowired
+    private MealRepository mealRepository;
+
     @Override
     public List<Diet> getDiets(Long clientId) {
         return dietRepository.getDiets(clientId);
     }
 
     @Override
-    public Diet getDiet(Long id) {
-        return dietRepository.getDiet(id);
+    public DietDTO getDiet(Long id) {
+
+
+        DietDTO dietDTO = dtoMappingService.createDTO(dietRepository.getDiet(id));
+        return dietDTO;
     }
 
     @Override

@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ClientService} from '../client.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Client} from '../models/Client';
 import {Diet} from "../../diet/models/Diet";
 import {DietService} from "../../diet/diet.service";
+import {NewDietComponent} from "../../diet/new-diet/new-diet.component";
 
 @Component({
   selector: 'app-show-client',
@@ -13,6 +14,8 @@ import {DietService} from "../../diet/diet.service";
 })
 export class ShowClientComponent implements OnInit {
 
+  @ViewChild("newDietRef") newDietRef : NewDietComponent;
+
   clientForm: FormGroup;
   showInfo: boolean;
   showDiets: boolean;
@@ -20,6 +23,8 @@ export class ShowClientComponent implements OnInit {
   showNewDiet: boolean;
   diets: Diet[] = new Array();
   dietToDelete: number;
+
+  dietIdToModify: number;
 
   constructor(private formBuilder: FormBuilder,
               private clientService: ClientService,
@@ -108,5 +113,16 @@ export class ShowClientComponent implements OnInit {
 
   setDietToDelete(id: number): void{
     this.dietToDelete = id;
+  }
+
+  setDietId(dietId: number): void{
+    this.dietIdToModify = dietId;
+    this.newDietRef.getDiet();
+  }
+
+  createNewDiet(): void{
+    this.dietIdToModify = null;
+    this.showDiets = true;
+    this.newDietRef.clearNewDiet();
   }
 }

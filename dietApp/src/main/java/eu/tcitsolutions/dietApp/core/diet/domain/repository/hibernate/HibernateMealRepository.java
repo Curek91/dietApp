@@ -35,7 +35,8 @@ public class HibernateMealRepository implements MealRepository {
     }
 
     @Override
-    public void delete(Meal meal) {
+    public void delete(Meal meal)
+    {
         entityManager.remove(meal);
     }
 
@@ -47,5 +48,12 @@ public class HibernateMealRepository implements MealRepository {
     @Override
     public void update(Meal meal) {
         entityManager.merge(meal);
+    }
+
+    @Override
+    public void delete(Long mealId, Long dietId)
+    {
+        String hql = "delete from diet_meal where diet_id = :diet_id";
+        entityManager.createQuery(hql).setParameter("diet_id", dietId).executeUpdate();
     }
 }

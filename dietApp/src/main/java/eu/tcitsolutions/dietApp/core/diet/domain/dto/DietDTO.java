@@ -9,13 +9,47 @@ import lombok.NoArgsConstructor;
 import java.util.Set;
 
 @Builder
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
 public class DietDTO {
 
     private Set<MealDTO> meals;
     private Double kcal;
     private Long clientId;
 
+    public DietDTO() {
+    }
+
+    public DietDTO(Set<MealDTO> meals, Double kcal, Long clientId) {
+        this.meals = meals;
+        this.kcal = kcal;
+        this.clientId = clientId;
+    }
+
+    public DietDTO(Set<MealDTO> meals, Long clientId) {
+        this.meals = meals;
+        this.clientId = clientId;
+    }
+
+    public Set<MealDTO> getMeals() {
+        return meals;
+    }
+
+    public void setMeals(Set<MealDTO> meals) {
+        this.meals = meals;
+    }
+
+    public Double getKcal() {
+        return kcal;
+    }
+
+    public void setKcal(Double kcal) {
+        this.kcal = kcal;
+    }
+
+    public Long getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(Long clientId) {
+        this.clientId = clientId;
+    }
 }

@@ -17,6 +17,7 @@ public interface DTOMappingService {
     public MealDTO createDTO(Meal source);
 
     public ProductDTO createDTO(Product source);
+    public ProductDTO createDTO(Product source, int weight, Long sortNo);
 
     public TypeDTO createDTO(Type source);
 

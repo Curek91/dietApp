@@ -58,17 +58,22 @@ public class DTOMappingServiceImpl implements DTOMappingService, ApplicationCont
 
     @Override
     public DietDTO createDTO(Diet source){
-        return new DietDTO(source.getMeals().stream().map(meal -> createDTO(meal)).collect(Collectors.toSet()), 0.0, null);
+        return new DietDTO(source.getMeals().stream().map(meal -> createDTO(meal)).collect(Collectors.toSet()), 0.0, source.getClient().getId());
     }
 
     @Override
     public MealDTO createDTO(Meal source){
-        return new MealDTO(source.getMealProducts().stream().map(prod -> createDTO(prod.getProduct())).collect(Collectors.toSet()), source.getMealNo(), 0,source.getSuplements());
+        return new MealDTO(source.getMealProducts().stream().map(prod -> createDTO(prod.getProduct(), prod.getWeight(), prod.getId())).collect(Collectors.toSet()), source.getMealNo(), 0,source.getSuplements());
     }
 
     @Override
     public ProductDTO createDTO(Product source) {
         return new ProductDTO(createDTO(source.getType()), source.getName(), source.getProtein(), source.getCarbs(), source.getFat(), source.getKcal());
+    }
+
+    @Override
+    public ProductDTO createDTO(Product source, int weight, Long sortNo) {
+        return new ProductDTO(source.getId(), createDTO(source.getType()), source.getName(), source.getProtein(), source.getCarbs(), source.getFat(), source.getKcal(), weight, sortNo);
     }
 
     @Override

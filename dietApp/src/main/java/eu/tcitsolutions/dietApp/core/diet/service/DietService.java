@@ -12,7 +12,7 @@ import java.util.List;
 public interface DietService {
     public List<Diet> getDiets(Long clientId);
 
-    public Diet getDiet(Long id);
+    public DietDTO getDiet(Long id);
 
     public Diet saveDiet(DietDTO source);
 

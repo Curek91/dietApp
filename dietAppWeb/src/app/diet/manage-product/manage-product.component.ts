@@ -36,7 +36,8 @@ export class ManageProductComponent implements OnInit {
           carbs: product.carbs,
           fat: product.fat,
           kcal: product.kcal,
-          weight: 0
+          weight: 0,
+          sortNo: null
         };
         this.products.push(prodTemp);
       });

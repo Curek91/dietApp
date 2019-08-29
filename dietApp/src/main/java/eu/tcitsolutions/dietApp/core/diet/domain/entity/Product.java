@@ -16,9 +16,6 @@ import java.util.stream.Stream;
 
 @Entity(name = "product")
 @EntityListeners(AuditingEntityListener.class)
-@Getter
-@Setter
-@NoArgsConstructor
 public class Product extends BaseLogEntity implements Serializable {
 
     @Id
@@ -42,7 +39,6 @@ public class Product extends BaseLogEntity implements Serializable {
         this.fat = fat;
         this.kcal = kcal;
         this.type = type;
-
     }
 
     public Product(Long id, String name, Long protein, Long carbs, Long fat, Long kcal, Type type) {
@@ -52,6 +48,65 @@ public class Product extends BaseLogEntity implements Serializable {
         this.carbs = carbs;
         this.fat = fat;
         this.kcal = kcal;
+        this.type = type;
+    }
+
+    public Product() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Long getProtein() {
+        return protein;
+    }
+
+    public void setProtein(Long protein) {
+        this.protein = protein;
+    }
+
+    public Long getCarbs() {
+        return carbs;
+    }
+
+    public void setCarbs(Long carbs) {
+        this.carbs = carbs;
+    }
+
+    public Long getFat() {
+        return fat;
+    }
+
+    public void setFat(Long fat) {
+        this.fat = fat;
+    }
+
+    public Long getKcal() {
+        return kcal;
+    }
+
+    public void setKcal(Long kcal) {
+        this.kcal = kcal;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
         this.type = type;
     }
 }

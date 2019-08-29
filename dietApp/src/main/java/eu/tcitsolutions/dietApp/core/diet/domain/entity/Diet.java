@@ -15,8 +15,6 @@ import java.util.Set;
 
 @Entity(name="diet")
 @EntityListeners(AuditingEntityListener.class)
-@Getter
-@Setter
 public class Diet extends BaseLogEntity implements Serializable {
 
     @Id
@@ -28,7 +26,7 @@ public class Diet extends BaseLogEntity implements Serializable {
     @OneToOne
     private Client client;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL)
     private Set<Meal> meals;
 
     public Diet(){
@@ -47,9 +45,37 @@ public class Diet extends BaseLogEntity implements Serializable {
         this.client = client;
     }
 
+    public Diet(Client client, Set<Meal> meals) {
+        this.client = client;
+        this.meals = meals;
+    }
+
     public void addMeal(Meal meal){
         meals.add(meal);
     }
 
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public Set<Meal> getMeals() {
+        return meals;
+    }
+
+    public void setMeals(Set<Meal> meals) {
+        this.meals = meals;
+    }
 }

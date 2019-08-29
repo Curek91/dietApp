@@ -62,9 +62,11 @@
         </div>
         <div class="row">
           <div class="col-sm-12 center-block">
+             <p>Diet id {{dietId}}</p>
             <button *ngIf="diet.meals && diet.meals.length > 0" type="button" class="btn btn-sm btn-danger addDietBtn text-center" (click)="deleteMeal()">Usuń posiłek</button>
             <button type="button" class="btn btn-sm btn-success addDietBtn center" (click)="addMeal()">Dodaj posiłek</button>
-            <button *ngIf="diet.meals && diet.meals.length > 0" type="button" (click)="addDiet()" class="btn btn-sm btn-success addDietBtn text-right">Zapisz Diete</button>
+            <button *ngIf="diet.meals && diet.meals.length > 0 && dietId == null" type="button" (click)="addDiet()" class="btn btn-sm btn-success addDietBtn text-right">Zapisz Diete</button>
+            <button *ngIf="diet.meals && diet.meals.length > 0 && dietId != null" type="button" (click)="modifyDiet()" class="btn btn-sm btn-success addDietBtn text-right">Aktualizuj diete</button>
           </div>
         </div>
       </div>

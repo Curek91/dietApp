@@ -11,8 +11,6 @@ import java.io.Serializable;
 
 @Entity(name = "type")
 @EntityListeners(AuditingEntityListener.class)
-@Getter
-@NoArgsConstructor
 public class Type extends BaseLogEntity implements Serializable {
 
     @Id
@@ -30,6 +28,25 @@ public class Type extends BaseLogEntity implements Serializable {
     }
 
     public Type(String name){
+        this.name = name;
+    }
+
+    public Type() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
         this.name = name;
     }
 }

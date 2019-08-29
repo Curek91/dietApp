@@ -10,10 +10,6 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "meal_product")
 public class MealProduct implements Serializable {
@@ -23,7 +19,7 @@ public class MealProduct implements Serializable {
     @SequenceGenerator(name="meal_prod_seq_generator", sequenceName = "meal_prod_seq", allocationSize=1)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn
     @JsonIgnore
     private Meal meal;
@@ -46,6 +42,9 @@ public class MealProduct implements Serializable {
         this.weight = weight;
     }
 
+    public MealProduct() {
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -59,5 +58,37 @@ public class MealProduct implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(meal.getMealNo(), product.getName(), weight);
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Meal getMeal() {
+        return meal;
+    }
+
+    public void setMeal(Meal meal) {
+        this.meal = meal;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
     }
 }

@@ -20,8 +20,6 @@ import java.util.stream.Stream;
 
 @Entity(name = "meal")
 @EntityListeners(AuditingEntityListener.class)
-@Getter
-@Setter
 public class Meal extends BaseLogEntity implements Serializable {
 
     @Id
@@ -57,7 +55,45 @@ public class Meal extends BaseLogEntity implements Serializable {
         this.mealProducts = Stream.of(mealProducts).collect(Collectors.toSet());
     }
 
+    public Meal(int mealNo, String suplements, Set<MealProduct> mealProducts) {
+        this.mealNo = mealNo;
+        this.suplements = suplements;
+        this.mealProducts = mealProducts;
+    }
+
     public void addProduct(Product product, int weight){
         this.mealProducts.add(new MealProduct(this, product, weight));
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public int getMealNo() {
+        return mealNo;
+    }
+
+    public void setMealNo(int mealNo) {
+        this.mealNo = mealNo;
+    }
+
+    public String getSuplements() {
+        return suplements;
+    }
+
+    public void setSuplements(String suplements) {
+        this.suplements = suplements;
+    }
+
+    public Set<MealProduct> getMealProducts() {
+        return mealProducts;
+    }
+
+    public void setMealProducts(Set<MealProduct> mealProducts) {
+        this.mealProducts = mealProducts;
     }
 }

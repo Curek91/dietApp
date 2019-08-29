@@ -14,8 +14,10 @@ import {IProduct} from '../models/IProduct';
 export class NewDietComponent implements OnInit {
 
   @Input() clientId : number;
+  @Input() dietId : number;
 
   diet: Diet = new Diet();
+  oldDiet: Diet = new Diet();
   products: Product[] = new Array();
   activeMeal: number;
   filter: String = '';
@@ -27,6 +29,7 @@ export class NewDietComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log("INIT");
     this.loadProducts();
     this.loadProductTypes();
   }
@@ -61,7 +64,8 @@ export class NewDietComponent implements OnInit {
           carbs: product.carbs,
           fat: product.fat,
           kcal: product.kcal,
-          weight: 0
+          weight: 0,
+          sortNo: null
         };
         this.products.push(prodTemp);
       });
@@ -69,16 +73,16 @@ export class NewDietComponent implements OnInit {
   }
 
   addToMeal(product: Product): void {
-    console.log('productTypeSelected: ' + this.productTypeSelected);
+    //console.log('productTypeSelected: ' + this.productTypeSelected);
     const prod: Product = new Product(product);
     this.diet.meals[this.activeMeal - 1].products.push(prod);
   }
 
   moveToMeal($event: any, id: number) {
-    console.log(id);
-    console.log(this.diet);
+    //console.log(id);
+    //console.log(this.diet);
     const prod: Product = new Product($event.dragData);
-    console.log(prod.name);
+    //console.log(prod.name);
     this.diet.meals[id - 1].products.push(prod);
 
   }
@@ -203,8 +207,8 @@ export class NewDietComponent implements OnInit {
   }
 
   addDiet() {
-    console.log(this.diet);
-    console.log("----------------------" + this.clientId);
+   // console.log(this.diet);
+   // console.log("----------------------" + this.clientId);
     this.diet.clientId = this.clientId;
     this.dietService.addDiet(this.diet).subscribe((diet) => {
       console.log('dodaje diet');
@@ -215,4 +219,42 @@ export class NewDietComponent implements OnInit {
     // this.diet.meals[this.activeMeal - 1].suplements = this.suplements;
     console.log('Suplementy dla posilku ' + this.activeMeal + ': ' + this.diet.meals[this.activeMeal - 1].suplements);
   }
+
+  clearNewDiet(): void{
+    this.diet = new Diet();
+    this.activeMeal = 0;
+  }
+
+  getDiet(): void {
+    this.dietService.getDiet(this.dietId).subscribe((diet) => {
+        diet.meals.sort((leftSide, rightSide) : number => {
+          if (leftSide.mealNo < rightSide.mealNo) return -1;
+          if (leftSide.mealNo > rightSide.mealNo) return 1;
+          return 0;
+        });
+        diet.meals.forEach((meal) => {
+          meal.products.sort((leftSide, rightSide) : number => {
+            if (leftSide.sortNo < rightSide.sortNo) return -1;
+            if (leftSide.sortNo > rightSide.sortNo) return 1;
+            return 0;
+          });
+        });
+        console.log('dietId: ' + diet.id);
+        console.log('sortNO: ' + diet.meals[0].products[0].sortNo);
+        console.log(diet);
+        this.diet = diet;
+      }
+    )}
+
+  modifyDiet() {
+    // console.log(this.diet);
+    // console.log("----------------------" + this.clientId);
+    this.diet.id = this.dietId;
+    console.log("DIETA:");
+    console.log(this.diet);
+    this.dietService.modifyDiet(this.diet).subscribe(() => {
+      console.log('modyfikuje diete');
+    });
+  }
+
 }
