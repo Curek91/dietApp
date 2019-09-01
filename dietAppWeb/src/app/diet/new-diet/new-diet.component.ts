@@ -207,8 +207,6 @@ export class NewDietComponent implements OnInit {
   }
 
   addDiet() {
-   // console.log(this.diet);
-   // console.log("----------------------" + this.clientId);
     this.diet.clientId = this.clientId;
     this.dietService.addDiet(this.diet).subscribe((diet) => {
       console.log('dodaje diet');
@@ -239,19 +237,12 @@ export class NewDietComponent implements OnInit {
             return 0;
           });
         });
-        console.log('dietId: ' + diet.id);
-        console.log('sortNO: ' + diet.meals[0].products[0].sortNo);
-        console.log(diet);
         this.diet = diet;
       }
     )}
 
   modifyDiet() {
-    // console.log(this.diet);
-    // console.log("----------------------" + this.clientId);
     this.diet.id = this.dietId;
-    console.log("DIETA:");
-    console.log(this.diet);
     this.dietService.modifyDiet(this.diet).subscribe(() => {
       console.log('modyfikuje diete');
     });

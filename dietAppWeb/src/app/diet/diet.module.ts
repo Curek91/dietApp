@@ -14,6 +14,7 @@ import {AngularFontAwesomeModule} from 'angular-font-awesome';
 import {AngularFileUploaderModule} from 'angular-file-uploader';
 import {DndModule, DraggableComponent, DraggableHandleComponent} from 'ng2-dnd';
 import {AppComponent} from '../app.component';
+import {ModalModule} from "angular-custom-modal";
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import {AppComponent} from '../app.component';
     ReactiveFormsModule,
     AngularFontAwesomeModule,
     AngularFileUploaderModule,
-    DndModule.forRoot()
+    DndModule.forRoot(),
+    ModalModule
   ],
   bootstrap: [AppComponent],
   providers: [CanActivateAuthGuard],
