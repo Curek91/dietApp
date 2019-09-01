@@ -109,7 +109,7 @@
           </tbody>
         </table>
       </div>
-      <app-new-diet #newDietRef [clientId]="route.snapshot.params['id']" [dietId]="dietIdToModify"></app-new-diet>
+      <app-new-diet #newDietRef [clientId]="route.snapshot.params['id']" [dietId]="dietIdToModify" [oldDiets]="diets"></app-new-diet>
     </div>
   </div>
 </div>

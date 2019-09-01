@@ -5,6 +5,7 @@ import {DietService} from '../diet.service';
 import {Meal} from '../models/Meal';
 import {ProductType} from '../models/ProductType';
 import {IProduct} from '../models/IProduct';
+import {ClientService} from "../../client/client.service";
 
 @Component({
   selector: 'app-new-diet',
@@ -15,6 +16,7 @@ export class NewDietComponent implements OnInit {
 
   @Input() clientId : number;
   @Input() dietId : number;
+  @Input() oldDiets: Diet[];
 
   diet: Diet = new Diet();
   oldDiet: Diet = new Diet();
@@ -25,7 +27,7 @@ export class NewDietComponent implements OnInit {
   types: ProductType[] = new Array();
   suplements: string = '';
 
-  constructor(private dietService: DietService) {
+  constructor(private dietService: DietService, private clientService: ClientService) {
   }
 
   ngOnInit() {
@@ -73,16 +75,12 @@ export class NewDietComponent implements OnInit {
   }
 
   addToMeal(product: Product): void {
-    //console.log('productTypeSelected: ' + this.productTypeSelected);
     const prod: Product = new Product(product);
     this.diet.meals[this.activeMeal - 1].products.push(prod);
   }
 
   moveToMeal($event: any, id: number) {
-    //console.log(id);
-    //console.log(this.diet);
     const prod: Product = new Product($event.dragData);
-    //console.log(prod.name);
     this.diet.meals[id - 1].products.push(prod);
 
   }
@@ -127,6 +125,8 @@ export class NewDietComponent implements OnInit {
   }
 
   getProteinsForMeal(meal: Meal): number {
+    if (meal == null)
+      return null;
     if (meal.products.length > 0) {
       return meal.products
         .map((product) => +product.protein * (product.weight / 100))
@@ -137,6 +137,8 @@ export class NewDietComponent implements OnInit {
   }
 
   getCarbsForMeal(meal: Meal): number {
+    if (meal == null)
+      return null;
     if (meal.products.length > 0) {
       return meal.products
         .map((product) => +product.carbs  * (product.weight / 100))
@@ -147,6 +149,8 @@ export class NewDietComponent implements OnInit {
   }
 
   getFatsForMeal(meal: Meal): number {
+    if (meal == null)
+      return null;
     if (meal.products.length > 0) {
       return meal.products
         .map((product) => +product.fat  * (product.weight / 100))
@@ -157,6 +161,8 @@ export class NewDietComponent implements OnInit {
   }
 
   getEnergyForMeal(meal: Meal): number {
+    if (meal == null)
+      return null;
     if (meal.products.length > 0) {
       return meal.products
         .map((product) => +product.kcal * (product.weight / 100))
@@ -166,9 +172,9 @@ export class NewDietComponent implements OnInit {
     }
   }
 
-  getProteinsForDiet(): number {
-    if (this.diet.meals.length > 0) {
-      return this.diet.meals
+  getProteinsForDiet(diet: Diet): number {
+    if (diet.meals.length > 0) {
+      return diet.meals
         .map((meal) => +this.getProteinsForMeal(meal))
         .reduce((prev, next) => prev + next);
     } else {
@@ -176,9 +182,9 @@ export class NewDietComponent implements OnInit {
     }
   }
 
-  getCarbsForDiet(): number {
-    if (this.diet.meals.length > 0) {
-      return this.diet.meals
+  getCarbsForDiet(diet: Diet): number {
+    if (diet.meals.length > 0) {
+      return diet.meals
         .map((meal) => +this.getCarbsForMeal(meal))
         .reduce((prev, next) => prev + next);
     } else {
@@ -186,9 +192,9 @@ export class NewDietComponent implements OnInit {
     }
   }
 
-  getFatsForDiet(): number {
-    if (this.diet.meals.length > 0) {
-      return this.diet.meals
+  getFatsForDiet(diet: Diet): number {
+    if (diet.meals.length > 0) {
+      return diet.meals
         .map((meal) => +this.getFatsForMeal(meal))
         .reduce((prev, next) => prev + next);
     } else {
@@ -196,9 +202,9 @@ export class NewDietComponent implements OnInit {
     }
   }
 
-  getEnergyForDiet(): number {
-    if (this.diet.meals.length > 0) {
-      return this.diet.meals
+  getEnergyForDiet(diet: Diet): number {
+    if (diet.meals.length > 0) {
+      return diet.meals
         .map((meal) => +this.getEnergyForMeal(meal))
         .reduce((prev, next) => prev + next);
     } else {
@@ -238,7 +244,9 @@ export class NewDietComponent implements OnInit {
           });
         });
         this.diet = diet;
+        this.activeMeal = 1;
       }
+
     )}
 
   modifyDiet() {
@@ -247,5 +255,43 @@ export class NewDietComponent implements OnInit {
       console.log('modyfikuje diete');
     });
   }
+
+  getOldDiet(value): void {
+
+    if (!value){
+      this.oldDiet = null;
+      return;
+    }
+
+    console.log("Diet id: " + value);
+    this.dietService.getDiet(value).subscribe((diet) => {
+        diet.meals.sort((leftSide, rightSide) : number => {
+          if (leftSide.mealNo < rightSide.mealNo) return -1;
+          if (leftSide.mealNo > rightSide.mealNo) return 1;
+          return 0;
+        });
+        diet.meals.forEach((meal) => {
+          meal.products.sort((leftSide, rightSide) : number => {
+            if (leftSide.sortNo < rightSide.sortNo) return -1;
+            if (leftSide.sortNo > rightSide.sortNo) return 1;
+            return 0;
+          });
+        });
+        this.oldDiet = diet;
+      }
+
+    )}
+
+    getMealOnOldDiet(mealNo: number): Meal {
+      let meal: Meal;
+      if (this.oldDiet) {
+        meal = this.oldDiet.meals.find(meal => meal.mealNo == mealNo);
+        return meal;
+      } else {
+        return null;
+      }
+    }
+
+
 
 }
