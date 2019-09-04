@@ -42,8 +42,6 @@ public class DietServiceImpl implements DietService {
 
     @Override
     public DietDTO getDiet(Long id) {
-
-
         DietDTO dietDTO = dtoMappingService.createDTO(dietRepository.getDiet(id));
         return dietDTO;
     }

@@ -40,4 +40,8 @@ export class ClientService {
   getClientDiets(clientId : number): Observable<Diet[]>{
     return this.http.get<Diet[]>(this.apiUrl + 'diets/' + clientId, {headers: this.headers});
   }
+
+  sendEmail(dietId): Observable<Diet>{
+    return this.http.post<Diet>(this.apiUrl + 'api/sendEmail', dietId, {headers: this.headers});
+  }
 }

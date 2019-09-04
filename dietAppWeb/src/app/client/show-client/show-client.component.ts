@@ -31,8 +31,7 @@ export class ShowClientComponent implements OnInit {
               private clientService: ClientService,
               private dietService: DietService,
               private router: Router,
-              private route: ActivatedRoute,
-              private modalService: ModalModule) { }
+              private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.showInfo = true;
@@ -122,5 +121,11 @@ export class ShowClientComponent implements OnInit {
     this.dietIdToModify = null;
     this.showDiets = true;
     this.newDietRef.clearNewDiet();
+  }
+
+  sendEmail(dietId: number){
+    this.clientService.sendEmail(dietId).subscribe(() => {
+      console.log('Wysyłam maila');
+    });
   }
 }
