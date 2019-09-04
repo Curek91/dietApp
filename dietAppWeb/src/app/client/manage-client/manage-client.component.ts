@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Client} from '../models/Client';
 import {ClientService} from '../client.service';
+import {ModalComponent} from "angular-custom-modal";
 
 @Component({
   selector: 'app-manage-client',
@@ -12,6 +13,7 @@ export class ManageClientComponent implements OnInit {
   clients: Client[] = new Array();
   filter: String = '';
   clientToDelete: number;
+
 
   constructor(private clientService: ClientService) {
   }
@@ -46,10 +48,4 @@ export class ManageClientComponent implements OnInit {
       this.loadClients();
     });
   }
-
-  setClientToDelete(id: number): void{
-    this.clientToDelete = id;
-  }
-
-
 }

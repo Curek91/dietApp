@@ -7,6 +7,7 @@ import { NewClientComponent } from './new-client/new-client.component';
 import { ShowClientComponent } from './show-client/show-client.component';
 import {AngularFontAwesomeModule} from 'angular-font-awesome';
 import {DietModule} from "../diet/diet.module";
+import {ModalModule} from "angular-custom-modal";
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import {DietModule} from "../diet/diet.module";
     RouterModule,
     ReactiveFormsModule,
     AngularFontAwesomeModule,
-    DietModule
+    DietModule,
+    ModalModule
   ],
   declarations: [ManageClientComponent, NewClientComponent, ShowClientComponent]
 })

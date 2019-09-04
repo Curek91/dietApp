@@ -219,11 +219,6 @@ export class NewDietComponent implements OnInit {
     });
   }
 
-  addSuplements(): void {
-    // this.diet.meals[this.activeMeal - 1].suplements = this.suplements;
-    console.log('Suplementy dla posilku ' + this.activeMeal + ': ' + this.diet.meals[this.activeMeal - 1].suplements);
-  }
-
   clearNewDiet(): void{
     this.diet = new Diet();
     this.activeMeal = 0;

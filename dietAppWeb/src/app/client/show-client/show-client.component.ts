@@ -6,6 +6,7 @@ import {Client} from '../models/Client';
 import {Diet} from "../../diet/models/Diet";
 import {DietService} from "../../diet/diet.service";
 import {NewDietComponent} from "../../diet/new-diet/new-diet.component";
+import {ModalComponent, ModalModule} from "angular-custom-modal";
 
 @Component({
   selector: 'app-show-client',
@@ -15,6 +16,7 @@ import {NewDietComponent} from "../../diet/new-diet/new-diet.component";
 export class ShowClientComponent implements OnInit {
 
   @ViewChild("newDietRef") newDietRef : NewDietComponent;
+  @ViewChild("deleteDietModal") deleteDietModal: ModalComponent;
 
   clientForm: FormGroup;
   showInfo: boolean;
@@ -22,7 +24,6 @@ export class ShowClientComponent implements OnInit {
   showTrainings: boolean;
   showNewDiet: boolean;
   diets: Diet[] = new Array();
-  dietToDelete: number;
 
   dietIdToModify: number;
 
@@ -30,7 +31,8 @@ export class ShowClientComponent implements OnInit {
               private clientService: ClientService,
               private dietService: DietService,
               private router: Router,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private modalService: ModalModule) { }
 
   ngOnInit() {
     this.showInfo = true;
@@ -109,10 +111,6 @@ export class ShowClientComponent implements OnInit {
     this.dietService.deleteDiet(id).subscribe((response) => {
       this.loadClientDiets();
     });
-  }
-
-  setDietToDelete(id: number): void{
-    this.dietToDelete = id;
   }
 
   setDietId(dietId: number): void{

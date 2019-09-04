@@ -35,28 +35,18 @@
         <td [routerLink]="['/client', client.id]">{{client.height}}</td>
         <td [routerLink]="['/client', client.id]">{{client.email}}</td>
         <td [routerLink]="['/client', client.id]">{{client.telephone}}</td>
-        <td><button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal" (click)="setClientToDelete(client.id)">Usuń</button></td>
-
-        <div class="modal fade" tabindex="-1" role="dialog" id="deleteModal">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">Czy napewno chcesz usunąć klienta?</h5>
-                <button type="button" class="close" data-dismiss="modal">
-                  <span></span>
-                </button>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-success btn-sm" data-dismiss="modal" (click)="deleteClient(clientToDelete)">Usuń</button>
-                <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Anuluj</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
+        <td><button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal" (click)="deleteClientModal.open()">Usuń</button></td>
+        <modal #deleteClientModal>
+          <ng-template #modalHeader><h5 class="modal-title">Czy napewno chcesz usunąć klienta o id {{client.id}}?</h5></ng-template>
+          <ng-template #modalFooter>
+            <button type="button" class="btn btn-success btn-sm" data-dismiss="modal" (click)="deleteClient(client.id)">Zapisz</button>
+            <button type="button" class="btn btn-danger btn-sm" (click)="deleteClientModal.close()">Anuluj</button>
+          </ng-template>
+        </modal>
       </tr>
       </tbody>
     </table>
   </div>
 </div>
+
+

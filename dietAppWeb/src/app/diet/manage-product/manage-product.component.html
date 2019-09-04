@@ -33,33 +33,27 @@
       <td>{{product.fat}}</td>
       <td>{{product.kcal}}</td>
       <td>{{product.type.name}}</td>
-      <td><button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal">Usuń</button></td>
-
-      <div class="modal fade" tabindex="-1" role="dialog" id="deleteModal">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Czy napewno chcesz usunąć produkt?</h5>
-              <button type="button" class="close" data-dismiss="modal">
-                <span></span>
-              </button>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-success btn-sm" data-dismiss="modal" (click)="deleteProduct(product.id)">Usuń</button>
-              <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Anuluj</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
+      <td><button class="btn btn-sm btn-danger" (click)="deleteProductModal.open()">Usuń</button></td>
+      <modal #deleteProductModal>
+        <ng-template #modalHeader><h5 class="modal-title">Czy napewno chcesz usunąć produkt o id {{product.id}}?</h5></ng-template>
+        <ng-template #modalFooter>
+          <button type="button" class="btn btn-success btn-sm" data-dismiss="modal" (click)="deleteProduct(product.id)">Usuń</button>
+          <button type="button" class="btn btn-danger btn-sm" (click)="deleteProductModal.close()">Anuluj</button>
+        </ng-template>
+      </modal>
     </tr>
     </tbody>
   </table>
   </div>
 </div>
 
-
+<modal #deleteProductModal>
+  <ng-template #modalHeader><h5 class="modal-title">Czy napewno chcesz zapisać klienta?</h5></ng-template>
+  <ng-template #modalFooter>
+    <button type="button" class="btn btn-success btn-sm" data-dismiss="modal" (click)="deleteProduct()">Zapisz</button>
+    <button type="button" class="btn btn-danger btn-sm" (click)="saveClientModal.close()">Anuluj</button>
+  </ng-template>
+</modal>
 
 
 

@@ -35,6 +35,16 @@
                 <span [ngClass]="{'greater': getCarbsForMeal(mealOnDiet) - getCarbsForMeal(getMealOnOldDiet(mealOnDiet.mealNo)) >= 0, 'lower': getCarbsForMeal(mealOnDiet) - getCarbsForMeal(getMealOnOldDiet(mealOnDiet.mealNo)) < 0}">Węglowodany: </span><br/>
                 <span [ngClass]="{'greater': getFatsForMeal(mealOnDiet) - getFatsForMeal(getMealOnOldDiet(mealOnDiet.mealNo)) >= 0, 'lower': getFatsForMeal(mealOnDiet) - getFatsForMeal(getMealOnOldDiet(mealOnDiet.mealNo)) < 0}">Tłuszcze: </span><br/>
                 <button class="btn btn-primary btn-sm" (click)="SuplModal.open()">Suplementy</button>
+                <modal #SuplModal>
+                  <ng-template #modalHeader><h5 class="modal-title">Suplementy posiłek {{mealOnDiet.mealNo}}</h5></ng-template>
+                  <ng-template #modalBody>
+                    <textarea [(ngModel)]="diet.meals[mealOnDiet.mealNo - 1].suplements" class="form-control" rows="5"></textarea>
+                  </ng-template>
+                  <ng-template #modalFooter>
+                    <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal" (click)="SuplModal.close()">Anuluj</button>
+                    <button type="button" class="btn btn-success btn-sm" data-dismiss="modal" (click)="SuplModal.close()">Zapisz</button>
+                  </ng-template>
+                </modal>
               </div>
             </div>
           </div>
@@ -110,23 +120,3 @@
     Copyright by Curek, 2018
   </div>
 </div>
-
-
-  <modal #SuplModal>
-    <ng-template #modalHeader><h5 class="modal-title">Suplementy posiłek {{activeMeal}}</h5></ng-template>
-    <ng-template #modalBody>
-      <textarea [(ngModel)]="diet.meals[activeMeal - 1].suplements" class="form-control" rows="5">
-
-        </textarea>
-    </ng-template>
-    <ng-template #modalFooter>
-      <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal" (click)="SuplModal.close()">Anuluj</button>
-      <button type="button" class="btn btn-success btn-sm" data-dismiss="modal" (click)="addSuplements()">Zapisz</button>
-    </ng-template>
-  </modal>
-
-
-
-
-
-

@@ -45,7 +45,7 @@
         <div class="row form-group">
           <div class="col-sm-12 text-right">
             <button class="btn btn-primary btn-md" style="margin-right: 2%" [disabled]="clientForm.invalid"
-                    data-toggle="modal" data-target="#saveModal">Zapisz
+                    (click)="saveClientModal.open()">Zapisz
             </button>
             <button class="btn btn-danger btn-md" type="submit" [routerLink]="['/manage-client']">Wróć</button>
           </div>
@@ -87,24 +87,14 @@
             <td (click)="setDietId(clientDiet.id)">{{clientDiet.id}}</td>
             <td (click)="setDietId(clientDiet.id)">{{clientDiet.createdBy}}</td>
             <td (click)="setDietId(clientDiet.id)">{{clientDiet.creationTime}} </td>
-            <td><button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal" (click)="setDietToDelete(clientDiet.id)">Usuń</button></td>
-
-            <div class="modal fade" tabindex="-1" role="dialog" id="deleteModal">
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title">Czy napewno chcesz usunąć dietę?</h5>
-                    <button type="button" class="close" data-dismiss="modal">
-                      <span></span>
-                    </button>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-success btn-sm" data-dismiss="modal" (click)="deleteDiet(dietToDelete)">Usuń</button>
-                    <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Anuluj</button>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <td><button class="btn btn-sm btn-danger" (click)="deleteDietModal.open()">Usuń</button></td>
+            <modal #deleteDietModal>
+              <ng-template #modalHeader><h5 class="modal-title">Czy napewno chcesz usunąć dietę o id {{clientDiet.id}}?</h5></ng-template>
+              <ng-template #modalFooter>
+                <button type="button" class="btn btn-success btn-sm" data-dismiss="modal" (click)="deleteDiet(clientDiet.id)">Usuń</button>
+                <button type="button" class="btn btn-danger btn-sm" (click)="deleteDietModal.close()">Anuluj</button>
+              </ng-template>
+            </modal>
           </tr>
           </tbody>
         </table>
@@ -114,20 +104,10 @@
   </div>
 </div>
 
-
-<div class="modal fade" tabindex="-1" role="dialog" id="saveModal">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Czy napewno chcesz zapisać klienta?</h5>
-        <button type="button" class="close" data-dismiss="modal">
-          <span></span>
-        </button>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-success btn-sm" data-dismiss="modal" (click)="modifyClient()">Zapisz</button>
-        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Anuluj</button>
-      </div>
-    </div>
-  </div>
-</div>
+<modal #saveClientModal>
+  <ng-template #modalHeader><h5 class="modal-title">Czy napewno chcesz zapisać klienta?</h5></ng-template>
+  <ng-template #modalFooter>
+    <button type="button" class="btn btn-success btn-sm" data-dismiss="modal" (click)="modifyClient()">Zapisz</button>
+    <button type="button" class="btn btn-danger btn-sm" (click)="saveClientModal.close()">Anuluj</button>
+  </ng-template>
+</modal>
