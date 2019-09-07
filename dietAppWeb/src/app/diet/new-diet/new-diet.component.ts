@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {Product} from '../models/Product';
 import {Diet} from '../models/Diet';
 import {DietService} from '../diet.service';
@@ -6,6 +6,7 @@ import {Meal} from '../models/Meal';
 import {ProductType} from '../models/ProductType';
 import {IProduct} from '../models/IProduct';
 import {ClientService} from "../../client/client.service";
+import {ModalComponent} from "angular-custom-modal";
 
 @Component({
   selector: 'app-new-diet',
@@ -17,6 +18,9 @@ export class NewDietComponent implements OnInit {
   @Input() clientId : number;
   @Input() dietId : number;
   @Input() oldDiets: Diet[];
+
+  @ViewChild("createDietModal") createDietModal: ModalComponent;
+  @ViewChild("updateDietModal") updateDietModal: ModalComponent;
 
   diet: Diet = new Diet();
   oldDiet: Diet = new Diet();
@@ -217,6 +221,7 @@ export class NewDietComponent implements OnInit {
     this.dietService.addDiet(this.diet).subscribe((diet) => {
       console.log('dodaje diet');
     });
+    this.createDietModal.close();
   }
 
   clearNewDiet(): void{
@@ -249,6 +254,7 @@ export class NewDietComponent implements OnInit {
     this.dietService.modifyDiet(this.diet).subscribe(() => {
       console.log('modyfikuje diete');
     });
+    this.updateDietModal.close();
   }
 
   getOldDiet(value): void {

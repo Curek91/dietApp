@@ -5,11 +5,14 @@ import eu.tcitsolutions.dietApp.core.diet.domain.dto.MealDTO;
 import eu.tcitsolutions.dietApp.core.diet.domain.dto.ProductDTO;
 import eu.tcitsolutions.dietApp.core.diet.service.DietService;
 import eu.tcitsolutions.dietApp.core.mail.service.EmailService;
+import eu.tcitsolutions.dietApp.utils.MailUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.stream.Collectors;
 
 @Controller
 public class MailController {
@@ -25,18 +28,9 @@ public class MailController {
     public @ResponseBody
     ResponseEntity send(@RequestBody Long dietId) {
         DietDTO diet = dietService.getDiet(dietId);
-        StringBuilder mailContent = new StringBuilder();
-        for (MealDTO meal: diet.getMeals()){
-            System.out.println("numer posilku: " + meal.getMealNo());
-            mailContent.append("Posiłek: ").append(meal.getMealNo()).append("\r\n");
-            for(ProductDTO prod: meal.getProducts()){
-                System.out.println("Nazwa produktu: " + prod.getName());
-                mailContent.append("\t").append(prod.getName()).append("\r\n");
-            }
-        }
-        System.out.println(mailContent);
-        emailService.sendEmail("bukszpanek91@gmail.com", "Dieta", mailContent.toString());
+        String mailText = MailUtils.createFormatMailText(diet);
+        System.out.println(mailText);
+        emailService.sendEmail("bukszpanek91@gmail.com", "Dieta", mailText);
         return new ResponseEntity(HttpStatus.OK);
     }
-
 }
