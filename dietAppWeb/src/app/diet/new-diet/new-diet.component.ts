@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {Product} from '../models/Product';
 import {Diet} from '../models/Diet';
 import {DietService} from '../diet.service';
@@ -18,6 +18,8 @@ export class NewDietComponent implements OnInit {
   @Input() clientId : number;
   @Input() dietId : number;
   @Input() oldDiets: Diet[];
+
+  @Output() refreshDietsEvent : EventEmitter<number> = new EventEmitter<number>();
 
   @ViewChild("createDietModal") createDietModal: ModalComponent;
   @ViewChild("updateDietModal") updateDietModal: ModalComponent;
@@ -229,8 +231,9 @@ export class NewDietComponent implements OnInit {
     this.dietService.addDiet(this.diet).subscribe((diet) => {
       console.log(diet.id);
       this.dietId = diet.id;
-      console.log('dodaje diete');
+      this.refreshDietsEvent.next(this.clientId);
     });
+    console.log('dodaje diete');
     this.createDietModal.close();
   }
 
