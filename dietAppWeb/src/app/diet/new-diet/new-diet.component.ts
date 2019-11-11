@@ -17,7 +17,6 @@ export class NewDietComponent implements OnInit {
   @Input() dietId : number;
 
   diet: Diet = new Diet();
-  oldDiet: Diet = new Diet();
   products: Product[] = new Array();
   activeMeal: number;
   filter: String = '';
@@ -207,11 +206,11 @@ export class NewDietComponent implements OnInit {
   }
 
   addDiet() {
-   // console.log(this.diet);
-   // console.log("----------------------" + this.clientId);
     this.diet.clientId = this.clientId;
     this.dietService.addDiet(this.diet).subscribe((diet) => {
-      console.log('dodaje diet');
+      console.log(diet.id);
+      this.dietId = diet.id;
+      console.log('dodaje diete');
     });
   }
 

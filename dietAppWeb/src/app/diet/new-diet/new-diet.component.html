@@ -65,8 +65,8 @@
           <div class="col-sm-12 center-block">
             <button *ngIf="diet.meals && diet.meals.length > 0" type="button" class="btn btn-sm btn-danger addDietBtn text-center" (click)="deleteMeal()">Usuń posiłek</button>
             <button type="button" class="btn btn-sm btn-success addDietBtn center" (click)="addMeal()">Dodaj posiłek</button>
-            <button *ngIf="diet.meals && diet.meals.length > 0 && dietId == null" type="button" (click)="addDiet()" class="btn btn-sm btn-success addDietBtn text-right">Zapisz Diete</button>
-            <button *ngIf="diet.meals && diet.meals.length > 0 && dietId != null" type="button" (click)="modifyDiet()" class="btn btn-sm btn-success addDietBtn text-right">Aktualizuj diete</button>
+            <button *ngIf="diet.meals && diet.meals.length > 0 && dietId == null" type="button" data-toggle="modal" data-target="#saveDietModal" class="btn btn-sm btn-success addDietBtn text-right">Zapisz Diete</button>
+            <button *ngIf="diet.meals && diet.meals.length > 0 && dietId != null" type="button" data-toggle="modal" data-target="#modifyDietModal" class="btn btn-sm btn-success addDietBtn text-right">Aktualizuj diete</button>
           </div>
         </div>
       </div>
@@ -123,6 +123,40 @@
     </div>
   </div>
 </div>
+
+  <div class="modal fade" tabindex="-1" role="dialog" id="saveDietModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Czy napewno chcesz dodać diete?</h5>
+          <button type="button" class="close" data-dismiss="modal">
+            <span></span>
+          </button>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success btn-sm" data-dismiss="modal" (click)="addDiet()">Dodaj</button>
+          <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Anuluj</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" tabindex="-1" role="dialog" id="modifyDietModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Czy napewno chcesz akutalizować diete?</h5>
+          <button type="button" class="close" data-dismiss="modal">
+            <span></span>
+          </button>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success btn-sm" data-dismiss="modal" (click)="modifyDiet()">Aktualizuj</button>
+          <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Anuluj</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
 

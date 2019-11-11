@@ -32,8 +32,8 @@ public class DietController {
     @RequestMapping(method = RequestMethod.POST, value="/diet/create", consumes = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     ResponseEntity<Diet> createDiet(@RequestBody DietDTO source){
-        dietService.saveDiet(source);
-        return new ResponseEntity<Diet>(new Diet(), HttpStatus.OK);
+        Diet diet = dietService.saveDiet(source);
+        return new ResponseEntity<Diet>(diet, HttpStatus.OK);
     }
 
     @CrossOrigin(origins = "${cors.host}")
