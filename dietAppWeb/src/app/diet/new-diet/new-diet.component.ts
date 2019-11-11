@@ -28,6 +28,7 @@ export class NewDietComponent implements OnInit {
   filter: String = '';
   productTypeSelected: String = null;
   types: ProductType[] = new Array();
+  oldDiet: Diet;
   suplements: string = '';
 
   constructor(private dietService: DietService, private clientService: ClientService) {
@@ -176,6 +177,8 @@ export class NewDietComponent implements OnInit {
   }
 
   getProteinsForDiet(diet: Diet): number {
+    if (diet == null)
+      return null;
     if (diet.meals.length > 0) {
       return diet.meals
         .map((meal) => +this.getProteinsForMeal(meal))
@@ -186,6 +189,8 @@ export class NewDietComponent implements OnInit {
   }
 
   getCarbsForDiet(diet: Diet): number {
+    if (diet == null)
+      return null;
     if (diet.meals.length > 0) {
       return diet.meals
         .map((meal) => +this.getCarbsForMeal(meal))
@@ -196,6 +201,8 @@ export class NewDietComponent implements OnInit {
   }
 
   getFatsForDiet(diet: Diet): number {
+    if (diet == null)
+      return null;
     if (diet.meals.length > 0) {
       return diet.meals
         .map((meal) => +this.getFatsForMeal(meal))
@@ -206,6 +213,8 @@ export class NewDietComponent implements OnInit {
   }
 
   getEnergyForDiet(diet: Diet): number {
+    if (diet == null)
+      return null;
     if (diet.meals.length > 0) {
       return diet.meals
         .map((meal) => +this.getEnergyForMeal(meal))

@@ -44,7 +44,6 @@ export class DietService {
   }
 
   modifyProduct(data): Observable<Product> {
-    console.log(data);
     return this.http.put<Product>(this.apiUrl + 'product/modify/' + data.id, data, {headers: this.headers});
   }
 
@@ -53,7 +52,6 @@ export class DietService {
   }
 
   getImage(id: number): Observable<Blob> {
-    console.log('getImage' + id);
     return this.http.get(this.apiUrl + 'getImage/' + id, { responseType: 'blob', headers: this.headersImage });
   }
 

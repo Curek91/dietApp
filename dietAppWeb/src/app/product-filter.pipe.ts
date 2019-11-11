@@ -8,8 +8,6 @@ export class ProductFilterPipe implements PipeTransform {
 
   transform(items: Product[], searchText: string, searchType: string): any {
 
-    console.log('searchText: ' + searchText);
-    console.log('searchType: ' + searchType);
     if (!items) {
       return [];
     } else {

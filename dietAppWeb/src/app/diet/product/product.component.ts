@@ -17,17 +17,13 @@ export class ProductComponent implements OnInit {
   constructor(private dietService: DietService) { }
 
   ngOnInit() {
-    console.log(this.productInput.id);
     this.getImageFromService(this.productInput.id);
   }
 
   createImageFromBlob(image: Blob) {
-    console.log('createImageFromBlob');
     const reader = new FileReader();
     reader.addEventListener('load', () => {
-      console.log(this.imageToShow);
       this.imageToShow = reader.result;
-      console.log(this.imageToShow);
     }, false);
 
     if (image) {
@@ -36,11 +32,8 @@ export class ProductComponent implements OnInit {
   }
 
   getImageFromService(id: number) {
-    console.log('getImageFromService');
     this.isImageLoading = true;
-    console.log('jeeestem2');
     this.dietService.getImage(id).subscribe(data => {
-      console.log('jeeestem');
       this.createImageFromBlob(data);
       this.isImageLoading = false;
     }, error => {

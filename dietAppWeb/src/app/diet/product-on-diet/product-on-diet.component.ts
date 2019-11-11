@@ -44,10 +44,10 @@ export class ProductOnDietComponent implements OnInit {
   }
 
   getTooltipText(product: Product): String {
-    return 'Białko: ' + product.protein  + 'g\n' +
-      'Węglowodany: ' + product.carbs  + 'g\n' +
-      'Tłuszcze: ' + product.fat  + 'g\n' +
-      'Kalorie: ' + product.kcal;
+    return 'Białko: ' + product.protein * (product.weight / 100)  + 'g\n' +
+      'Węglowodany: ' + product.carbs * (product.weight / 100)  + 'g\n' +
+      'Tłuszcze: ' + product.fat * (product.weight / 100)  + 'g\n' +
+      'Kalorie: ' + product.kcal * (product.weight / 100);
   }
 
 
