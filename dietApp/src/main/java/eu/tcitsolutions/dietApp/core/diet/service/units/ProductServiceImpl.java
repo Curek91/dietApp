@@ -26,11 +26,13 @@ import java.util.List;
 @Transactional
 public class ProductServiceImpl implements ProductService {
 
-    @Autowired
     private ProductRepository productRepository;
+    private DTOMappingService dtoMappingService;
 
-    @Autowired
-    DTOMappingService dtoMappingService;
+    public ProductServiceImpl(ProductRepository productRepository, DTOMappingService dtoMappingService){
+        this.productRepository = productRepository;
+        this.dtoMappingService = dtoMappingService;
+    }
 
     @Override
     public List<Product> getProducts() {

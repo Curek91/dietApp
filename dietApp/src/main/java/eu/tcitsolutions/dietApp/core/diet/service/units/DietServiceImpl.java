@@ -25,15 +25,15 @@ import java.util.Set;
 @Service
 @Transactional
 public class DietServiceImpl implements DietService {
-
-    @Autowired
+    
     private DietRepository dietRepository;
 
-    @Autowired
     DTOMappingService dtoMappingService;
 
-    @Autowired
-    private MealRepository mealRepository;
+    public DietServiceImpl(DietRepository dietRepository, DTOMappingService dtoMappingService){
+        this.dietRepository = dietRepository;
+        this.dtoMappingService = dtoMappingService;
+    }
 
     @Override
     public List<Diet> getDiets(Long clientId) {

@@ -22,8 +22,11 @@ import java.util.List;
 @RestController
 public class DietController {
 
-    @Autowired
     private DietService dietService;
+
+    public DietController(DietService dietService){
+        this.dietService = dietService;
+    }
 
     @CrossOrigin(origins = "${cors.host}")
     @RequestMapping(method = RequestMethod.POST, value="/diet/create", consumes = MediaType.APPLICATION_JSON_VALUE)

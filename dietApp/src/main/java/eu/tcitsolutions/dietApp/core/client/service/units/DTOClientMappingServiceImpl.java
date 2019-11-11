@@ -23,6 +23,11 @@ public class DTOClientMappingServiceImpl implements DTOClientMappingService, App
 
     private ApplicationContext applicationContext;
 
+    public DTOClientMappingServiceImpl(ClientRepository clientRepository, ApplicationContext applicationContext){
+        this.clientRepository = clientRepository;
+        this.applicationContext = applicationContext;
+    }
+
     public void setApplicationContext(final ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
     }
