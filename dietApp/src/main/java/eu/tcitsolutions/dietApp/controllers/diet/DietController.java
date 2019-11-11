@@ -22,15 +22,18 @@ import java.util.List;
 @RestController
 public class DietController {
 
-    @Autowired
     private DietService dietService;
+
+    public DietController(DietService dietService){
+        this.dietService = dietService;
+    }
 
     @CrossOrigin(origins = "${cors.host}")
     @RequestMapping(method = RequestMethod.POST, value="/diet/create", consumes = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     ResponseEntity<Diet> createDiet(@RequestBody DietDTO source){
-        dietService.saveDiet(source);
-        return new ResponseEntity<Diet>(new Diet(), HttpStatus.OK);
+        Diet diet = dietService.saveDiet(source);
+        return new ResponseEntity<Diet>(diet, HttpStatus.OK);
     }
 
     @CrossOrigin(origins = "${cors.host}")

@@ -40,6 +40,8 @@ export class ManageClientComponent implements OnInit {
         };
          this.clients.push(clientTemp);
       });
+      console.log(this.clients);
+      this.clients.sort((client1, client2) => client1.id - client2.id);
     });
   }
 

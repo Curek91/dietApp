@@ -17,6 +17,10 @@ public class TypeController {
     @Autowired
     TypeService typeService;
 
+    public TypeController(TypeService typeService){
+        this.typeService = typeService;
+    }
+
     @CrossOrigin(origins = "${cors.host}")
     @RequestMapping(method = RequestMethod.GET, value = "/types")
     @ResponseStatus(HttpStatus.OK)

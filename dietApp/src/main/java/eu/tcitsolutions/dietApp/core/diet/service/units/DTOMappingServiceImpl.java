@@ -33,14 +33,18 @@ public class DTOMappingServiceImpl implements DTOMappingService, ApplicationCont
     private ProductRepository productRepository;
     private TypeRepository typeRepository;
     private ClientRepository clientRepository;
-
-    @Autowired
     private MealRepository mealRepository;
-
-    @Autowired
     private DTOClientMappingService dtoClientMappingService;
-
     private ApplicationContext applicationContext;
+
+    public DTOMappingServiceImpl(ProductRepository productRepository, TypeRepository typeRepository, ClientRepository clientRepository, MealRepository mealRepository, DTOClientMappingService dtoClientMappingService, ApplicationContext applicationContext){
+        this.productRepository = productRepository;
+        this.typeRepository = typeRepository;
+        this.clientRepository = clientRepository;
+        this.mealRepository = mealRepository;
+        this.dtoClientMappingService = dtoClientMappingService;
+        this.applicationContext = applicationContext;
+    }
 
     public void setApplicationContext(final ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;

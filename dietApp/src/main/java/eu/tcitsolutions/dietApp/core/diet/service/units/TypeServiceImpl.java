@@ -15,11 +15,13 @@ import java.util.List;
 @Transactional
 public class TypeServiceImpl implements TypeService {
 
-    @Autowired
     private TypeRepository typeRepository;
+    private DTOMappingService dtoMappingService;
 
-    @Autowired
-    DTOMappingService dtoMappingService;
+    public TypeServiceImpl(TypeRepository typeRepository, DTOMappingService dtoMappingService){
+        this.typeRepository = typeRepository;
+        this.dtoMappingService = dtoMappingService;
+    }
 
     @Override
     public List<Type> getTypes() {

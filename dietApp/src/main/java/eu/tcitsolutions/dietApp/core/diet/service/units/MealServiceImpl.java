@@ -19,11 +19,13 @@ import java.util.List;
 @Transactional
 public class MealServiceImpl implements MealService {
 
-    @Autowired
     private MealRepository mealRepository;
+    private DTOMappingService dtoMappingService;
 
-    @Autowired
-    DTOMappingService dtoMappingService;
+    public MealServiceImpl(MealRepository mealRepository, DTOMappingService dtoMappingService){
+        this.mealRepository = mealRepository;
+        this.dtoMappingService = dtoMappingService;
+    }
 
     @Override
     public List<Meal> getMeals() {

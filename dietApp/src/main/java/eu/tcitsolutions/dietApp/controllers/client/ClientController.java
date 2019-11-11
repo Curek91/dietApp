@@ -14,8 +14,11 @@ import java.util.List;
 @RestController
 public class ClientController {
 
-    @Autowired
     ClientService clientService;
+
+    public ClientController(ClientService clientService){
+        this.clientService = clientService;
+    }
 
     @CrossOrigin(origins = "${cors.host}")
     @RequestMapping(method = RequestMethod.GET, value = "/clients")

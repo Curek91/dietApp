@@ -8,6 +8,8 @@ import { ShowClientComponent } from './show-client/show-client.component';
 import {AngularFontAwesomeModule} from 'angular-font-awesome';
 import {DietModule} from "../diet/diet.module";
 import {ModalModule} from "angular-custom-modal";
+import {ProductFilterPipe} from "../product-filter.pipe";
+import {ClientFilterPipe} from "../client-filter.pipe";
 
 @NgModule({
   imports: [
@@ -19,6 +21,6 @@ import {ModalModule} from "angular-custom-modal";
     DietModule,
     ModalModule
   ],
-  declarations: [ManageClientComponent, NewClientComponent, ShowClientComponent]
+  declarations: [ManageClientComponent, NewClientComponent, ShowClientComponent, ClientFilterPipe]
 })
 export class ClientModule { }

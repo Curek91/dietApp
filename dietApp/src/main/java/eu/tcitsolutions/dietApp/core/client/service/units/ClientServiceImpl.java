@@ -5,6 +5,7 @@ import eu.tcitsolutions.dietApp.core.client.domain.entity.Client;
 import eu.tcitsolutions.dietApp.core.client.domain.repository.ClientRepository;
 import eu.tcitsolutions.dietApp.core.client.service.ClientService;
 import eu.tcitsolutions.dietApp.core.client.service.DTOClientMappingService;
+import eu.tcitsolutions.dietApp.core.diet.service.DTOMappingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,11 +16,14 @@ import java.util.List;
 @Transactional
 public class ClientServiceImpl implements ClientService {
 
-    @Autowired
     private ClientRepository clientRepository;
 
-    @Autowired
-    DTOClientMappingService dtoClientMappingService;
+    private DTOClientMappingService dtoClientMappingService;
+
+    public ClientServiceImpl(ClientRepository clientRepository, DTOClientMappingService dtoClientMappingService){
+        this.clientRepository = clientRepository;
+        this.dtoClientMappingService = dtoClientMappingService;
+    }
 
     @Override
     public List<Client> getClients() {
