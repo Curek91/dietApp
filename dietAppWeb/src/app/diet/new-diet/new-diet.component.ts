@@ -15,8 +15,8 @@ import {ModalComponent} from "angular-custom-modal";
 })
 export class NewDietComponent implements OnInit {
 
-  @Input() clientId : number;
-  @Input() dietId : number;
+  @Input() clientId: number;
+  @Input() dietId: number;
   @Input() oldDiets: Diet[];
 
   @Output() refreshDietsEvent : EventEmitter<number> = new EventEmitter<number>();

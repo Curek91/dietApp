@@ -26,18 +26,18 @@ export class ClientService {
   }
 
   addClient(data): Observable<Client> {
-    return this.http.post<Client>(this.apiUrl + 'client/create', data, {headers: this.headers});
+    return this.http.post<Client>(this.apiUrl + 'client', data, {headers: this.headers});
   }
 
   deleteClient(id: number): any {
-    return this.http.delete<any>(this.apiUrl + 'client/delete/' + id, {headers: this.headers});
+    return this.http.delete<any>(this.apiUrl + 'client/' + id, {headers: this.headers});
   }
 
   modifyClient(data): Observable<Client> {
-    return this.http.put<Client>(this.apiUrl + 'client/modify/' + data.id, data, {headers: this.headers});
+    return this.http.put<Client>(this.apiUrl + 'client/' + data.id, data, {headers: this.headers});
   }
 
-  getClientDiets(clientId : number): Observable<Diet[]>{
+  getClientDiets(clientId: number): Observable<Diet[]> {
     return this.http.get<Diet[]>(this.apiUrl + 'diets/' + clientId, {headers: this.headers});
   }
 

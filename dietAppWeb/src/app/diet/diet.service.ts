@@ -40,30 +40,30 @@ export class DietService {
   }
 
   addProduct(data): Observable<Product> {
-    return this.http.post<Product>(this.apiUrl + 'product/create', data, {headers: this.headers});
+    return this.http.post<Product>(this.apiUrl + 'product', data, {headers: this.headers});
   }
 
   modifyProduct(data): Observable<Product> {
-    return this.http.put<Product>(this.apiUrl + 'product/modify/' + data.id, data, {headers: this.headers});
+    return this.http.put<Product>(this.apiUrl + 'product/' + data.id, data, {headers: this.headers});
   }
 
   deleteProduct(id: number): any {
-    return this.http.delete<any>(this.apiUrl + 'product/delete/' + id, {headers: this.headers});
+    return this.http.delete<any>(this.apiUrl + 'product/' + id, {headers: this.headers});
   }
 
   getImage(id: number): Observable<Blob> {
-    return this.http.get(this.apiUrl + 'getImage/' + id, { responseType: 'blob', headers: this.headersImage });
+    return this.http.get(this.apiUrl + 'image/' + id, { responseType: 'blob', headers: this.headersImage });
   }
 
   addDiet(data): Observable<Diet> {
-    return this.http.post<Diet>(this.apiUrl + 'diet/create', data, {headers: this.headers});
+    return this.http.post<Diet>(this.apiUrl + 'diet', data, {headers: this.headers});
   }
 
   deleteDiet(id: number): any {
-    return this.http.delete<any>(this.apiUrl + 'diet/delete/' + id, {headers: this.headers});
+    return this.http.delete<any>(this.apiUrl + 'diet/' + id, {headers: this.headers});
   }
 
   modifyDiet(data): Observable<Diet> {
-    return this.http.put<Diet>(this.apiUrl + 'diet/modify/' + data.id, data, {headers: this.headers});
+    return this.http.put<Diet>(this.apiUrl + 'diet/' + data.id, data, {headers: this.headers});
   }
 }
