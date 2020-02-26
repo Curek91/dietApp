@@ -5,7 +5,6 @@ import eu.tcitsolutions.dietApp.core.diet.domain.dto.TypeDTO;
 import eu.tcitsolutions.dietApp.core.diet.domain.entity.Meal;
 import eu.tcitsolutions.dietApp.core.diet.domain.entity.Type;
 import eu.tcitsolutions.dietApp.core.diet.domain.repository.MealRepository;
-import eu.tcitsolutions.dietApp.core.diet.domain.repository.TypeRepository;
 import eu.tcitsolutions.dietApp.core.diet.service.DTOMappingService;
 import eu.tcitsolutions.dietApp.core.diet.service.MealService;
 import eu.tcitsolutions.dietApp.core.diet.service.TypeService;

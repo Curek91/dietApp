@@ -1,38 +1,31 @@
 package eu.tcitsolutions.dietApp.core.diet.service.units;
 
 import eu.tcitsolutions.dietApp.core.diet.domain.dto.DietDTO;
-import eu.tcitsolutions.dietApp.core.diet.domain.dto.MealDTO;
-import eu.tcitsolutions.dietApp.core.diet.domain.dto.TypeDTO;
 import eu.tcitsolutions.dietApp.core.diet.domain.entity.Diet;
-import eu.tcitsolutions.dietApp.core.diet.domain.entity.Meal;
-import eu.tcitsolutions.dietApp.core.diet.domain.entity.Product;
-import eu.tcitsolutions.dietApp.core.diet.domain.entity.Type;
 import eu.tcitsolutions.dietApp.core.diet.domain.repository.DietRepository;
-import eu.tcitsolutions.dietApp.core.diet.domain.repository.MealRepository;
-import eu.tcitsolutions.dietApp.core.diet.domain.repository.ProductRepository;
-import eu.tcitsolutions.dietApp.core.diet.domain.repository.TypeRepository;
 import eu.tcitsolutions.dietApp.core.diet.service.DTOMappingService;
 import eu.tcitsolutions.dietApp.core.diet.service.DietService;
-import eu.tcitsolutions.dietApp.core.diet.service.TypeService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Service
 @Transactional
+@Setter
 public class DietServiceImpl implements DietService {
     
     private DietRepository dietRepository;
 
     DTOMappingService dtoMappingService;
 
-    public DietServiceImpl(DietRepository dietRepository, DTOMappingService dtoMappingService){
+    public DietServiceImpl(DietRepository dietRepository, @Qualifier("DTOMappingServiceImpl")  DTOMappingService dtoMappingService){
         this.dietRepository = dietRepository;
         this.dtoMappingService = dtoMappingService;
+
     }
 
     @Override

@@ -6,6 +6,7 @@ import eu.tcitsolutions.dietApp.core.diet.domain.repository.TypeRepository;
 import eu.tcitsolutions.dietApp.core.diet.service.DTOMappingService;
 import eu.tcitsolutions.dietApp.core.diet.service.TypeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -18,7 +19,7 @@ public class TypeServiceImpl implements TypeService {
     private TypeRepository typeRepository;
     private DTOMappingService dtoMappingService;
 
-    public TypeServiceImpl(TypeRepository typeRepository, DTOMappingService dtoMappingService){
+    public TypeServiceImpl(@Qualifier("hibernateTypeRepository") TypeRepository typeRepository, DTOMappingService dtoMappingService){
         this.typeRepository = typeRepository;
         this.dtoMappingService = dtoMappingService;
     }

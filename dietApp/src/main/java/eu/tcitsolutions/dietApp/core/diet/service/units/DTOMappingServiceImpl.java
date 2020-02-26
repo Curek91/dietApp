@@ -13,6 +13,7 @@ import eu.tcitsolutions.dietApp.core.diet.domain.repository.TypeRepository;
 import eu.tcitsolutions.dietApp.core.diet.service.DTOMappingService;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Lazy;
@@ -37,7 +38,7 @@ public class DTOMappingServiceImpl implements DTOMappingService, ApplicationCont
     private DTOClientMappingService dtoClientMappingService;
     private ApplicationContext applicationContext;
 
-    public DTOMappingServiceImpl(ProductRepository productRepository, TypeRepository typeRepository, ClientRepository clientRepository, MealRepository mealRepository, DTOClientMappingService dtoClientMappingService, ApplicationContext applicationContext){
+    public DTOMappingServiceImpl(ProductRepository productRepository, @Qualifier("hibernateTypeRepository") TypeRepository typeRepository, ClientRepository clientRepository, MealRepository mealRepository, DTOClientMappingService dtoClientMappingService, ApplicationContext applicationContext){
         this.productRepository = productRepository;
         this.typeRepository = typeRepository;
         this.clientRepository = clientRepository;
