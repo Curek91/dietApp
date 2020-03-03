@@ -16,7 +16,7 @@ public class ClientController {
 
     ClientService clientService;
 
-    public ClientController(ClientService clientService){
+    public ClientController(ClientService clientService) {
         this.clientService = clientService;
     }
 
@@ -24,7 +24,7 @@ public class ClientController {
     @RequestMapping(method = RequestMethod.GET, value = "/clients")
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
-    ResponseEntity<List<Client>> clientsList(){
+    ResponseEntity<List<Client>> clientsList() {
         List<Client> clientList = clientService.getClients();
         return new ResponseEntity<List<Client>>(clientList, HttpStatus.OK);
     }
@@ -33,15 +33,15 @@ public class ClientController {
     @RequestMapping(method = RequestMethod.GET, value = "/client/{id}")
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
-    ResponseEntity<Client> getClient(@PathVariable Long id){
+    ResponseEntity<Client> getClient(@PathVariable Long id) {
         Client client = clientService.getClient(id);
         return new ResponseEntity<Client>(client, HttpStatus.OK);
     }
 
     @CrossOrigin(origins = "${cors.host}")
-    @RequestMapping(method = RequestMethod.POST, value="/client/create", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.POST, value = "/client/create", consumes = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
-    ResponseEntity<Client> createClient(@RequestBody ClientDTO source){
+    ResponseEntity<Client> createClient(@RequestBody ClientDTO source) {
         clientService.saveClient(source);
         return new ResponseEntity<Client>(HttpStatus.OK);
     }
@@ -49,7 +49,7 @@ public class ClientController {
     @CrossOrigin(origins = "${cors.host}")
     @RequestMapping(method = RequestMethod.PUT, value = "/client/modify/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
-    ResponseEntity<Client> updateClient(@PathVariable("id") Long id, @RequestBody ClientDTO source){
+    ResponseEntity<Client> updateClient(@PathVariable("id") Long id, @RequestBody ClientDTO source) {
         clientService.updateClient(id, source);
         return new ResponseEntity<Client>(HttpStatus.OK);
     }
@@ -57,8 +57,21 @@ public class ClientController {
     @CrossOrigin(origins = "${cors.host}")
     @RequestMapping(method = RequestMethod.DELETE, value = "/client/delete/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
-    ResponseEntity<Client> updateType(@PathVariable("id") Long id){
+    ResponseEntity<Client> updateType(@PathVariable("id") Long id) {
         clientService.removeClient(id);
+        return new ResponseEntity<Client>(HttpStatus.OK);
+    }
+
+    @CrossOrigin(origins = "${cors.host}")
+    @RequestMapping(method = RequestMethod.POST, value = "/client/createNewVersion/{clientNo}")
+    public @ResponseBody
+    ResponseEntity<Client> createNewVersion(@PathVariable("clientNo") Long clientNo, @RequestParam("clientId") String clientId, @RequestBody ClientDTO source) {
+        System.out.println("Wypisuje parametry: ");
+        System.out.println("clientNo: " + clientNo);
+        System.out.println("clientId: " + clientId);
+
+        clientService.createNewVersion(Long.parseLong(clientId), clientNo, source);
+
         return new ResponseEntity<Client>(HttpStatus.OK);
     }
 }

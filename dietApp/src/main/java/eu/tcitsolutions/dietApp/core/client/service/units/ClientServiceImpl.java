@@ -49,4 +49,18 @@ public class ClientServiceImpl implements ClientService {
     public void updateClient(Long id, ClientDTO source) {
         clientRepository.update(dtoClientMappingService.createEntity(id ,source));
     }
+
+    @Override
+    public void createNewVersion(Long id, Long object_no, ClientDTO source) {
+        Client client = dtoClientMappingService.createEntity(source);
+        client.setPreClientId(id);
+        client.setClientNo(object_no);
+        Client newClient = clientRepository.save(client);
+        System.out.println(newClient.getId());
+        client = clientRepository.getClient(id);
+        System.out.println("---------" + client.getId());
+        System.out.println("---------" + client.getId());
+        client.setSucClientId(newClient.getId());
+        clientRepository.update(client);
+    }
 }

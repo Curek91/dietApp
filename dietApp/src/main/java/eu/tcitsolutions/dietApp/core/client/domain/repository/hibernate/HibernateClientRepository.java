@@ -25,8 +25,11 @@ public class HibernateClientRepository implements ClientRepository {
     }
 
     @Override
-    public void save(Client client) {
+    public Client save(Client client) {
         entityManager.persist(client);
+        entityManager.flush();
+        System.out.println(client.getId());
+        return client;
     }
 
     @Override

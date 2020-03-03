@@ -18,6 +18,10 @@ public class ClientDTO {
     private Integer height;
     private String email;
     private String telephone;
+    private Integer biceps;
+    private Integer chest;
+    private Integer waist;
+    private Integer thigh;
 
     public ClientDTO(String firstname, String lastname, Integer age, Float weight, Integer height, String email, String telephone) {
         this.firstname = firstname;
@@ -27,6 +31,20 @@ public class ClientDTO {
         this.height = height;
         this.email = email;
         this.telephone = telephone;
+    }
+
+    public ClientDTO(String firstname, String lastname, Integer age, Float weight, Integer height, String email, String telephone, Integer biceps, Integer chest, Integer waist, Integer thigh) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.age = age;
+        this.weight = weight;
+        this.height = height;
+        this.email = email;
+        this.telephone = telephone;
+        this.biceps = biceps;
+        this.chest = chest;
+        this.waist = waist;
+        this.thigh = thigh;
     }
 
     public ClientDTO() {
@@ -86,5 +104,37 @@ public class ClientDTO {
 
     public void setTelephone(String telephone) {
         this.telephone = telephone;
+    }
+
+    public Integer getBiceps() {
+        return biceps;
+    }
+
+    public void setBiceps(Integer biceps) {
+        this.biceps = biceps;
+    }
+
+    public Integer getChest() {
+        return chest;
+    }
+
+    public void setChest(Integer chest) {
+        this.chest = chest;
+    }
+
+    public Integer getWaist() {
+        return waist;
+    }
+
+    public void setWaist(Integer waist) {
+        this.waist = waist;
+    }
+
+    public Integer getThigh() {
+        return thigh;
+    }
+
+    public void setThigh(Integer thigh) {
+        this.thigh = thigh;
     }
 }

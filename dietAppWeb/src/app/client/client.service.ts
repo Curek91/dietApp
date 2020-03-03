@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {AuthService} from '../auth/auth.service';
 import {Client} from './models/Client';
 import {Observable} from 'rxjs/Rx';
-import {Diet} from "../diet/models/Diet";
+import {Diet} from '../diet/models/Diet';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +14,7 @@ export class ClientService {
     'Content-Type': 'application/json',
     'Authorization': 'Bearer ' + this.authService.getToken()
   });
+
   constructor(private http: HttpClient, private authService: AuthService) {
   }
 
@@ -37,11 +38,18 @@ export class ClientService {
     return this.http.put<Client>(this.apiUrl + 'client/modify/' + data.id, data, {headers: this.headers});
   }
 
-  getClientDiets(clientId : number): Observable<Diet[]>{
+  getClientDiets(clientId: number): Observable<Diet[]> {
     return this.http.get<Diet[]>(this.apiUrl + 'diets/' + clientId, {headers: this.headers});
   }
 
-  sendEmail(dietId): Observable<Diet>{
+  sendEmail(dietId): Observable<Diet> {
     return this.http.post<Diet>(this.apiUrl + 'api/sendEmail', dietId, {headers: this.headers});
+  }
+
+  createNewVersion(clientId: number, clientNo: number, data): Observable<Client> {
+    return this.http.put<Client>(this.apiUrl + 'client/createNewVersion/' + clientNo, data, {
+      headers: this.headers,
+      params: new HttpParams().set('clientId', clientId.toString())
+    });
   }
 }

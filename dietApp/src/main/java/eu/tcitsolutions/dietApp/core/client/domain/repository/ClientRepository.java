@@ -10,11 +10,13 @@ public interface ClientRepository {
 
     public Client getClient(Long id);
 
-    public void save(Client client);
+    public Client save(Client client);
 
     public void delete(Client client);
 
     public void delete(Long id);
 
     public void update(Client client);
+
+
 }

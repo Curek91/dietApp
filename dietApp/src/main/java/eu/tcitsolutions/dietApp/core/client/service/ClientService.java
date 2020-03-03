@@ -15,4 +15,6 @@ public interface ClientService {
     public void removeClient(Long id);
 
     public void updateClient(Long id, ClientDTO source);
+
+    public void createNewVersion(Long id, Long object_no, ClientDTO source);
 }
