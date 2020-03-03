@@ -24,12 +24,13 @@ export class ManageClientComponent implements OnInit {
 
   loadClients(): void {
     let clientTemp: Client;
-    this.clientService.getClients().subscribe((clients) => {
+    this.clientService.getNewestClients().subscribe((clients) => {
       this.clients = [];
       clients.forEach((client) => {
 
         clientTemp = {
           id: client.id,
+          clientNo: client.clientNo,
           firstname: client.firstname,
           lastname: client.lastname,
           age: client.age,

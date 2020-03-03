@@ -31,6 +31,11 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
+    public List<Client> getNewestClients() {
+        return clientRepository.getNewestClients();
+    }
+
+    @Override
     public Client getClient(Long id) {
         return clientRepository.getClient(id);
     }
@@ -51,15 +56,14 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public void createNewVersion(Long id, Long object_no, ClientDTO source) {
+    public void createNewVersion(Long clientNo, ClientDTO source) {
         Client client = dtoClientMappingService.createEntity(source);
-        client.setPreClientId(id);
-        client.setClientNo(object_no);
+        Long lastId = clientRepository.getLastIdForClientNo(clientNo);
+        client.setPreClientId(lastId);
+        client.setClientNo(clientNo);
         Client newClient = clientRepository.save(client);
         System.out.println(newClient.getId());
-        client = clientRepository.getClient(id);
-        System.out.println("---------" + client.getId());
-        System.out.println("---------" + client.getId());
+        client = clientRepository.getClient(lastId);
         client.setSucClientId(newClient.getId());
         clientRepository.update(client);
     }

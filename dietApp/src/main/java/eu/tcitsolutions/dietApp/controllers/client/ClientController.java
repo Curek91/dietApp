@@ -30,6 +30,15 @@ public class ClientController {
     }
 
     @CrossOrigin(origins = "${cors.host}")
+    @RequestMapping(method = RequestMethod.GET, value = "/newestClients")
+    @ResponseStatus(HttpStatus.OK)
+    public @ResponseBody
+    ResponseEntity<List<Client>> newestClients() {
+        List<Client> clientList = clientService.getNewestClients();
+        return new ResponseEntity<List<Client>>(clientList, HttpStatus.OK);
+    }
+
+    @CrossOrigin(origins = "${cors.host}")
     @RequestMapping(method = RequestMethod.GET, value = "/client/{id}")
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
@@ -65,12 +74,11 @@ public class ClientController {
     @CrossOrigin(origins = "${cors.host}")
     @RequestMapping(method = RequestMethod.POST, value = "/client/createNewVersion/{clientNo}")
     public @ResponseBody
-    ResponseEntity<Client> createNewVersion(@PathVariable("clientNo") Long clientNo, @RequestParam("clientId") String clientId, @RequestBody ClientDTO source) {
+    ResponseEntity<Client> createNewVersion(@PathVariable("clientNo") Long clientNo, @RequestBody ClientDTO source) {
         System.out.println("Wypisuje parametry: ");
         System.out.println("clientNo: " + clientNo);
-        System.out.println("clientId: " + clientId);
 
-        clientService.createNewVersion(Long.parseLong(clientId), clientNo, source);
+        clientService.createNewVersion(clientNo, source);
 
         return new ResponseEntity<Client>(HttpStatus.OK);
     }

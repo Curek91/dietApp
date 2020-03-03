@@ -23,6 +23,7 @@ public class Client extends BaseLogEntity implements Serializable {
     @SequenceGenerator(name="client_seq_generator", sequenceName = "client_seq", allocationSize=1)
     @NaturalId
     private Long id;
+
     @Column(name = "client_no", updatable = false)
     private Long clientNo;
     @Column(name = "pre_client_id", updatable = true)

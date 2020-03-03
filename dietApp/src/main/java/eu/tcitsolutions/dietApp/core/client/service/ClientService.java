@@ -8,6 +8,8 @@ import java.util.List;
 public interface ClientService {
     public List<Client> getClients();
 
+    public List<Client> getNewestClients();
+
     public Client getClient(Long id);
 
     public void saveClient(ClientDTO source);
@@ -16,5 +18,5 @@ public interface ClientService {
 
     public void updateClient(Long id, ClientDTO source);
 
-    public void createNewVersion(Long id, Long object_no, ClientDTO source);
+    public void createNewVersion(Long clientNo, ClientDTO source);
 }

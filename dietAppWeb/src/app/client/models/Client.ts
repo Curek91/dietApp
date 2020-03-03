@@ -7,6 +7,7 @@ import {Diet} from "../../diet/models/Diet";
 
 export class Client implements IClient {
   id: number;
+  clientNo: number;
   firstname: string;
   lastname: string;
   age: number;
@@ -17,6 +18,7 @@ export class Client implements IClient {
 
   constructor(client: Client) {
     this.id = client.id;
+    this.clientNo = client.clientNo;
     this.firstname = client.firstname;
     this.lastname = client.lastname;
     this.age = client.age;
