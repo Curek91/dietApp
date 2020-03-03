@@ -38,7 +38,7 @@ public class DTOMappingServiceImpl implements DTOMappingService, ApplicationCont
     private DTOClientMappingService dtoClientMappingService;
     private ApplicationContext applicationContext;
 
-    public DTOMappingServiceImpl(ProductRepository productRepository, @Qualifier("hibernateTypeRepository") TypeRepository typeRepository, ClientRepository clientRepository, MealRepository mealRepository, DTOClientMappingService dtoClientMappingService, ApplicationContext applicationContext){
+    public DTOMappingServiceImpl(ProductRepository productRepository, TypeRepository typeRepository, ClientRepository clientRepository, MealRepository mealRepository, DTOClientMappingService dtoClientMappingService, ApplicationContext applicationContext){
         this.productRepository = productRepository;
         this.typeRepository = typeRepository;
         this.clientRepository = clientRepository;

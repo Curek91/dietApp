@@ -9,7 +9,7 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
-public class MySqlTypeRepository implements TypeRepository {
+public class HibernateTypeRepository implements TypeRepository {
     @PersistenceContext
     private EntityManager entityManager;
 

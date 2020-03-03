@@ -1,7 +1,6 @@
 package eu.tcitsolutions.dietApp.core.common.entity;
 
 import lombok.Getter;
-import oracle.jheadstart.util.DatabaseProcedure;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -15,7 +14,6 @@ import javax.persistence.PreUpdate;
 import java.sql.Types;
 import java.time.LocalDateTime;
 
-import dk.tia.domain.adf.fwkext.commons.util.DatabaseProcedureFacade;
 
 
 @Getter
