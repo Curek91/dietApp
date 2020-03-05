@@ -41,6 +41,7 @@ export class NewClientComponent implements OnInit {
 
     client = {
       id: null,
+      clientNo: null,
       firstname: this.clientForm.value['firstname'].toString(),
       lastname: this.clientForm.value['lastname'].toString(),
       age: +this.clientForm.value['age'],

@@ -67,4 +67,9 @@ public class ClientServiceImpl implements ClientService {
         client.setSucClientId(newClient.getId());
         clientRepository.update(client);
     }
+
+    @Override
+    public List<Client> getClientVersions(Long clientNo) {
+        return clientRepository.getClientVersions(clientNo);
+    }
 }

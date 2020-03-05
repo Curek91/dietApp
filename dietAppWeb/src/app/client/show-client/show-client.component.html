@@ -15,7 +15,7 @@
           </div>
           <div class="col-sm-6 align-self-end ">
             <label class="new-product-label">Nazwisko:</label>
-            <input class="form-control" formControlName="lastname" placeholder="Nazwisko...">
+            <input class="form-control" [disabled]="true" formControlName="lastname" placeholder="Nazwisko...">
           </div>
         </div>
         <div class="row form-group">
@@ -38,16 +38,23 @@
             <input class="form-control" formControlName="email" placeholder="Email...">
           </div>
           <div class="col-sm-6 align-self-end ">
-            <label class="new-product-label">Nazwisko:</label>
+            <label class="new-product-label">Numer telefonu:</label>
             <input class="form-control" formControlName="telephone" placeholder="Telefon...">
           </div>
         </div>
         <div class="row form-group">
-          <div class="col-sm-12 text-right">
+          <div class="col-sm-4 text-left">
+            <i class="fa fa-angle-double-left fa-3x navigate-angle" (click)="getFirstClientVersion()"></i>
+            <i class="fa fa-angle-left fa-3x navigate-angle" (click)="getPreviousClientVersion()"></i>
+            <i class="fa fa-angle-right fa-3x navigate-angle" (click)="getNextClientVersion()"></i>
+            <i class="fa fa-angle-double-right fa-3x navigate-angle" (click)="getLastClientVersion()"></i>
+          </div>
+          <div class="col-sm-8 text-right">
             <button class="btn btn-primary btn-md" style="margin-right: 2%" [disabled]="clientForm.invalid"
                     (click)="saveClientModal.open()">Zapisz
             </button>
             <button class="btn btn-danger btn-md" type="submit" [routerLink]="['/manage-client']">Wróć</button>
+
           </div>
         </div>
       </form>
@@ -55,12 +62,12 @@
   </div>
 
   <div class="accordion-panel">
-    <div class="accordion-header" >
+    <div class="accordion-header">
       <h3>
         <div class="row">
           <div class="col-sm-10" (click)="showDiets = !showDiets">
             <i class="fa " [ngClass]="{'fa-angle-down': showDiets === true, 'fa-angle-right': showDiets === false}"></i>
-            <span >Diety</span>
+            <span>Diety</span>
           </div>
           <div class="col-sm-2">
             <button class="btn btn-sm btn-success" (click)="createNewDiet()">Utwórz nową diete</button>
@@ -68,7 +75,6 @@
         </div>
       </h3>
     </div>
-
 
 
     <div class="accordion-body" *ngIf="showDiets">
@@ -88,22 +94,69 @@
             <td (click)="setDietId(clientDiet.id)">{{clientDiet.id}}</td>
             <td (click)="setDietId(clientDiet.id)">{{clientDiet.createdBy}}</td>
             <td (click)="setDietId(clientDiet.id)">{{clientDiet.creationTime}} </td>
-            <td><button class="btn btn-sm btn-danger" (click)="deleteDietModal.open()">Usuń</button></td>
+            <td>
+              <button class="btn btn-sm btn-danger" (click)="deleteDietModal.open()">Usuń</button>
+            </td>
             <modal #deleteDietModal>
-              <ng-template #modalHeader><h5 class="modal-title">Czy napewno chcesz usunąć dietę o id {{clientDiet.id}}?</h5></ng-template>
+              <ng-template #modalHeader><h5 class="modal-title">Czy napewno chcesz usunąć dietę o id {{clientDiet.id}}
+                ?</h5></ng-template>
               <ng-template #modalFooter>
-                <button type="button" class="btn btn-success btn-sm" data-dismiss="modal" (click)="deleteDiet(clientDiet.id)">Usuń</button>
+                <button type="button" class="btn btn-success btn-sm" data-dismiss="modal"
+                        (click)="deleteDiet(clientDiet.id)">Usuń
+                </button>
                 <button type="button" class="btn btn-danger btn-sm" (click)="deleteDietModal.close()">Anuluj</button>
               </ng-template>
             </modal>
-            <td><button class="btn btn-sm btn-info" (click)="sendEmail(clientDiet.id)">Wyślij email</button></td>
+            <td>
+              <button class="btn btn-sm btn-info" (click)="sendEmail(clientDiet.id)">Wyślij email</button>
+            </td>
           </tr>
           </tbody>
         </table>
       </div>
-      <app-new-diet #newDietRef (refreshDietsEvent)="loadClientDiets()" [clientId]="route.snapshot.params['id']" [dietId]="dietIdToModify" [oldDiets]="diets"></app-new-diet>
+      <app-new-diet #newDietRef (refreshDietsEvent)="loadClientDiets()" [clientId]="route.snapshot.params['id']"
+                    [dietId]="dietIdToModify" [oldDiets]="diets"></app-new-diet>
     </div>
   </div>
+
+
+  <div class="accordion-panel">
+    <div class="accordion-header">
+      <h3>
+        <div class="row">
+          <div class="col-sm-10" (click)="showProgress = !showProgress">
+            <i class="fa "
+               [ngClass]="{'fa-angle-down': showProgress === true, 'fa-angle-right': showProgress === false}"></i>
+            <span>Postępy (Tabelka z postępami)</span>
+          </div>
+        </div>
+      </h3>
+    </div>
+    <div class="accordion-body" *ngIf="showProgress">
+      <div class="row">
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion-panel">
+    <div class="accordion-header">
+      <h3>
+        <div class="row">
+          <div class="col-sm-10" (click)="showGraphs = !showGraphs">
+            <i class="fa "
+               [ngClass]="{'fa-angle-down': showGraphs === true, 'fa-angle-right': showGraphs === false}"></i>
+            <span>Wykresy (Wykresy np. wagi)</span>
+          </div>
+        </div>
+      </h3>
+    </div>
+    <div class="accordion-body" *ngIf="showGraphs">
+      <div class="row">
+      </div>
+    </div>
+  </div>
+
+
 </div>
 
 <modal #saveClientModal>

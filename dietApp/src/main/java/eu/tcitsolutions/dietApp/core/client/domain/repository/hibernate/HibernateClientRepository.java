@@ -63,4 +63,10 @@ public class HibernateClientRepository implements ClientRepository {
         return (Long) entityManager.createQuery(hql).setParameter("clientNo", clientNo).getSingleResult();
     }
 
+    @Override
+    public List<Client> getClientVersions(Long clientNo) {
+        String hql = "select c from client c where c.clientNo = :clientNo";
+        return (List<Client>) entityManager.createQuery(hql).setParameter("clientNo", clientNo).getResultList();
+    }
+
 }

@@ -12,3 +12,16 @@
 {
   margin-bottom: 4%;
 }
+
+.navigate-angle
+{
+  padding: 20px;
+}
+
+.navigate-angle:hover
+{
+  padding: 20px;
+  color: red;
+  text-decoration: underline;
+  cursor: pointer;
+}

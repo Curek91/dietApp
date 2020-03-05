@@ -56,4 +56,8 @@ export class ClientService {
       params: new HttpParams().set('clientId', clientId.toString())
     });
   }
+
+  getClientVersions(clientNo: number): Observable<Client[]> {
+    return this.http.get<Client[]>(this.apiUrl + 'clientVersions/' + clientNo, {headers: this.headers});
+  }
 }

@@ -75,11 +75,16 @@ public class ClientController {
     @RequestMapping(method = RequestMethod.POST, value = "/client/createNewVersion/{clientNo}")
     public @ResponseBody
     ResponseEntity<Client> createNewVersion(@PathVariable("clientNo") Long clientNo, @RequestBody ClientDTO source) {
-        System.out.println("Wypisuje parametry: ");
-        System.out.println("clientNo: " + clientNo);
-
         clientService.createNewVersion(clientNo, source);
-
         return new ResponseEntity<Client>(HttpStatus.OK);
+    }
+
+    @CrossOrigin(origins = "${cors.host}")
+    @RequestMapping(method = RequestMethod.GET, value = "/clientVersions/{clientNo}")
+    @ResponseStatus(HttpStatus.OK)
+    public @ResponseBody
+    ResponseEntity<List<Client>> clientVersions(@PathVariable Long clientNo) {
+        List<Client> clientList = clientService.getClientVersions(clientNo);
+        return new ResponseEntity<List<Client>>(clientList, HttpStatus.OK);
     }
 }

@@ -27,14 +27,14 @@
       </thead>
       <tbody>
       <tr *ngFor="let client of clients | clientFilter:filter">
-        <td [routerLink]="['/client', client.id]">{{client.clientNo}}</td>
-        <td [routerLink]="['/client', client.id]">{{client.firstname}}</td>
-        <td [routerLink]="['/client', client.id]">{{client.lastname}} </td>
-        <td [routerLink]="['/client', client.id]">{{client.age}}</td>
-        <td [routerLink]="['/client', client.id]">{{client.weight}}</td>
-        <td [routerLink]="['/client', client.id]">{{client.height}}</td>
-        <td [routerLink]="['/client', client.id]">{{client.email}}</td>
-        <td [routerLink]="['/client', client.id]">{{client.telephone}}</td>
+        <td [routerLink]="['/client', client.clientNo]">{{client.clientNo}}</td>
+        <td [routerLink]="['/client', client.clientNo]">{{client.firstname}}</td>
+        <td [routerLink]="['/client', client.clientNo]">{{client.lastname}} </td>
+        <td [routerLink]="['/client', client.clientNo]">{{client.age}}</td>
+        <td [routerLink]="['/client', client.clientNo]">{{client.weight}}</td>
+        <td [routerLink]="['/client', client.clientNo]">{{client.height}}</td>
+        <td [routerLink]="['/client', client.clientNo]">{{client.email}}</td>
+        <td [routerLink]="['/client', client.clientNo]">{{client.telephone}}</td>
         <td><button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal" (click)="deleteClientModal.open()">Usuń</button></td>
         <modal #deleteClientModal>
           <ng-template #modalHeader><h5 class="modal-title">Czy napewno chcesz usunąć klienta o id {{client.id}}?</h5></ng-template>

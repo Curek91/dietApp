@@ -1,6 +1,7 @@
 import {Diet} from "../../diet/models/Diet";
 export interface IClient {
   id: number;
+  clientNo: number;
   firstname: string;
   lastname: string;
   age: number;

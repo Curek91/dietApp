@@ -22,5 +22,5 @@ public interface ClientRepository {
 
     public Long getLastIdForClientNo(Long clientNo);
 
-
+    public List<Client> getClientVersions(Long clientNo);
 }

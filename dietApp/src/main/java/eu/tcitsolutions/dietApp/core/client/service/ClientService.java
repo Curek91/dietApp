@@ -19,4 +19,6 @@ public interface ClientService {
     public void updateClient(Long id, ClientDTO source);
 
     public void createNewVersion(Long clientNo, ClientDTO source);
+
+    public List<Client> getClientVersions(Long clientNo);
 }

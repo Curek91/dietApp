@@ -1,5 +1,5 @@
 import {IClient} from './IClient';
-import {Diet} from "../../diet/models/Diet";
+import {Diet} from '../../diet/models/Diet';
 /**
  * Created by tomasz.cur on 04.03.2019.
  */
@@ -7,7 +7,7 @@ import {Diet} from "../../diet/models/Diet";
 
 export class Client implements IClient {
   id: number;
-  clientNo: number;
+  clientNo: number
   firstname: string;
   lastname: string;
   age: number;

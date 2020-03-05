@@ -11,7 +11,7 @@ import {ShowClientComponent} from './show-client/show-client.component';
 const CLIENT_ROUTES: Route[] = [
   {path: 'manage-client', component: ManageClientComponent, canActivate: [CanActivateAuthGuard]},
   {path: 'new-client', component: NewClientComponent, canActivate: [CanActivateAuthGuard]},
-  {path: 'client/:id', component: ShowClientComponent, canActivate: [CanActivateAuthGuard]}
+  {path: 'client/:clientNo', component: ShowClientComponent, canActivate: [CanActivateAuthGuard]}
 ];
 
 @NgModule({
