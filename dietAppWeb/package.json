@@ -21,7 +21,7 @@
     "@angular/platform-browser": "6.0.7",
     "@angular/platform-browser-dynamic": "6.0.7",
     "@angular/router": "6.0.7",
-    "acorn": "^6.1.1",
+    "acorn": "^6.4.1",
     "angular-file-uploader": "^5.0.2",
     "angular-font-awesome": "^3.1.2",
     "angular2-image-upload": "^1.0.0-rc.2",
