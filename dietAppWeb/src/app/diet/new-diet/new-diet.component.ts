@@ -5,8 +5,8 @@ import {DietService} from '../diet.service';
 import {Meal} from '../models/Meal';
 import {ProductType} from '../models/ProductType';
 import {IProduct} from '../models/IProduct';
-import {ClientService} from "../../client/client.service";
-import {ModalComponent} from "angular-custom-modal";
+import {ClientService} from '../../client/client.service';
+import {ModalComponent} from 'angular-custom-modal';
 
 @Component({
   selector: 'app-new-diet',
@@ -15,14 +15,14 @@ import {ModalComponent} from "angular-custom-modal";
 })
 export class NewDietComponent implements OnInit {
 
-  @Input() clientId : number;
-  @Input() dietId : number;
+  @Input() clientNo: number;
+  @Input() dietId: number;
   @Input() oldDiets: Diet[];
 
-  @Output() refreshDietsEvent : EventEmitter<number> = new EventEmitter<number>();
+  @Output() refreshDietsEvent: EventEmitter<number> = new EventEmitter<number>();
 
-  @ViewChild("createDietModal") createDietModal: ModalComponent;
-  @ViewChild("updateDietModal") updateDietModal: ModalComponent;
+  @ViewChild('createDietModal') createDietModal: ModalComponent;
+  @ViewChild('updateDietModal') updateDietModal: ModalComponent;
 
   diet: Diet = new Diet();
   products: Product[] = new Array();
@@ -31,13 +31,12 @@ export class NewDietComponent implements OnInit {
   productTypeSelected: String = null;
   types: ProductType[] = new Array();
   oldDiet: Diet;
-  suplements: string = '';
+  suplements: String = '';
 
   constructor(private dietService: DietService, private clientService: ClientService) {
   }
 
   ngOnInit() {
-    console.log("INIT");
     this.loadProducts();
     this.loadProductTypes();
   }
@@ -131,8 +130,9 @@ export class NewDietComponent implements OnInit {
   }
 
   getProteinsForMeal(meal: Meal): number {
-    if (meal == null)
+    if (meal == null) {
       return null;
+    }
     if (meal.products.length > 0) {
       return meal.products
         .map((product) => +product.protein * (product.weight / 100))
@@ -143,8 +143,9 @@ export class NewDietComponent implements OnInit {
   }
 
   getCarbsForMeal(meal: Meal): number {
-    if (meal == null)
+    if (meal == null) {
       return null;
+    }
     if (meal.products.length > 0) {
       return meal.products
         .map((product) => +product.carbs  * (product.weight / 100))
@@ -155,8 +156,9 @@ export class NewDietComponent implements OnInit {
   }
 
   getFatsForMeal(meal: Meal): number {
-    if (meal == null)
+    if (meal == null) {
       return null;
+    }
     if (meal.products.length > 0) {
       return meal.products
         .map((product) => +product.fat  * (product.weight / 100))
@@ -167,8 +169,9 @@ export class NewDietComponent implements OnInit {
   }
 
   getEnergyForMeal(meal: Meal): number {
-    if (meal == null)
+    if (meal == null) {
       return null;
+    }
     if (meal.products.length > 0) {
       return meal.products
         .map((product) => +product.kcal * (product.weight / 100))
@@ -179,8 +182,9 @@ export class NewDietComponent implements OnInit {
   }
 
   getProteinsForDiet(diet: Diet): number {
-    if (diet == null)
+    if (diet == null) {
       return null;
+    }
     if (diet.meals.length > 0) {
       return diet.meals
         .map((meal) => +this.getProteinsForMeal(meal))
@@ -191,8 +195,9 @@ export class NewDietComponent implements OnInit {
   }
 
   getCarbsForDiet(diet: Diet): number {
-    if (diet == null)
+    if (diet == null) {
       return null;
+    }
     if (diet.meals.length > 0) {
       return diet.meals
         .map((meal) => +this.getCarbsForMeal(meal))
@@ -203,8 +208,9 @@ export class NewDietComponent implements OnInit {
   }
 
   getFatsForDiet(diet: Diet): number {
-    if (diet == null)
+    if (diet == null) {
       return null;
+    }
     if (diet.meals.length > 0) {
       return diet.meals
         .map((meal) => +this.getFatsForMeal(meal))
@@ -215,8 +221,9 @@ export class NewDietComponent implements OnInit {
   }
 
   getEnergyForDiet(diet: Diet): number {
-    if (diet == null)
+    if (diet == null) {
       return null;
+    }
     if (diet.meals.length > 0) {
       return diet.meals
         .map((meal) => +this.getEnergyForMeal(meal))
@@ -227,32 +234,32 @@ export class NewDietComponent implements OnInit {
   }
 
   addDiet() {
-    this.diet.clientId = this.clientId;
+    this.diet.clientNo = this.clientNo;
     this.dietService.addDiet(this.diet).subscribe((diet) => {
       console.log(diet.id);
       this.dietId = diet.id;
-      this.refreshDietsEvent.next(this.clientId);
+      this.refreshDietsEvent.next(this.clientNo);
     });
     console.log('dodaje diete');
     this.createDietModal.close();
   }
 
-  clearNewDiet(): void{
+  clearNewDiet(): void {
     this.diet = new Diet();
     this.activeMeal = 0;
   }
 
   getDiet(): void {
     this.dietService.getDiet(this.dietId).subscribe((diet) => {
-        diet.meals.sort((leftSide, rightSide) : number => {
-          if (leftSide.mealNo < rightSide.mealNo) return -1;
-          if (leftSide.mealNo > rightSide.mealNo) return 1;
+        diet.meals.sort((leftSide, rightSide): number => {
+          if (leftSide.mealNo < rightSide.mealNo) { return -1; }
+          if (leftSide.mealNo > rightSide.mealNo) { return 1; }
           return 0;
         });
         diet.meals.forEach((meal) => {
-          meal.products.sort((leftSide, rightSide) : number => {
-            if (leftSide.sortNo < rightSide.sortNo) return -1;
-            if (leftSide.sortNo > rightSide.sortNo) return 1;
+          meal.products.sort((leftSide, rightSide): number => {
+            if (leftSide.sortNo < rightSide.sortNo) { return -1; }
+            if (leftSide.sortNo > rightSide.sortNo) { return 1; }
             return 0;
           });
         });
@@ -260,7 +267,7 @@ export class NewDietComponent implements OnInit {
         this.activeMeal = 1;
       }
 
-    )}
+    ); }
 
   modifyDiet() {
     this.diet.id = this.dietId;
@@ -272,33 +279,33 @@ export class NewDietComponent implements OnInit {
 
   getOldDiet(value): void {
 
-    if (!value){
+    if (!value) {
       this.oldDiet = null;
       return;
     }
 
-    console.log("Diet id: " + value);
     this.dietService.getDiet(value).subscribe((diet) => {
-        diet.meals.sort((leftSide, rightSide) : number => {
-          if (leftSide.mealNo < rightSide.mealNo) return -1;
-          if (leftSide.mealNo > rightSide.mealNo) return 1;
+        diet.meals.sort((leftSide, rightSide): number => {
+          if (leftSide.mealNo < rightSide.mealNo) { return -1; }
+          if (leftSide.mealNo > rightSide.mealNo) { return 1; }
           return 0;
         });
         diet.meals.forEach((meal) => {
-          meal.products.sort((leftSide, rightSide) : number => {
-            if (leftSide.sortNo < rightSide.sortNo) return -1;
-            if (leftSide.sortNo > rightSide.sortNo) return 1;
+          meal.products.sort((leftSide, rightSide): number => {
+            if (leftSide.sortNo < rightSide.sortNo) { return -1; }
+            if (leftSide.sortNo > rightSide.sortNo) { return 1; }
             return 0;
           });
         });
         this.oldDiet = diet;
       }
 
-    )}
+    ); }
 
     getMealOnOldDiet(mealNo: number): Meal {
       let meal: Meal;
       if (this.oldDiet) {
+        // tslint:disable-next-line:no-shadowed-variable triple-equals
         meal = this.oldDiet.meals.find(meal => meal.mealNo == mealNo);
         return meal;
       } else {

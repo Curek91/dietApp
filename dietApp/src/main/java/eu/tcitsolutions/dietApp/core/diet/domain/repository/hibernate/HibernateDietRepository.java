@@ -16,9 +16,9 @@ public class HibernateDietRepository implements DietRepository {
     private EntityManager entityManager;
 
     @Override
-    public List<Diet> getDiets(Long clientId) {
-        String hql = "select d from diet d where d.client.id = :client_id";
-        return (List<Diet>) entityManager.createQuery(hql).setParameter("client_id", clientId).getResultList();
+    public List<Diet> getDiets(Long clientNo) {
+        String hql = "select d from diet d where d.client.clientNo = :client_no";
+        return (List<Diet>) entityManager.createQuery(hql).setParameter("client_no", clientNo).getResultList();
     }
 
     @Override

@@ -118,7 +118,7 @@
           </tbody>
         </table>
       </div>
-      <app-new-diet #newDietRef (refreshDietsEvent)="loadClientDiets()" [clientId]="route.snapshot.params['id']"
+      <app-new-diet #newDietRef (refreshDietsEvent)="loadClientDiets()" [clientNo]="route.snapshot.params['clientNo']"
                     [dietId]="dietIdToModify" [oldDiets]="diets"></app-new-diet>
     </div>
   </div>

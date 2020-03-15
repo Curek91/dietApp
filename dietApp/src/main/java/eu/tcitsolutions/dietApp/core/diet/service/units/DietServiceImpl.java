@@ -1,5 +1,6 @@
 package eu.tcitsolutions.dietApp.core.diet.service.units;
 
+import eu.tcitsolutions.dietApp.core.client.domain.repository.ClientRepository;
 import eu.tcitsolutions.dietApp.core.diet.domain.dto.DietDTO;
 import eu.tcitsolutions.dietApp.core.diet.domain.entity.Diet;
 import eu.tcitsolutions.dietApp.core.diet.domain.repository.DietRepository;
@@ -29,8 +30,8 @@ public class DietServiceImpl implements DietService {
     }
 
     @Override
-    public List<Diet> getDiets(Long clientId) {
-        return dietRepository.getDiets(clientId);
+    public List<Diet> getDiets(Long clientNo) {
+        return dietRepository.getDiets(clientNo);
     }
 
     @Override

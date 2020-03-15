@@ -37,11 +37,11 @@ public class DietController {
     }
 
     @CrossOrigin(origins = "${cors.host}")
-    @RequestMapping(method = RequestMethod.GET, value = "/diets/{clientId}")
+    @RequestMapping(method = RequestMethod.GET, value = "/diets/{clientNo}")
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
-    ResponseEntity<List<Diet>> dietsList(@PathVariable Long clientId){
-        List<Diet> dietList = dietService.getDiets(clientId);
+    ResponseEntity<List<Diet>> dietsList(@PathVariable Long clientNo){
+        List<Diet> dietList = dietService.getDiets(clientNo);
         return new ResponseEntity<List<Diet>>(dietList, HttpStatus.OK);
     }
 

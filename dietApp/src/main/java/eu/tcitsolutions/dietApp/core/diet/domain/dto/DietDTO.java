@@ -13,20 +13,20 @@ public class DietDTO {
 
     private Set<MealDTO> meals;
     private Double kcal;
-    private Long clientId;
+    private Long clientNo;
 
     public DietDTO() {
     }
 
-    public DietDTO(Set<MealDTO> meals, Double kcal, Long clientId) {
+    public DietDTO(Set<MealDTO> meals, Double kcal, Long clientNo) {
         this.meals = meals;
         this.kcal = kcal;
-        this.clientId = clientId;
+        this.clientNo = clientNo;
     }
 
-    public DietDTO(Set<MealDTO> meals, Long clientId) {
+    public DietDTO(Set<MealDTO> meals, Long clientNo) {
         this.meals = meals;
-        this.clientId = clientId;
+        this.clientNo = clientNo;
     }
 
     public Set<MealDTO> getMeals() {
@@ -45,11 +45,11 @@ public class DietDTO {
         this.kcal = kcal;
     }
 
-    public Long getClientId() {
-        return clientId;
+    public Long getClientNo() {
+        return clientNo;
     }
 
-    public void setClientId(Long clientId) {
-        this.clientId = clientId;
+    public void setClientNo(Long clientNo) {
+        this.clientNo = clientNo;
     }
 }

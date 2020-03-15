@@ -6,7 +6,7 @@ import eu.tcitsolutions.dietApp.core.diet.domain.entity.Type;
 import java.util.List;
 
 public interface DietRepository {
-    public List<Diet> getDiets(Long clientId);
+    public List<Diet> getDiets(Long clientNo);
 
     public Diet getDiet(Long id);
 

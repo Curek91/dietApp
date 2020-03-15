@@ -92,18 +92,6 @@ export class ShowClientComponent implements OnInit {
     return client;
   }
 
-  modifyClient() {
-    console.log(this.parseFormToEntity());
-
-
-
-    this.clientService.modifyClient(this.parseFormToEntity()).subscribe(() => {
-      console.log('modyfikuje klienta');
-
-      this.router.navigate(['../manage-client']);
-    });
-  }
-
   loadClientDiets() {
     const id = +this.route.snapshot.params['clientNo'];
     let dietTemp: Diet;
