@@ -15,7 +15,7 @@
           </div>
           <div class="col-sm-6 align-self-end ">
             <label class="new-product-label">Nazwisko:</label>
-            <input class="form-control" [disabled]="true" formControlName="lastname" placeholder="Nazwisko...">
+            <input class="form-control" formControlName="lastname" placeholder="Nazwisko...">
           </div>
         </div>
         <div class="row form-group">
@@ -44,17 +44,21 @@
         </div>
         <div class="row form-group">
           <div class="col-sm-4 text-left">
-            <i class="fa fa-angle-double-left fa-3x navigate-angle" (click)="getFirstClientVersion()"></i>
-            <i class="fa fa-angle-left fa-3x navigate-angle" (click)="getPreviousClientVersion()"></i>
-            <i class="fa fa-angle-right fa-3x navigate-angle" (click)="getNextClientVersion()"></i>
-            <i class="fa fa-angle-double-right fa-3x navigate-angle" (click)="getLastClientVersion()"></i>
+            <i class="fa fa-angle-double-left fa-3x navigate-angle" (click)="changeClientVersion(0)"></i>
+            <i class="fa fa-angle-left fa-3x navigate-angle" (click)="changeClientVersion(currentClientVersion - 1)"></i>
+            <span *ngIf="clientForm.disabled">{{currentClientVersion + 1}} .. {{clientVersions.length}}</span>
+            <span *ngIf="!clientForm.disabled">Nowa waersja</span>
+            <i class="fa fa-angle-right fa-3x navigate-angle" (click)="changeClientVersion(currentClientVersion + 1)"></i>
+            <i class="fa fa-angle-double-right fa-3x navigate-angle" (click)="changeClientVersion(clientVersions.length - 1)"></i>
           </div>
           <div class="col-sm-8 text-right">
-            <button class="btn btn-primary btn-md" style="margin-right: 2%" [disabled]="clientForm.invalid"
-                    (click)="saveClientModal.open()">Zapisz
+            <button class="btn btn-danger btn-md" style="margin-right: 2%"
+                    (click)="cancelNewVersion()" *ngIf="!clientForm.disabled">Wycofaj
             </button>
-            <button class="btn btn-danger btn-md" type="submit" [routerLink]="['/manage-client']">Wróć</button>
-
+            <button class="btn btn-primary btn-md" style="margin-right: 2%" [disabled]="clientForm.invalid"
+                    (click)="saveClientModal.open()" *ngIf="!clientForm.disabled">Zapisz
+            </button>
+            <button class="btn btn-info btn-md" (click)="createNewVersion()" *ngIf="clientForm.disabled">Utwórz nową wersję</button>
           </div>
         </div>
       </form>
@@ -162,7 +166,7 @@
 <modal #saveClientModal>
   <ng-template #modalHeader><h5 class="modal-title">Czy napewno chcesz zapisać klienta?</h5></ng-template>
   <ng-template #modalFooter>
-    <button type="button" class="btn btn-success btn-sm" data-dismiss="modal" (click)="modifyClient()">Zapisz</button>
+    <button type="button" class="btn btn-success btn-sm" data-dismiss="modal" (click)="commitNewVersion()">Zapisz</button>
     <button type="button" class="btn btn-danger btn-sm" (click)="saveClientModal.close()">Anuluj</button>
   </ng-template>
 </modal>

@@ -1,5 +1,5 @@
 import {
-  Component,
+  Component, HostListener,
   OnInit,
   ViewChild
 } from '@angular/core';
@@ -11,6 +11,9 @@ import {Diet} from '../../diet/models/Diet';
 import {DietService} from '../../diet/diet.service';
 import {NewDietComponent} from '../../diet/new-diet/new-diet.component';
 import {ModalComponent, ModalModule} from 'angular-custom-modal';
+import {DISABLED} from "@angular/forms/src/model";
+import {until} from "selenium-webdriver";
+import elementIsDisabled = until.elementIsDisabled;
 
 @Component({
   selector: 'app-show-client',
@@ -21,20 +24,21 @@ export class ShowClientComponent implements OnInit {
 
   @ViewChild('newDietRef') newDietRef: NewDietComponent;
   @ViewChild('deleteDietModal') deleteDietModal: ModalComponent;
+  @ViewChild('saveClientModal') saveClientModal: ModalComponent;
 
-  clientForm: FormGroup;
   showInfo: boolean;
   showDiets: boolean;
   showTrainings: boolean;
   showProgress: boolean;
   showGraphs: boolean;
-  showNewDiet: boolean;
+
+  clientForm: FormGroup;
   diets: Diet[] = new Array();
 
   dietIdToModify: number;
 
   clientVersions: Client[] = new Array();
-  currentClientVersion: number = null;
+  currentClientVersion: number;
 
   constructor(private formBuilder: FormBuilder,
               private clientService: ClientService,
@@ -49,7 +53,7 @@ export class ShowClientComponent implements OnInit {
     this.showGraphs = false;
     this.showTrainings = false;
     this.clientForm = this.formBuilder.group({
-      firstname: ['', Validators.required],
+      firstname: ['',  Validators.required],
       lastname: ['', Validators.required],
       age: ['', Validators.required],
       weight: ['', Validators.required],
@@ -57,9 +61,18 @@ export class ShowClientComponent implements OnInit {
       email: ['', Validators.required],
       telephone: ['', Validators.required]
     });
+    this.clientForm.disable();
     this.loadClientVersions();
     this.loadClientDiets();
-    this.clientForm.disable();
+  }
+
+  @HostListener('document:keyup', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (event.key === 'ArrowRight') {
+      this.changeClientVersion(this.currentClientVersion + 1);
+    } else if (event.key === 'ArrowLeft'){
+      this.changeClientVersion(this.currentClientVersion - 1);
+    }
   }
 
   parseFormToEntity(): Client {
@@ -81,6 +94,9 @@ export class ShowClientComponent implements OnInit {
 
   modifyClient() {
     console.log(this.parseFormToEntity());
+
+
+
     this.clientService.modifyClient(this.parseFormToEntity()).subscribe(() => {
       console.log('modyfikuje klienta');
 
@@ -104,21 +120,6 @@ export class ShowClientComponent implements OnInit {
   }
 
 
-  loadClient() {
-    const id = +this.route.snapshot.params['clientNo'];
-    this.clientService.getClient(id).subscribe((client) => {
-      this.clientForm = this.formBuilder.group({
-        firstname: [client.firstname, Validators.required],
-        lastname: [client.lastname, Validators.required],
-        age: [+client.age, Validators.required],
-        weight: [+client.weight, Validators.required],
-        height: [+client.height, Validators.required],
-        email: [client.email, Validators.required],
-        telephone: [client.telephone, Validators.required]
-      });
-    });
-  }
-
   loadClientVersions() {
     const clientNo = +this.route.snapshot.params['clientNo'];
     let clientTemp: Client;
@@ -140,75 +141,28 @@ export class ShowClientComponent implements OnInit {
         };
         this.clientVersions.push(clientTemp);
       });
-      console.log(this.clientVersions);
       this.clientVersions.sort((client1, client2) => client1.id - client2.id);
       this.currentClientVersion = this.clientVersions.length - 1;
-      this.clientForm = this.formBuilder.group({
-        firstname: [this.clientVersions[this.currentClientVersion].firstname, Validators.required],
-        lastname: [this.clientVersions[this.currentClientVersion].lastname, Validators.required],
-        age: [+this.clientVersions[this.currentClientVersion].age, Validators.required],
-        weight: [+this.clientVersions[this.currentClientVersion].weight, Validators.required],
-        height: [+this.clientVersions[this.currentClientVersion].height, Validators.required],
-        email: [this.clientVersions[this.currentClientVersion].email, Validators.required],
-        telephone: [this.clientVersions[this.currentClientVersion].telephone, Validators.required]
-      });
+      this.fillForm(this.currentClientVersion);
     });
   }
 
-  getPreviousClientVersion(): void {
-    if (this.currentClientVersion > 0) {
-      this.currentClientVersion = this.currentClientVersion - 1;
-      this.clientForm = this.formBuilder.group({
-        firstname: [this.clientVersions[this.currentClientVersion].firstname, Validators.required],
-        lastname: [this.clientVersions[this.currentClientVersion].lastname, Validators.required],
-        age: [+this.clientVersions[this.currentClientVersion].age, Validators.required],
-        weight: [+this.clientVersions[this.currentClientVersion].weight, Validators.required],
-        height: [+this.clientVersions[this.currentClientVersion].height, Validators.required],
-        email: [this.clientVersions[this.currentClientVersion].email, Validators.required],
-        telephone: [this.clientVersions[this.currentClientVersion].telephone, Validators.required]
-      });
+  fillForm(version: number) {
+    this.clientForm.get('firstname').setValue(this.clientVersions[version].firstname);
+    this.clientForm.get('lastname').setValue(this.clientVersions[version].lastname);
+    this.clientForm.get('age').setValue(this.clientVersions[version].age);
+    this.clientForm.get('weight').setValue(this.clientVersions[version].weight);
+    this.clientForm.get('height').setValue(this.clientVersions[version].height);
+    this.clientForm.get('email').setValue(this.clientVersions[version].email);
+    this.clientForm.get('telephone').setValue(this.clientVersions[version].telephone);
+  }
+
+  changeClientVersion(version: number){
+    if (version >= 0 && version <= this.clientVersions.length - 1) {
+      this.currentClientVersion = version;
+      this.fillForm(this.currentClientVersion);
+      this.clientForm.disable();
     }
-  }
-
-  getNextClientVersion(): void {
-    if (this.currentClientVersion < this.clientVersions.length - 1) {
-      this.currentClientVersion = this.currentClientVersion + 1;
-      this.clientForm = this.formBuilder.group({
-        firstname: [this.clientVersions[this.currentClientVersion].firstname, Validators.required],
-        lastname: [this.clientVersions[this.currentClientVersion].lastname, Validators.required],
-        age: [+this.clientVersions[this.currentClientVersion].age, Validators.required],
-        weight: [+this.clientVersions[this.currentClientVersion].weight, Validators.required],
-        height: [+this.clientVersions[this.currentClientVersion].height, Validators.required],
-        email: [this.clientVersions[this.currentClientVersion].email, Validators.required],
-        telephone: [this.clientVersions[this.currentClientVersion].telephone, Validators.required]
-      });
-    }
-  }
-
-  getFirstClientVersion(): void {
-      this.currentClientVersion = 0;
-      this.clientForm = this.formBuilder.group({
-        firstname: [this.clientVersions[this.currentClientVersion].firstname, Validators.required],
-        lastname: [this.clientVersions[this.currentClientVersion].lastname, Validators.required],
-        age: [+this.clientVersions[this.currentClientVersion].age, Validators.required],
-        weight: [+this.clientVersions[this.currentClientVersion].weight, Validators.required],
-        height: [+this.clientVersions[this.currentClientVersion].height, Validators.required],
-        email: [this.clientVersions[this.currentClientVersion].email, Validators.required],
-        telephone: [this.clientVersions[this.currentClientVersion].telephone, Validators.required]
-      });
-  }
-
-  getLastClientVersion(): void {
-      this.currentClientVersion = this.clientVersions.length - 1;
-      this.clientForm = this.formBuilder.group({
-        firstname: [this.clientVersions[this.currentClientVersion].firstname, Validators.required],
-        lastname: [this.clientVersions[this.currentClientVersion].lastname, Validators.required],
-        age: [+this.clientVersions[this.currentClientVersion].age, Validators.required],
-        weight: [+this.clientVersions[this.currentClientVersion].weight, Validators.required],
-        height: [+this.clientVersions[this.currentClientVersion].height, Validators.required],
-        email: [this.clientVersions[this.currentClientVersion].email, Validators.required],
-        telephone: [this.clientVersions[this.currentClientVersion].telephone, Validators.required]
-      });
   }
 
   deleteDiet(id: number): void {
@@ -232,5 +186,28 @@ export class ShowClientComponent implements OnInit {
     this.clientService.sendEmail(dietId).subscribe(() => {
       console.log('Wysyłam maila');
     });
+  }
+
+  createNewVersion() {
+    console.log('Weszlo');
+    this.currentClientVersion = this.clientVersions.length - 1;
+    this.changeClientVersion(this.currentClientVersion);
+    this.clientForm.enable();
+  }
+
+  cancelNewVersion(){
+    this.changeClientVersion(this.clientVersions.length - 1);
+    this.clientForm.disable();
+  }
+
+  commitNewVersion() {
+    this.clientService.createNewVersion(+this.route.snapshot.params['clientNo'], this.parseFormToEntity()).subscribe(
+      () => {
+        console.log('Creating new version of client');
+        this.loadClientVersions();
+        this.clientForm.disable();
+        this.saveClientModal.close();
+      }
+    );
   }
 }

@@ -50,10 +50,9 @@ export class ClientService {
     return this.http.post<Diet>(this.apiUrl + 'api/sendEmail', dietId, {headers: this.headers});
   }
 
-  createNewVersion(clientId: number, clientNo: number, data): Observable<Client> {
-    return this.http.put<Client>(this.apiUrl + 'client/createNewVersion/' + clientNo, data, {
+  createNewVersion(clientNo: number, data): Observable<Client> {
+    return this.http.post<Client>(this.apiUrl + 'client/createNewVersion/' + clientNo, data, {
       headers: this.headers,
-      params: new HttpParams().set('clientId', clientId.toString())
     });
   }
 
