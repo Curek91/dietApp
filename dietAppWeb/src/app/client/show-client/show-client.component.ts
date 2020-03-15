@@ -59,7 +59,11 @@ export class ShowClientComponent implements OnInit {
       weight: ['', Validators.required],
       height: ['', Validators.required],
       email: ['', Validators.required],
-      telephone: ['', Validators.required]
+      telephone: ['', Validators.required],
+      biceps: [''],
+      chest: [''],
+      waist: [''],
+      thigh: ['']
     });
     this.clientForm.disable();
     this.loadClientVersions();
@@ -87,7 +91,11 @@ export class ShowClientComponent implements OnInit {
       weight: +this.clientForm.value['weight'],
       height: +this.clientForm.value['height'],
       email: this.clientForm.value['email'].toString(),
-      telephone: this.clientForm.value['telephone'].toString()
+      telephone: this.clientForm.value['telephone'].toString(),
+      biceps: +this.clientForm.value['biceps'],
+      chest: +this.clientForm.value['chest'],
+      waist: +this.clientForm.value['waist'],
+      thigh: +this.clientForm.value['thigh']
     };
     return client;
   }
@@ -125,7 +133,11 @@ export class ShowClientComponent implements OnInit {
           weight: client.weight,
           height: client.height,
           email: client.email,
-          telephone: client.telephone
+          telephone: client.telephone,
+          biceps: client.biceps,
+          chest: client.chest,
+          waist: client.waist,
+          thigh: client.thigh
         };
         this.clientVersions.push(clientTemp);
       });
@@ -143,6 +155,10 @@ export class ShowClientComponent implements OnInit {
     this.clientForm.get('height').setValue(this.clientVersions[version].height);
     this.clientForm.get('email').setValue(this.clientVersions[version].email);
     this.clientForm.get('telephone').setValue(this.clientVersions[version].telephone);
+    this.clientForm.get('biceps').setValue(this.clientVersions[version].biceps);
+    this.clientForm.get('chest').setValue(this.clientVersions[version].chest);
+    this.clientForm.get('waist').setValue(this.clientVersions[version].waist);
+    this.clientForm.get('thigh').setValue(this.clientVersions[version].thigh);
   }
 
   changeClientVersion(version: number){

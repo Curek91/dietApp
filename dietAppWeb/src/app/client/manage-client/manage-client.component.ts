@@ -37,7 +37,11 @@ export class ManageClientComponent implements OnInit {
           weight: client.weight,
           height: client.height,
           email: client.email,
-          telephone: client.telephone
+          telephone: client.telephone,
+          biceps: client.biceps,
+          chest: client.chest,
+          waist: client.waist,
+          thigh: client.thigh
         };
          this.clients.push(clientTemp);
       });

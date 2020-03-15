@@ -24,22 +24,43 @@
             <input class="form-control" formControlName="age" placeholder="Wiek...">
           </div>
           <div class="col-sm-4">
-            <label class="new-product-label">Waga:</label>
-            <input class="form-control" formControlName="weight" placeholder="Waga...">
-          </div>
-          <div class="col-sm-4 align-self-end">
-            <label class="new-product-label">Wzrost:</label>
-            <input class="form-control" formControlName="height" placeholder="Wzrost...">
-          </div>
-        </div>
-        <div class="row form-group">
-          <div class="col-sm-6">
             <label class="new-product-label">Email:</label>
             <input class="form-control" formControlName="email" placeholder="Email...">
           </div>
-          <div class="col-sm-6 align-self-end ">
+          <div class="col-sm-4 align-self-end ">
             <label class="new-product-label">Numer telefonu:</label>
             <input class="form-control" formControlName="telephone" placeholder="Telefon...">
+          </div>
+        </div>
+        <div class="row form-group size-row">
+          <div class="col-sm-3">
+            <label class="new-product-label">Biceps:</label>
+            <input class="form-control" formControlName="biceps" placeholder="Biceps...">
+          </div>
+          <div class="col-sm-3 align-self-end ">
+            <label class="new-product-label">Klatka:</label>
+            <input class="form-control" formControlName="chest" placeholder="Klatka...">
+          </div>
+          <div class="col-sm-3">
+            <label class="new-product-label">Talia:</label>
+            <input class="form-control" formControlName="waist" placeholder="Talia...">
+          </div>
+          <div class="col-sm-3 align-self-end ">
+            <label class="new-product-label">Udo:</label>
+            <input class="form-control" formControlName="thigh" placeholder="Udo...">
+          </div>
+        </div>
+        <div class="row form-group">
+          <div class="col-sm-3">
+            <label class="new-product-label">Waga:</label>
+            <input class="form-control" formControlName="weight" placeholder="Waga...">
+          </div>
+          <div class="col-sm-3 align-self-end">
+            <label class="new-product-label">Wzrost:</label>
+            <input class="form-control" formControlName="height" placeholder="Wzrost...">
+          </div>
+          <div class="col-sm-6">
+
           </div>
         </div>
         <div class="row form-group">
@@ -131,13 +152,37 @@
           <div class="col-sm-10" (click)="showProgress = !showProgress">
             <i class="fa "
                [ngClass]="{'fa-angle-down': showProgress === true, 'fa-angle-right': showProgress === false}"></i>
-            <span>Postępy (Tabelka z postępami)</span>
+            <span>Postdsfsępy</span>
           </div>
         </div>
       </h3>
     </div>
     <div class="accordion-body" *ngIf="showProgress">
       <div class="row">
+        <div class="col-sm-12">
+          <table class="table table-striped">
+            <thead>
+            <th>Lp</th>
+            <th>Waga</th>
+            <th>Wzrost</th>
+            <th>Biceps</th>
+            <th>Klatka</th>
+            <th>Talia</th>
+            <th>Udo</th>
+            </thead>
+            <tbody>
+            <tr *ngFor="let version of clientVersions; let i = index">
+              <td>{{i + 6}}</td>
+              <td>{{version.weight}}</td>
+              <td>{{version.height}}</td>
+              <td>{{version.biceps}}</td>
+              <td>{{version.chest}}</td>
+              <td>{{version.waist}}</td>
+              <td>{{version.thigh}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
@@ -149,13 +194,25 @@
           <div class="col-sm-10" (click)="showGraphs = !showGraphs">
             <i class="fa "
                [ngClass]="{'fa-angle-down': showGraphs === true, 'fa-angle-right': showGraphs === false}"></i>
-            <span>Wykresy (Wykresy np. wagi)</span>
+            <span>Wykresy</span>
           </div>
         </div>
       </h3>
     </div>
-    <div class="accordion-body" *ngIf="showGraphs">
+    <div class="accordion-body">
       <div class="row">
+        <div class="col-sm-12">
+          asdas
+        <canvas baseChart width="400" height="400"
+                [datasets]="lineChartData"
+                [labels]="lineChartLabels"
+                [options]="lineChartOptions"
+                [colors]="lineChartColors"
+                [legend]="lineChartLegend"
+                [chartType]="lineChartType"
+                [plugins]="lineChartPlugins">
+        </canvas>
+        </div>
       </div>
     </div>
   </div>

@@ -32,7 +32,11 @@ export class NewClientComponent implements OnInit {
       weight: ['', Validators.required],
       height: ['', Validators.required],
       email: ['', Validators.required],
-      telephone: ['', Validators.required]
+      telephone: ['', Validators.required],
+      biceps: [''],
+      chest: [''],
+      waist: [''],
+      thigh: ['']
     });
   }
 
@@ -48,7 +52,11 @@ export class NewClientComponent implements OnInit {
       weight: +this.clientForm.value['weight'],
       height: +this.clientForm.value['height'],
       email: this.clientForm.value['email'].toString(),
-      telephone: this.clientForm.value['telephone'].toString()
+      telephone: this.clientForm.value['telephone'].toString(),
+      biceps: +this.clientForm.value['height'],
+      chest: +this.clientForm.value['chest'],
+      waist: +this.clientForm.value['waist'],
+      thigh: +this.clientForm.value['thigh']
     };
     return client;
   }

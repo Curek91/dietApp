@@ -83,6 +83,21 @@ public class Client extends BaseLogEntity implements Serializable {
         this.thigh = thigh;
     }
 
+    public Client(Long id, String firstname, String lastname, Integer age, Float weight, Integer height, String email, String telephone, Integer biceps, Integer chest, Integer waist, Integer thigh) {
+        this.id = id;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.age = age;
+        this.weight = weight;
+        this.height = height;
+        this.email = email;
+        this.telephone = telephone;
+        this.biceps = biceps;
+        this.chest = chest;
+        this.waist = waist;
+        this.thigh = thigh;
+    }
+
     public Long getId() {
         return id;
     }
