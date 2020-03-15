@@ -10,6 +10,7 @@ import {DietModule} from "../diet/diet.module";
 import {ModalModule} from "angular-custom-modal";
 import {ProductFilterPipe} from "../product-filter.pipe";
 import {ClientFilterPipe} from "../client-filter.pipe";
+import {ChartsModule} from "ng2-charts";
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import {ClientFilterPipe} from "../client-filter.pipe";
     ReactiveFormsModule,
     AngularFontAwesomeModule,
     DietModule,
-    ModalModule
+    ModalModule,
+    ChartsModule
   ],
   declarations: [ManageClientComponent, NewClientComponent, ShowClientComponent, ClientFilterPipe]
 })

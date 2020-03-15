@@ -11,9 +11,9 @@ import {Diet} from '../../diet/models/Diet';
 import {DietService} from '../../diet/diet.service';
 import {NewDietComponent} from '../../diet/new-diet/new-diet.component';
 import {ModalComponent, ModalModule} from 'angular-custom-modal';
-import {DISABLED} from "@angular/forms/src/model";
-import {until} from "selenium-webdriver";
-import elementIsDisabled = until.elementIsDisabled;
+import {ChartDataSets, ChartOptions} from 'chart.js';
+import {Color} from 'ng2-charts';
+import {range} from "rxjs";
 
 @Component({
   selector: 'app-show-client',
@@ -40,6 +40,22 @@ export class ShowClientComponent implements OnInit {
   clientVersions: Client[] = new Array();
   currentClientVersion: number;
 
+  public lineChartData: ChartDataSets[] = [
+    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
+    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
+    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
+    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
+    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
+    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' }
+  ];
+  public lineChartOptions: (ChartOptions) = {
+    responsive: true,
+  };
+  public lineChartLegend = true;
+  public lineChartType = 'line';
+
+  public lineChartLabels = [];
+
   constructor(private formBuilder: FormBuilder,
               private clientService: ClientService,
               private dietService: DietService,
@@ -63,7 +79,8 @@ export class ShowClientComponent implements OnInit {
       biceps: [''],
       chest: [''],
       waist: [''],
-      thigh: ['']
+      thigh: [''],
+      modificationTime: ['']
     });
     this.clientForm.disable();
     this.loadClientVersions();
@@ -95,7 +112,8 @@ export class ShowClientComponent implements OnInit {
       biceps: +this.clientForm.value['biceps'],
       chest: +this.clientForm.value['chest'],
       waist: +this.clientForm.value['waist'],
-      thigh: +this.clientForm.value['thigh']
+      thigh: +this.clientForm.value['thigh'],
+      modificationTime: this.clientForm.value['modificationTime']
     };
     return client;
   }
@@ -121,7 +139,7 @@ export class ShowClientComponent implements OnInit {
     let clientTemp: Client;
     this.clientService.getClientVersions(clientNo).subscribe((clientVersions) => {
       this.clientVersions = [];
-
+      console.log(clientVersions);
       clientVersions.forEach((client) => {
 
         clientTemp = {
@@ -137,14 +155,36 @@ export class ShowClientComponent implements OnInit {
           biceps: client.biceps,
           chest: client.chest,
           waist: client.waist,
-          thigh: client.thigh
+          thigh: client.thigh,
+          modificationTime: client.modificationTime
         };
         this.clientVersions.push(clientTemp);
       });
       this.clientVersions.sort((client1, client2) => client1.id - client2.id);
       this.currentClientVersion = this.clientVersions.length - 1;
       this.fillForm(this.currentClientVersion);
+      console.log('Ogarniamy');
+      console.log(this.clientVersions);
+      console.log(this.clientVersions.map((client) => client.biceps));
+
+      this.fillChartValues(this.clientVersions);
     });
+  }
+
+  fillChartValues(clients: Client[]) {
+    console.log('Filling charts values');
+    this.lineChartData = [
+      {data: clients.map((client) => client.biceps), label: 'Biceps'},
+      {data: clients.map((client) => client.chest), label: 'Klatka'},
+      {data: clients.map((client) => client.waist), label: 'Talia'},
+      {data: clients.map((client) => client.thigh), label: 'Udo'},
+      {data: clients.map((client) => client.weight), label: 'Waga'},
+      {data: clients.map((client) => client.height), label: 'Wzrost'}
+    ];
+    this.lineChartLabels.length = 0;
+    for (let i = 0; i < clients.length; i++) {
+      this.lineChartLabels.push(clients[i].modificationTime);
+    }
   }
 
   fillForm(version: number) {
@@ -159,6 +199,7 @@ export class ShowClientComponent implements OnInit {
     this.clientForm.get('chest').setValue(this.clientVersions[version].chest);
     this.clientForm.get('waist').setValue(this.clientVersions[version].waist);
     this.clientForm.get('thigh').setValue(this.clientVersions[version].thigh);
+    this.clientForm.get('modificationTime').setValue(this.clientVersions[version].modificationTime);
   }
 
   changeClientVersion(version: number){

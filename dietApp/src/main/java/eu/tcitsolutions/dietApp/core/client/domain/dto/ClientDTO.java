@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Set;
 
 @Builder
@@ -22,18 +24,9 @@ public class ClientDTO {
     private Integer chest;
     private Integer waist;
     private Integer thigh;
+    private LocalDateTime date;
 
-    public ClientDTO(String firstname, String lastname, Integer age, Float weight, Integer height, String email, String telephone) {
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.age = age;
-        this.weight = weight;
-        this.height = height;
-        this.email = email;
-        this.telephone = telephone;
-    }
-
-    public ClientDTO(String firstname, String lastname, Integer age, Float weight, Integer height, String email, String telephone, Integer biceps, Integer chest, Integer waist, Integer thigh) {
+    public ClientDTO(String firstname, String lastname, Integer age, Float weight, Integer height, String email, String telephone, Integer biceps, Integer chest, Integer waist, Integer thigh, LocalDateTime date) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.age = age;
@@ -45,6 +38,7 @@ public class ClientDTO {
         this.chest = chest;
         this.waist = waist;
         this.thigh = thigh;
+        this.date = date;
     }
 
     public ClientDTO() {
@@ -136,5 +130,13 @@ public class ClientDTO {
 
     public void setThigh(Integer thigh) {
         this.thigh = thigh;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
     }
 }

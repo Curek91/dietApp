@@ -36,7 +36,8 @@ export class NewClientComponent implements OnInit {
       biceps: [''],
       chest: [''],
       waist: [''],
-      thigh: ['']
+      thigh: [''],
+      modificationTime: ['']
     });
   }
 
@@ -56,7 +57,8 @@ export class NewClientComponent implements OnInit {
       biceps: +this.clientForm.value['height'],
       chest: +this.clientForm.value['chest'],
       waist: +this.clientForm.value['waist'],
-      thigh: +this.clientForm.value['thigh']
+      thigh: +this.clientForm.value['thigh'],
+      modificationTime: this.clientForm.value['modificationTime']
     };
     return client;
   }

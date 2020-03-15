@@ -18,6 +18,7 @@ export class Client implements IClient {
   chest: number;
   waist: number;
   thigh: number;
+  modificationTime: Date;
 
   constructor(client: Client) {
     this.id = client.id;
@@ -33,5 +34,6 @@ export class Client implements IClient {
     this.chest = client.chest;
     this.waist = client.waist;
     this.thigh = client.thigh;
+    this.modificationTime = client.modificationTime;
   }
 }

@@ -41,7 +41,8 @@ export class ManageClientComponent implements OnInit {
           biceps: client.biceps,
           chest: client.chest,
           waist: client.waist,
-          thigh: client.thigh
+          thigh: client.thigh,
+          modificationTime: client.modificationTime
         };
          this.clients.push(clientTemp);
       });

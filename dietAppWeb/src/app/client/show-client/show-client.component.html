@@ -9,13 +9,17 @@
     <div class="accordion-body" *ngIf="showInfo">
       <form [formGroup]="clientForm">
         <div class="row form-group">
-          <div class="col-sm-6">
+          <div class="col-sm-4">
             <label class="new-product-label">Imię:</label>
             <input class="form-control" formControlName="firstname" placeholder="Imię...">
           </div>
-          <div class="col-sm-6 align-self-end ">
+          <div class="col-sm-4 align-self-end ">
             <label class="new-product-label">Nazwisko:</label>
             <input class="form-control" formControlName="lastname" placeholder="Nazwisko...">
+          </div>
+          <div class="col-sm-4 align-self-end ">
+            <label class="new-product-label">Data modyfikacji:</label>
+            <input class="form-control" formControlName="modificationTime" placeholder="Data modyfikacji...">
           </div>
         </div>
         <div class="row form-group">
@@ -152,7 +156,7 @@
           <div class="col-sm-10" (click)="showProgress = !showProgress">
             <i class="fa "
                [ngClass]="{'fa-angle-down': showProgress === true, 'fa-angle-right': showProgress === false}"></i>
-            <span>Postdsfsępy</span>
+            <span>Postępy</span>
           </div>
         </div>
       </h3>
@@ -172,7 +176,7 @@
             </thead>
             <tbody>
             <tr *ngFor="let version of clientVersions; let i = index">
-              <td>{{i + 6}}</td>
+              <td>{{i + 1}}</td>
               <td>{{version.weight}}</td>
               <td>{{version.height}}</td>
               <td>{{version.biceps}}</td>
@@ -199,20 +203,17 @@
         </div>
       </h3>
     </div>
-    <div class="accordion-body">
+    <div class="accordion-body" *ngIf="showGraphs">
       <div class="row">
-        <div class="col-sm-12">
-          asdas
-        <canvas baseChart width="400" height="400"
+      <div class="col-sm-12">
+        <canvas baseChart width="800" height="200"
                 [datasets]="lineChartData"
-                [labels]="lineChartLabels"
                 [options]="lineChartOptions"
-                [colors]="lineChartColors"
                 [legend]="lineChartLegend"
-                [chartType]="lineChartType"
-                [plugins]="lineChartPlugins">
+                [labels]="lineChartLabels"
+                [chartType]="lineChartType">
         </canvas>
-        </div>
+      </div>
       </div>
     </div>
   </div>

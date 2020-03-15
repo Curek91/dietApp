@@ -12,4 +12,5 @@ export interface IClient {
   chest: number;
   waist: number;
   thigh: number;
+  modificationTime: Date;
 }
