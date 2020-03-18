@@ -48,8 +48,12 @@ public class HibernateClientRepository implements ClientRepository {
     }
 
     @Override
-    public void delete(Long id) {
-        entityManager.remove(entityManager.find(Client.class, id));
+    public void delete(Long clientNo) {
+        String hql = "select c.id from client c where c.clientNo = :clientNo";
+        List<Long> idsToRemove = entityManager.createQuery(hql).setParameter("clientNo", clientNo).getResultList();
+        for (Long id: idsToRemove) {
+            entityManager.remove(entityManager.find(Client.class, id));
+        }
     }
 
     @Override

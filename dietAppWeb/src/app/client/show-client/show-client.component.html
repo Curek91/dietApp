@@ -18,8 +18,8 @@
             <input class="form-control" formControlName="lastname" placeholder="Nazwisko...">
           </div>
           <div class="col-sm-4 align-self-end ">
-            <label class="new-product-label">Data modyfikacji:</label>
-            <input class="form-control" formControlName="modificationTime" placeholder="Data modyfikacji...">
+            <label class="new-product-label">Data:</label>
+            <input class="form-control" formControlName="date">
           </div>
         </div>
         <div class="row form-group">
@@ -90,64 +90,6 @@
     </div>
   </div>
 
-  <div class="accordion-panel">
-    <div class="accordion-header">
-      <h3>
-        <div class="row">
-          <div class="col-sm-10" (click)="showDiets = !showDiets">
-            <i class="fa " [ngClass]="{'fa-angle-down': showDiets === true, 'fa-angle-right': showDiets === false}"></i>
-            <span>Diety</span>
-          </div>
-          <div class="col-sm-2">
-            <button class="btn btn-sm btn-success" (click)="createNewDiet()">Utwórz nową diete</button>
-          </div>
-        </div>
-      </h3>
-    </div>
-
-
-    <div class="accordion-body" *ngIf="showDiets">
-      <div class="row">
-        <table class="table table-striped">
-          <thead>
-          <tr>
-            <th>Lp</th>
-            <th>Utworzona przez</th>
-            <th>Data utworzenia</th>
-            <th></th>
-            <th></th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr *ngFor="let clientDiet of diets">
-            <td (click)="setDietId(clientDiet.id)">{{clientDiet.id}}</td>
-            <td (click)="setDietId(clientDiet.id)">{{clientDiet.createdBy}}</td>
-            <td (click)="setDietId(clientDiet.id)">{{clientDiet.creationTime}} </td>
-            <td>
-              <button class="btn btn-sm btn-danger" (click)="deleteDietModal.open()">Usuń</button>
-            </td>
-            <modal #deleteDietModal>
-              <ng-template #modalHeader><h5 class="modal-title">Czy napewno chcesz usunąć dietę o id {{clientDiet.id}}
-                ?</h5></ng-template>
-              <ng-template #modalFooter>
-                <button type="button" class="btn btn-success btn-sm" data-dismiss="modal"
-                        (click)="deleteDiet(clientDiet.id)">Usuń
-                </button>
-                <button type="button" class="btn btn-danger btn-sm" (click)="deleteDietModal.close()">Anuluj</button>
-              </ng-template>
-            </modal>
-            <td>
-              <button class="btn btn-sm btn-info" (click)="sendEmail(clientDiet.id)">Wyślij email</button>
-            </td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-      <app-new-diet #newDietRef (refreshDietsEvent)="loadClientDiets()" [clientNo]="route.snapshot.params['clientNo']"
-                    [dietId]="dietIdToModify" [oldDiets]="diets"></app-new-diet>
-    </div>
-  </div>
-
 
   <div class="accordion-panel">
     <div class="accordion-header">
@@ -215,6 +157,64 @@
         </canvas>
       </div>
       </div>
+    </div>
+  </div>
+
+  <div class="accordion-panel">
+    <div class="accordion-header">
+      <h3>
+        <div class="row">
+          <div class="col-sm-10" (click)="showDiets = !showDiets">
+            <i class="fa " [ngClass]="{'fa-angle-down': showDiets === true, 'fa-angle-right': showDiets === false}"></i>
+            <span>Diety</span>
+          </div>
+          <div class="col-sm-2">
+            <button class="btn btn-sm btn-success" (click)="createNewDiet()">Utwórz nową diete</button>
+          </div>
+        </div>
+      </h3>
+    </div>
+
+
+    <div class="accordion-body" *ngIf="showDiets">
+      <div class="row">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>Lp</th>
+            <th>Utworzona przez</th>
+            <th>Data utworzenia</th>
+            <th></th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let clientDiet of diets">
+            <td (click)="setDietId(clientDiet.id)">{{clientDiet.id}}</td>
+            <td (click)="setDietId(clientDiet.id)">{{clientDiet.createdBy}}</td>
+            <td (click)="setDietId(clientDiet.id)">{{clientDiet.creationTime}} </td>
+            <td>
+              <button class="btn btn-sm btn-danger" (click)="deleteDietModal.open()">Usuń</button>
+            </td>
+            <modal #deleteDietModal>
+              <ng-template #modalHeader><h5 class="modal-title">Czy napewno chcesz usunąć dietę o id {{clientDiet.id}}
+                ?</h5></ng-template>
+              <ng-template #modalFooter>
+                <button type="button" class="btn btn-success btn-sm" data-dismiss="modal"
+                        (click)="deleteDiet(clientDiet.id)">Usuń
+                </button>
+                <button type="button" class="btn btn-danger btn-sm" (click)="deleteDietModal.close()">Anuluj</button>
+              </ng-template>
+            </modal>
+            <td>
+              <button class="btn btn-sm btn-info" (click)="sendEmail(clientDiet.id)">Wyślij email</button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <app-new-diet #newDietRef (refreshDietsEvent)="loadClientDiets()" [clientNo]="route.snapshot.params['clientNo']"
+                    [dietId]="dietIdToModify" [oldDiets]="diets"></app-new-diet>
     </div>
   </div>
 

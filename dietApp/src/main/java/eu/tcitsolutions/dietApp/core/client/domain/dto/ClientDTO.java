@@ -13,6 +13,7 @@ import java.util.Set;
 @Builder
 public class ClientDTO {
 
+    private Long clientNo;
     private String firstname;
     private String lastname;
     private Integer age;
@@ -26,7 +27,8 @@ public class ClientDTO {
     private Integer thigh;
     private LocalDateTime date;
 
-    public ClientDTO(String firstname, String lastname, Integer age, Float weight, Integer height, String email, String telephone, Integer biceps, Integer chest, Integer waist, Integer thigh, LocalDateTime date) {
+    public ClientDTO(Long clientNo, String firstname, String lastname, Integer age, Float weight, Integer height, String email, String telephone, Integer biceps, Integer chest, Integer waist, Integer thigh, LocalDateTime date) {
+        this.clientNo = clientNo;
         this.firstname = firstname;
         this.lastname = lastname;
         this.age = age;
@@ -138,5 +140,13 @@ public class ClientDTO {
 
     public void setDate(LocalDateTime date) {
         this.date = date;
+    }
+
+    public Long getClientNo() {
+        return clientNo;
+    }
+
+    public void setClientNo(Long clientNo) {
+        this.clientNo = clientNo;
     }
 }

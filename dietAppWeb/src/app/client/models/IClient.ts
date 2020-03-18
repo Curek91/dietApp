@@ -1,5 +1,4 @@
 export interface IClient {
-  id: number;
   clientNo: number;
   firstname: string;
   lastname: string;
@@ -12,5 +11,5 @@ export interface IClient {
   chest: number;
   waist: number;
   thigh: number;
-  modificationTime: Date;
+  date: Date;
 }

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -26,18 +27,18 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public List<Client> getClients() {
-        return clientRepository.getClients();
+    public List<ClientDTO> getClients() {
+        return clientRepository.getClients().stream().map((c) -> dtoClientMappingService.createDTO(c)).collect(Collectors.toList()) ;
     }
 
     @Override
-    public List<Client> getNewestClients() {
-        return clientRepository.getNewestClients();
+    public List<ClientDTO> getNewestClients() {
+        return clientRepository.getNewestClients().stream().map((c) -> dtoClientMappingService.createDTO(c)).collect(Collectors.toList());
     }
 
     @Override
-    public Client getClient(Long id) {
-        return clientRepository.getClient(id);
+    public ClientDTO getClient(Long id) {
+        return dtoClientMappingService.createDTO(clientRepository.getClient(id));
     }
 
     @Override
@@ -46,8 +47,8 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public void removeClient(Long id) {
-        clientRepository.delete(id);
+    public void removeClient(Long clientNo) {
+        clientRepository.delete(clientNo);
     }
 
     @Override
@@ -69,7 +70,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public List<Client> getClientVersions(Long clientNo) {
-        return clientRepository.getClientVersions(clientNo);
+    public List<ClientDTO> getClientVersions(Long clientNo) {
+        return clientRepository.getClientVersions(clientNo).stream().map((c) -> dtoClientMappingService.createDTO(c)).collect(Collectors.toList());
     }
 }

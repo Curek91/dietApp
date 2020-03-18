@@ -34,8 +34,8 @@ export class ClientService {
     return this.http.post<Client>(this.apiUrl + 'client/create', data, {headers: this.headers});
   }
 
-  deleteClient(id: number): any {
-    return this.http.delete<any>(this.apiUrl + 'client/delete/' + id, {headers: this.headers});
+  deleteClient(clientNo: number): any {
+    return this.http.delete<any>(this.apiUrl + 'client/delete/' + clientNo, {headers: this.headers});
   }
 
   modifyClient(data): Observable<Client> {

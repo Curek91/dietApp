@@ -14,6 +14,7 @@ import {ModalComponent, ModalModule} from 'angular-custom-modal';
 import {ChartDataSets, ChartOptions} from 'chart.js';
 import {Color} from 'ng2-charts';
 import {range} from "rxjs";
+import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'app-show-client',
@@ -80,7 +81,7 @@ export class ShowClientComponent implements OnInit {
       chest: [''],
       waist: [''],
       thigh: [''],
-      modificationTime: ['']
+      date: ['']
     });
     this.clientForm.disable();
     this.loadClientVersions();
@@ -100,7 +101,6 @@ export class ShowClientComponent implements OnInit {
     let client: Client;
 
     client = {
-      id: +this.route.snapshot.params['clientNo'],
       clientNo: null,
       firstname: this.clientForm.value['firstname'].toString(),
       lastname: this.clientForm.value['lastname'].toString(),
@@ -113,7 +113,7 @@ export class ShowClientComponent implements OnInit {
       chest: +this.clientForm.value['chest'],
       waist: +this.clientForm.value['waist'],
       thigh: +this.clientForm.value['thigh'],
-      modificationTime: this.clientForm.value['modificationTime']
+      date: null
     };
     return client;
   }
@@ -143,7 +143,6 @@ export class ShowClientComponent implements OnInit {
       clientVersions.forEach((client) => {
 
         clientTemp = {
-          id: client.id,
           clientNo: client.clientNo,
           firstname: client.firstname,
           lastname: client.lastname,
@@ -156,14 +155,16 @@ export class ShowClientComponent implements OnInit {
           chest: client.chest,
           waist: client.waist,
           thigh: client.thigh,
-          modificationTime: client.modificationTime
+          date: client.date
         };
         this.clientVersions.push(clientTemp);
       });
-      this.clientVersions.sort((client1, client2) => client1.id - client2.id);
+      this.clientVersions.sort((client1, client2) => new Date(client1.date).getTime() - new Date(client2.date).getTime());
+
+
       this.currentClientVersion = this.clientVersions.length - 1;
       this.fillForm(this.currentClientVersion);
-      console.log('Ogarniamy');
+      console.log('Ogarniay');
       console.log(this.clientVersions);
       console.log(this.clientVersions.map((client) => client.biceps));
 
@@ -183,7 +184,7 @@ export class ShowClientComponent implements OnInit {
     ];
     this.lineChartLabels.length = 0;
     for (let i = 0; i < clients.length; i++) {
-      this.lineChartLabels.push(clients[i].modificationTime);
+      this.lineChartLabels.push(new Date(clients[i].date).toUTCString());
     }
   }
 
@@ -199,7 +200,7 @@ export class ShowClientComponent implements OnInit {
     this.clientForm.get('chest').setValue(this.clientVersions[version].chest);
     this.clientForm.get('waist').setValue(this.clientVersions[version].waist);
     this.clientForm.get('thigh').setValue(this.clientVersions[version].thigh);
-    this.clientForm.get('modificationTime').setValue(this.clientVersions[version].modificationTime);
+    this.clientForm.get('date').setValue(new Date(this.clientVersions[version].date).toUTCString());
   }
 
   changeClientVersion(version: number){

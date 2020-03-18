@@ -29,7 +29,6 @@ export class ManageClientComponent implements OnInit {
       clients.forEach((client) => {
 
         clientTemp = {
-          id: client.id,
           clientNo: client.clientNo,
           firstname: client.firstname,
           lastname: client.lastname,
@@ -42,17 +41,17 @@ export class ManageClientComponent implements OnInit {
           chest: client.chest,
           waist: client.waist,
           thigh: client.thigh,
-          modificationTime: client.modificationTime
+          date: client.date
         };
          this.clients.push(clientTemp);
       });
       console.log(this.clients);
-      this.clients.sort((client1, client2) => client1.id - client2.id);
+      this.clients.sort((client1, client2) => client1.clientNo - client2.clientNo);
     });
   }
 
-  deleteClient(id: number): void {
-    this.clientService.deleteClient(id).subscribe((response) => {
+  deleteClient(clientNo: number): void {
+    this.clientService.deleteClient(clientNo).subscribe((response) => {
       this.loadClients();
     });
   }

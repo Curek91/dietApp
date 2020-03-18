@@ -5,7 +5,6 @@ import {IClient} from './IClient';
 
 
 export class Client implements IClient {
-  id: number;
   clientNo: number
   firstname: string;
   lastname: string;
@@ -18,10 +17,9 @@ export class Client implements IClient {
   chest: number;
   waist: number;
   thigh: number;
-  modificationTime: Date;
+  date: Date;
 
   constructor(client: Client) {
-    this.id = client.id;
     this.clientNo = client.clientNo;
     this.firstname = client.firstname;
     this.lastname = client.lastname;
@@ -34,6 +32,6 @@ export class Client implements IClient {
     this.chest = client.chest;
     this.waist = client.waist;
     this.thigh = client.thigh;
-    this.modificationTime = client.modificationTime;
+    this.date = client.date;
   }
 }

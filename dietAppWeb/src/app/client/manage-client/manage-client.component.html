@@ -39,7 +39,7 @@
         <modal #deleteClientModal>
           <ng-template #modalHeader><h5 class="modal-title">Czy napewno chcesz usunąć klienta o id {{client.id}}?</h5></ng-template>
           <ng-template #modalFooter>
-            <button type="button" class="btn btn-success btn-sm" data-dismiss="modal" (click)="deleteClient(client.id)">Zapisz</button>
+            <button type="button" class="btn btn-success btn-sm" data-dismiss="modal" (click)="deleteClient(client.clientNo)">Zapisz</button>
             <button type="button" class="btn btn-danger btn-sm" (click)="deleteClientModal.close()">Anuluj</button>
           </ng-template>
         </modal>

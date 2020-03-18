@@ -16,7 +16,7 @@ public interface ClientRepository {
 
     public void delete(Client client);
 
-    public void delete(Long id);
+    public void delete(Long clientNo);
 
     public void update(Client client);
 

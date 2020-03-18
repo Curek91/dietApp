@@ -6,19 +6,19 @@ import eu.tcitsolutions.dietApp.core.client.domain.entity.Client;
 import java.util.List;
 
 public interface ClientService {
-    public List<Client> getClients();
+    public List<ClientDTO> getClients();
 
-    public List<Client> getNewestClients();
+    public List<ClientDTO> getNewestClients();
 
-    public Client getClient(Long id);
+    public ClientDTO getClient(Long id);
 
     public void saveClient(ClientDTO source);
 
-    public void removeClient(Long id);
+    public void removeClient(Long clientNo);
 
     public void updateClient(Long id, ClientDTO source);
 
     public void createNewVersion(Long clientNo, ClientDTO source);
 
-    public List<Client> getClientVersions(Long clientNo);
+    public List<ClientDTO> getClientVersions(Long clientNo);
 }

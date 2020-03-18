@@ -37,7 +37,7 @@ export class NewClientComponent implements OnInit {
       chest: [''],
       waist: [''],
       thigh: [''],
-      modificationTime: ['']
+      date: ['']
     });
   }
 
@@ -45,7 +45,6 @@ export class NewClientComponent implements OnInit {
     let client: Client;
 
     client = {
-      id: null,
       clientNo: null,
       firstname: this.clientForm.value['firstname'].toString(),
       lastname: this.clientForm.value['lastname'].toString(),
@@ -58,7 +57,7 @@ export class NewClientComponent implements OnInit {
       chest: +this.clientForm.value['chest'],
       waist: +this.clientForm.value['waist'],
       thigh: +this.clientForm.value['thigh'],
-      modificationTime: this.clientForm.value['modificationTime']
+      date: this.clientForm.value['date']
     };
     return client;
   }
