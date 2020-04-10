@@ -7,6 +7,8 @@ import eu.tcitsolutions.dietApp.core.client.service.ClientService;
 import eu.tcitsolutions.dietApp.core.client.service.DTOClientMappingService;
 import eu.tcitsolutions.dietApp.core.diet.service.DTOMappingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -28,17 +30,22 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public List<ClientDTO> getClients() {
-        return clientRepository.getClients().stream().map((c) -> dtoClientMappingService.createDTO(c)).collect(Collectors.toList()) ;
+        return clientRepository.findAll().stream().map((c) -> dtoClientMappingService.createDTO(c)).collect(Collectors.toList()) ;
     }
 
     @Override
-    public List<ClientDTO> getNewestClients() {
-        return clientRepository.getNewestClients().stream().map((c) -> dtoClientMappingService.createDTO(c)).collect(Collectors.toList());
+    public Page<Client> getClients(Pageable page) {
+        return clientRepository.findAll(page);
+    }
+
+    @Override
+    public Page<Client> getNewestClients(Pageable page) {
+        return clientRepository.findNewestClients(page);
     }
 
     @Override
     public ClientDTO getClient(Long id) {
-        return dtoClientMappingService.createDTO(clientRepository.getClient(id));
+        return dtoClientMappingService.createDTO(clientRepository.findById(id).get());
     }
 
     @Override
@@ -48,29 +55,35 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public void removeClient(Long clientNo) {
-        clientRepository.delete(clientNo);
+        clientRepository.deleteById(clientNo);
+    }
+
+    @Override
+    public void removeClientById(Long id) {
+        clientRepository.deleteById(id);
     }
 
     @Override
     public void updateClient(Long id, ClientDTO source) {
-        clientRepository.update(dtoClientMappingService.createEntity(id ,source));
+        Client clientToUpdate = dtoClientMappingService.createEntity(source);
+        clientToUpdate.setId(id);
+        clientRepository.save(clientToUpdate);
+    }
+
+    @Override
+    public void updateClientByPatch(Long id, ClientDTO source) {
+        Client clientToUpdate = dtoClientMappingService.createEntity(source);
+        clientToUpdate.setId(id);
+        clientRepository.save(clientToUpdate);
     }
 
     @Override
     public void createNewVersion(Long clientNo, ClientDTO source) {
-        Client client = dtoClientMappingService.createEntity(source);
-        Long lastId = clientRepository.getLastIdForClientNo(clientNo);
-        client.setPreClientId(lastId);
-        client.setClientNo(clientNo);
-        Client newClient = clientRepository.save(client);
-        System.out.println(newClient.getId());
-        client = clientRepository.getClient(lastId);
-        client.setSucClientId(newClient.getId());
-        clientRepository.update(client);
+        //Mock
     }
 
     @Override
     public List<ClientDTO> getClientVersions(Long clientNo) {
-        return clientRepository.getClientVersions(clientNo).stream().map((c) -> dtoClientMappingService.createDTO(c)).collect(Collectors.toList());
+        return clientRepository.findClientsByClientNo(clientNo).stream().map((c) -> dtoClientMappingService.createDTO(c)).collect(Collectors.toList());
     }
 }

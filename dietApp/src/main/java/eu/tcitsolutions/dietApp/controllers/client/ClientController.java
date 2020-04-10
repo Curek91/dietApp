@@ -3,14 +3,16 @@ package eu.tcitsolutions.dietApp.controllers.client;
 import eu.tcitsolutions.dietApp.core.client.domain.dto.ClientDTO;
 import eu.tcitsolutions.dietApp.core.client.domain.entity.Client;
 import eu.tcitsolutions.dietApp.core.client.service.ClientService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.PagedResources;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "${cors.host}")
 @RestController
 public class ClientController {
 
@@ -20,70 +22,60 @@ public class ClientController {
         this.clientService = clientService;
     }
 
-    @CrossOrigin(origins = "${cors.host}")
-    @RequestMapping(method = RequestMethod.GET, value = "/clients")
-    @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody
-    ResponseEntity<List<ClientDTO>> clientsList() {
-        List<ClientDTO> clientList = clientService.getClients();
-        return new ResponseEntity<List<ClientDTO>>(clientList, HttpStatus.OK);
+    @GetMapping(value = "/clients", params = {"!sort", "!page", "!size"})
+    public ResponseEntity<List<ClientDTO>> clientsList() {
+        List<ClientDTO> clients = clientService.getClients();
+        return ResponseEntity.ok(clients);
     }
 
-    @CrossOrigin(origins = "${cors.host}")
-    @RequestMapping(method = RequestMethod.GET, value = "/newestClients")
-    @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody
-    ResponseEntity<List<ClientDTO>> newestClients() {
-        List<ClientDTO> clientList = clientService.getNewestClients();
-        return new ResponseEntity<List<ClientDTO>>(clientList, HttpStatus.OK);
+    @GetMapping(value = "/clients")
+    public ResponseEntity<PagedResources<Client>> clientsList(Pageable page, PagedResourcesAssembler assembler) {
+        return ResponseEntity.ok(assembler.toResource(clientService.getClients(page)));
     }
 
-    @CrossOrigin(origins = "${cors.host}")
-    @RequestMapping(method = RequestMethod.GET, value = "/client/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody
-    ResponseEntity<ClientDTO> getClient(@PathVariable Long id) {
+    @GetMapping( value = "/clients/newests")
+    public ResponseEntity<PagedResources<Client>> newestClients(Pageable page, PagedResourcesAssembler assembler) {
+        return ResponseEntity.ok(assembler.toResource(clientService.getNewestClients(page)));
+    }
+
+    @GetMapping(value = "/clients/{id}")
+    public ResponseEntity<ClientDTO> getClient(@PathVariable Long id) {
         ClientDTO client = clientService.getClient(id);
-        return new ResponseEntity<ClientDTO>(client, HttpStatus.OK);
+        return ResponseEntity.ok(client);
     }
 
-    @CrossOrigin(origins = "${cors.host}")
-    @RequestMapping(method = RequestMethod.POST, value = "/client/create", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody
-    ResponseEntity<Client> createClient(@RequestBody ClientDTO source) {
+    @PostMapping(value = "/clients")
+    public ResponseEntity<Client> createClient(@RequestBody ClientDTO source) {
         clientService.saveClient(source);
         return new ResponseEntity<Client>(HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "${cors.host}")
-    @RequestMapping(method = RequestMethod.PUT, value = "/client/modify/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody
-    ResponseEntity<Client> updateClient(@PathVariable("id") Long id, @RequestBody ClientDTO source) {
+    @PutMapping(value = "/clients/{id}")
+    public ResponseEntity<Client> updateClient(@PathVariable("id") Long id, @RequestBody ClientDTO source) {
         clientService.updateClient(id, source);
         return new ResponseEntity<Client>(HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "${cors.host}")
-    @RequestMapping(method = RequestMethod.DELETE, value = "/client/delete/{clientNo}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody
-    ResponseEntity deleteClient(@PathVariable("clientNo") Long id) {
-        clientService.removeClient(id);
+    @PatchMapping(value = "/clients/{id}")
+    public ResponseEntity<Client> updateClientByPatch(@PathVariable("id") Long id, @RequestBody ClientDTO source) {
+        clientService.updateClient(id, source);
+        return new ResponseEntity<Client>(HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "/clients/{clientNo}")
+    public ResponseEntity deleteClient(@PathVariable("clientNo") Long id) {
+        clientService.removeClientById(id);
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "${cors.host}")
-    @RequestMapping(method = RequestMethod.POST, value = "/client/createNewVersion/{clientNo}")
-    public @ResponseBody
-    ResponseEntity<Client> createNewVersion(@PathVariable("clientNo") Long clientNo, @RequestBody ClientDTO source) {
+    @PostMapping(value = "/clients/createNewVersion/{clientNo}")
+    public ResponseEntity<Client> createNewVersion(@PathVariable("clientNo") Long clientNo, @RequestBody ClientDTO source) {
         clientService.createNewVersion(clientNo, source);
         return new ResponseEntity<Client>(HttpStatus.OK);
     }
 
-    @CrossOrigin(origins = "${cors.host}")
-    @RequestMapping(method = RequestMethod.GET, value = "/clientVersions/{clientNo}")
-    @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody
-    ResponseEntity<List<ClientDTO>> clientVersions(@PathVariable Long clientNo) {
+    @GetMapping(value = "clients/clientVersions/{clientNo}")
+    public ResponseEntity<List<ClientDTO>> clientVersions(@PathVariable Long clientNo) {
         List<ClientDTO> clientList = clientService.getClientVersions(clientNo);
         return new ResponseEntity<List<ClientDTO>>(clientList, HttpStatus.OK);
     }

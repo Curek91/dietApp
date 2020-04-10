@@ -54,6 +54,6 @@ public class DTOClientMappingServiceImpl implements DTOClientMappingService, App
 
     @Override
     public Client createEntity(Long id){
-        return clientRepository.getClient(id);
+        return clientRepository.findById(id).get();
     }
 }

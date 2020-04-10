@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Client} from '../models/Client';
 import {ClientService} from '../client.service';
-import {ModalComponent} from "angular-custom-modal";
+import {Links} from '../models/Links';
 
 @Component({
   selector: 'app-manage-client',
@@ -24,8 +24,23 @@ export class ManageClientComponent implements OnInit {
 
   loadClients(): void {
     let clientTemp: Client;
-    this.clientService.getNewestClients().subscribe((clients) => {
+    this.clientService.getNewestClients().subscribe((page) => {
+      const clients = page._embedded.clientList;
+      const pageJSON = page.page;
+      const links: Links = page._links;
       this.clients = [];
+      console.log('----------BEGIN-------------------');
+      console.log(page);
+      console.log('----------CLIENTS-------------------');
+      console.log(clients);
+      console.log('----------PAGEJSON-------------------');
+      console.log(pageJSON.totalElements);
+      console.log('----------LINKS-------------------');
+      console.log(links.first != null ? 'First: ' + links.first.href : 'First Link not found');
+      console.log(links.prev != null ? 'Prev: ' + links.prev.href : 'Prev Link not found');
+      console.log(links.self != null ? 'Self: ' + links.self.href : 'Self Link not found');
+      console.log(links.next != null ? 'Next: ' + links.next.href : 'Next Link not found');
+      console.log(links.last != null ? 'Last: ' + links.last.href : 'Last Link not found');
       clients.forEach((client) => {
 
         clientTemp = {

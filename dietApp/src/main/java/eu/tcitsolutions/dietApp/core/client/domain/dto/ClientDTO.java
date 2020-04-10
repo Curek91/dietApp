@@ -1,14 +1,8 @@
 package eu.tcitsolutions.dietApp.core.client.domain.dto;
 
-import eu.tcitsolutions.dietApp.core.diet.domain.entity.Diet;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.Set;
 
 @Builder
 public class ClientDTO {

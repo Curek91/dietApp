@@ -93,13 +93,13 @@ public class DTOMappingServiceImpl implements DTOMappingService, ApplicationCont
 
     @Override
     public Diet createEntity(DietDTO source) {
-        Diet diet = new Diet(source.getMeals().stream().map(mealDTO -> createEntity(mealDTO)).collect(Collectors.toSet()), dtoClientMappingService.createEntity(clientRepository.getLastIdForClientNo(source.getClientNo())));
+        Diet diet = new Diet(source.getMeals().stream().map(mealDTO -> createEntity(mealDTO)).collect(Collectors.toSet()), clientRepository.findById(source.getClientNo()).get());
         return diet;
     }
 
     @Override
     public Diet createEntity(Long id, DietDTO source) {
-        Diet diet = new Diet(id, source.getMeals().stream().map(mealDTO -> createEntity(mealDTO)).collect(Collectors.toSet()), dtoClientMappingService.createEntity(clientRepository.getLastIdForClientNo(source.getClientNo())));
+        Diet diet = new Diet(id, source.getMeals().stream().map(mealDTO -> createEntity(mealDTO)).collect(Collectors.toSet()), clientRepository.findById(source.getClientNo()).get());
         return diet;
     }
 

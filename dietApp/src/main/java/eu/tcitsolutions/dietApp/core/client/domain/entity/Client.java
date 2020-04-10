@@ -26,10 +26,6 @@ public class Client extends BaseLogEntity implements Serializable {
 
     @Column(name = "client_no", updatable = false)
     private Long clientNo;
-    @Column(name = "pre_client_id", updatable = true)
-    private Long preClientId;
-    @Column(name = "suc_client_id", updatable = true)
-    private Long sucClientId;
 
     private String firstname;
     private String lastname;
@@ -38,33 +34,10 @@ public class Client extends BaseLogEntity implements Serializable {
     private Integer height;
     private String email;
     private String telephone;
-
     private Integer biceps;
     private Integer chest;
     private Integer waist;
     private Integer thigh;
-
-
-    public Client(String firstname, String lastname, Integer age, Float weight, Integer height, String email, String telephone) {
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.age = age;
-        this.weight = weight;
-        this.height = height;
-        this.email = email;
-        this.telephone = telephone;
-    }
-
-    public Client(Long id, String firstname, String lastname, Integer age, Float weight, Integer height, String email, String telephone) {
-        this.id = id;
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.age = age;
-        this.weight = weight;
-        this.height = height;
-        this.email = email;
-        this.telephone = telephone;
-    }
 
     public Client() {
     }
@@ -84,18 +57,8 @@ public class Client extends BaseLogEntity implements Serializable {
     }
 
     public Client(Long id, String firstname, String lastname, Integer age, Float weight, Integer height, String email, String telephone, Integer biceps, Integer chest, Integer waist, Integer thigh) {
+        this(firstname, lastname, age, weight, height, email, telephone, biceps, chest, waist, thigh);
         this.id = id;
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.age = age;
-        this.weight = weight;
-        this.height = height;
-        this.email = email;
-        this.telephone = telephone;
-        this.biceps = biceps;
-        this.chest = chest;
-        this.waist = waist;
-        this.thigh = thigh;
     }
 
     public Long getId() {
@@ -168,22 +131,6 @@ public class Client extends BaseLogEntity implements Serializable {
 
     public void setClientNo(Long clientNo) {
         this.clientNo = clientNo;
-    }
-
-    public Long getPreClientId() {
-        return preClientId;
-    }
-
-    public void setPreClientId(Long preClientId) {
-        this.preClientId = preClientId;
-    }
-
-    public Long getSucClientId() {
-        return sucClientId;
-    }
-
-    public void setSucClientId(Long sucClientId) {
-        this.sucClientId = sucClientId;
     }
 
     public Integer getBiceps() {

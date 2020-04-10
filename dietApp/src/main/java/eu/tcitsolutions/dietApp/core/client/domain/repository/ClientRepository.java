@@ -1,26 +1,25 @@
 package eu.tcitsolutions.dietApp.core.client.domain.repository;
 
-
 import eu.tcitsolutions.dietApp.core.client.domain.entity.Client;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ClientRepository {
-    public List<Client> getClients();
+    List<Client> findAll();
 
-    public List<Client> getNewestClients();
+    Page<Client> findAll(Pageable page);
 
-    public Client getClient(Long id);
+    Optional<Client> findById(Long id);
 
-    public Client save(Client client);
+    List<Client> findClientsByClientNo(Long clientNo);
 
-    public void delete(Client client);
+    Client save(Client client);
 
-    public void delete(Long clientNo);
+    void deleteById(Long id);
 
-    public void update(Client client);
-
-    public Long getLastIdForClientNo(Long clientNo);
-
-    public List<Client> getClientVersions(Long clientNo);
+    Page<Client> findNewestClients(Pageable pageable);
 }

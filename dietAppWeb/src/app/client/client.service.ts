@@ -4,6 +4,7 @@ import {AuthService} from '../auth/auth.service';
 import {Client} from './models/Client';
 import {Observable} from 'rxjs/Rx';
 import {Diet} from '../diet/models/Diet';
+import {Page} from "./models/Page";
 
 @Injectable({
   providedIn: 'root'
@@ -22,8 +23,8 @@ export class ClientService {
     return this.http.get<Client[]>(this.apiUrl + 'clients', {headers: this.headers});
   }
 
-  getNewestClients(): Observable<Client[]> {
-    return this.http.get<Client[]>(this.apiUrl + 'newestClients', {headers: this.headers});
+  getNewestClients(): Observable<Page> {
+    return this.http.get<Page>(this.apiUrl + 'newestClients', {headers: this.headers});
   }
 
   getClient(id: number): Observable<Client> {
