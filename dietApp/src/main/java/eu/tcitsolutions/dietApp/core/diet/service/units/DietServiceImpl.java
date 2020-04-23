@@ -20,10 +20,9 @@ import java.util.List;
 public class DietServiceImpl implements DietService {
     
     private DietRepository dietRepository;
-
     DTOMappingService dtoMappingService;
 
-    public DietServiceImpl(DietRepository dietRepository, @Qualifier("DTOMappingServiceImpl")  DTOMappingService dtoMappingService){
+    public DietServiceImpl(DietRepository dietRepository,DTOMappingService dtoMappingService){
         this.dietRepository = dietRepository;
         this.dtoMappingService = dtoMappingService;
 
@@ -31,12 +30,12 @@ public class DietServiceImpl implements DietService {
 
     @Override
     public List<Diet> getDiets(Long clientNo) {
-        return dietRepository.getDiets(clientNo);
+        return dietRepository.findAll();
     }
 
     @Override
     public DietDTO getDiet(Long id) {
-        DietDTO dietDTO = dtoMappingService.createDTO(dietRepository.getDiet(id));
+        DietDTO dietDTO = dtoMappingService.createDTO(dietRepository.findById(id).get());
         return dietDTO;
     }
 
@@ -47,11 +46,12 @@ public class DietServiceImpl implements DietService {
 
     @Override
     public void removeDiet(Long id) {
-        dietRepository.delete(id);
+        dietRepository.deleteById(id);
     }
 
     @Override
-    public void updateDiet(Long id, DietDTO source) {
-        dietRepository.update(dtoMappingService.createEntity(id ,source));
+    public void updateDiet(Long id, Diet source) {
+        source.setId(id);
+        dietRepository.save(source);
     }
 }

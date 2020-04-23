@@ -28,11 +28,12 @@ public class MealServiceImpl implements MealService {
 
     @Override
     public List<Meal> getMeals() {
-        return mealRepository.getMeals();
+        return mealRepository.findAll();
     }
 
     @Override
-    public Meal getMeal(Long id) {return mealRepository.getMeal(id);
+    public Meal getMeal(Long id) {
+        return mealRepository.findById(id).get();
     }
 
     @Override
@@ -42,11 +43,7 @@ public class MealServiceImpl implements MealService {
 
     @Override
     public void removeMeal(Long id) {
-        mealRepository.delete(id);
+        mealRepository.deleteById(id);
     }
 
-/*    @Override
-    public void updateMeal(Long id, MealDTO source) {
-        mealRepository.update(dtoMappingService.createEntity(id ,source));
-    }*/
 }

@@ -10,9 +10,4 @@ public interface TypeService {
 
     public Type getType(Long id);
 
-    public void saveType(TypeDTO source);
-
-    public void removeType(Long id);
-
-    public void updateType(Long id, TypeDTO source);
 }

@@ -1,20 +1,21 @@
 package eu.tcitsolutions.dietApp.core.diet.domain.repository;
 
 import eu.tcitsolutions.dietApp.core.diet.domain.entity.Product;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ProductRepository {
 
-    public List<Product> getProducts();
+    List<Product> findAll();
 
-    public Product getProduct(Long id);
+    Page<Product> findAll(Pageable page);
 
-    public Product save(Product product);
+    Optional<Product> findById(Long id);
 
-    public void delete(Product product);
+    Product save(Product client);
 
-    public void delete(Long id);
-
-    public void update(Product product);
+    void deleteById(Long id);
 }

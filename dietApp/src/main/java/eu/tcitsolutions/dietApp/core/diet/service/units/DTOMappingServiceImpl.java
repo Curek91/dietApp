@@ -31,15 +31,13 @@ import java.util.stream.Collectors;
 public class DTOMappingServiceImpl implements DTOMappingService, ApplicationContextAware {
 
 
-    private ProductRepository productRepository;
     private TypeRepository typeRepository;
     private ClientRepository clientRepository;
     private MealRepository mealRepository;
     private DTOClientMappingService dtoClientMappingService;
     private ApplicationContext applicationContext;
 
-    public DTOMappingServiceImpl(ProductRepository productRepository, TypeRepository typeRepository, ClientRepository clientRepository, MealRepository mealRepository, DTOClientMappingService dtoClientMappingService, ApplicationContext applicationContext){
-        this.productRepository = productRepository;
+    public DTOMappingServiceImpl(TypeRepository typeRepository, ClientRepository clientRepository, MealRepository mealRepository, DTOClientMappingService dtoClientMappingService, ApplicationContext applicationContext){
         this.typeRepository = typeRepository;
         this.clientRepository = clientRepository;
         this.mealRepository = mealRepository;
@@ -53,7 +51,6 @@ public class DTOMappingServiceImpl implements DTOMappingService, ApplicationCont
 
     @PostConstruct
     public void handleDependencies() {
-        this.productRepository = applicationContext.getBean(ProductRepository.class);
         this.typeRepository = applicationContext.getBean(TypeRepository.class);
     }
 
@@ -142,7 +139,7 @@ public class DTOMappingServiceImpl implements DTOMappingService, ApplicationCont
     public Type createEntity(TypeDTO source){
         String name = source.getName();
         if (source.getId() != null){
-            name = typeRepository.getType(source.getId()).getName();
+            name = typeRepository.findById(source.getId()).get().getName();
         }
         return new Type(source.getId(), name);
     }

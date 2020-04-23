@@ -47,19 +47,19 @@ public class ClientController {
     @PostMapping(value = "/clients")
     public ResponseEntity<Client> createClient(@RequestBody ClientDTO source) {
         clientService.saveClient(source);
-        return new ResponseEntity<Client>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping(value = "/clients/{id}")
     public ResponseEntity<Client> updateClient(@PathVariable("id") Long id, @RequestBody ClientDTO source) {
         clientService.updateClient(id, source);
-        return new ResponseEntity<Client>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PatchMapping(value = "/clients/{id}")
     public ResponseEntity<Client> updateClientByPatch(@PathVariable("id") Long id, @RequestBody ClientDTO source) {
         clientService.updateClient(id, source);
-        return new ResponseEntity<Client>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/clients/{clientNo}")
@@ -71,12 +71,12 @@ public class ClientController {
     @PostMapping(value = "/clients/createNewVersion/{clientNo}")
     public ResponseEntity<Client> createNewVersion(@PathVariable("clientNo") Long clientNo, @RequestBody ClientDTO source) {
         clientService.createNewVersion(clientNo, source);
-        return new ResponseEntity<Client>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping(value = "clients/clientVersions/{clientNo}")
     public ResponseEntity<List<ClientDTO>> clientVersions(@PathVariable Long clientNo) {
         List<ClientDTO> clientList = clientService.getClientVersions(clientNo);
-        return new ResponseEntity<List<ClientDTO>>(clientList, HttpStatus.OK);
+        return new ResponseEntity<>(clientList, HttpStatus.OK);
     }
 }

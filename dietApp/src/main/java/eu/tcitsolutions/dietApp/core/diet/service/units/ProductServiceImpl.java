@@ -1,5 +1,7 @@
 package eu.tcitsolutions.dietApp.core.diet.service.units;
 
+import eu.tcitsolutions.dietApp.core.client.domain.dto.ClientDTO;
+import eu.tcitsolutions.dietApp.core.client.domain.entity.Client;
 import eu.tcitsolutions.dietApp.utils.Utils;
 import eu.tcitsolutions.dietApp.core.diet.domain.dto.ProductDTO;
 import eu.tcitsolutions.dietApp.core.diet.domain.entity.Product;
@@ -27,36 +29,35 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService {
 
     private ProductRepository productRepository;
-    private DTOMappingService dtoMappingService;
 
-    public ProductServiceImpl(ProductRepository productRepository, DTOMappingService dtoMappingService){
+    public ProductServiceImpl(ProductRepository productRepository){
         this.productRepository = productRepository;
-        this.dtoMappingService = dtoMappingService;
     }
 
     @Override
     public List<Product> getProducts() {
-        return productRepository.getProducts();
+        return productRepository.findAll();
     }
 
     @Override
     public Product getProduct(Long id) {
-        return productRepository.getProduct(id);
+        return productRepository.findById(id).get();
     }
 
     @Override
-    public Product saveProduct(ProductDTO source) {
-       return productRepository.save(dtoMappingService.createEntity(source));
+    public Product saveProduct(Product source) {
+       return productRepository.save(source);
     }
 
     @Override
     public void removeProduct(Long id) {
-        productRepository.delete(id);
+        productRepository.deleteById(id);
     }
 
     @Override
-    public void updateProduct(Long id, ProductDTO source) {
-        productRepository.update(dtoMappingService.createEntity(id, source));
+    public void updateProduct(Long id, Product source) {
+        source.setId(id);
+        productRepository.save(source);
     }
 
     @Override
@@ -65,7 +66,7 @@ public class ProductServiceImpl implements ProductService {
         Path rootLocation = Paths.get("upload-dir");
         try {
             if (file.isEmpty()) {
-                throw new RuntimeException("Nie można zapisać pustego pliku: " + filename);
+                throw new RuntimeException("Cannot store empty file: " + filename);
             }
             if (filename.contains("..")) {
                 // This is a security check

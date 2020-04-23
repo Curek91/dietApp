@@ -17,35 +17,19 @@ import java.util.List;
 public class TypeServiceImpl implements TypeService {
 
     private TypeRepository typeRepository;
-    private DTOMappingService dtoMappingService;
 
-    public TypeServiceImpl(@Qualifier("hibernateTypeRepository") TypeRepository typeRepository, DTOMappingService dtoMappingService){
+    public TypeServiceImpl(TypeRepository typeRepository){
         this.typeRepository = typeRepository;
-        this.dtoMappingService = dtoMappingService;
     }
 
     @Override
     public List<Type> getTypes() {
-        return typeRepository.getTypes();
+        return typeRepository.findAll();
     }
 
     @Override
     public Type getType(Long id) {
-        return typeRepository.getType(id);
+        return typeRepository.findById(id).get();
     }
 
-    @Override
-    public void saveType(TypeDTO source) {
-        typeRepository.save(dtoMappingService.createEntity(source));
-    }
-
-    @Override
-    public void removeType(Long id) {
-        typeRepository.delete(id);
-    }
-
-    @Override
-    public void updateType(Long id, TypeDTO source) {
-        typeRepository.update(dtoMappingService.createEntity(id ,source));
-    }
 }

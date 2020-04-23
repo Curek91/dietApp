@@ -16,8 +16,4 @@ public interface MealService {
 
     public void removeMeal(Long id);
 
-/*    public void updateMeal(Long id, MealDTO source);*/
-
-/*    void init();*/
-
 }

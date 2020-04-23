@@ -10,14 +10,14 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 public interface DietService {
-    public List<Diet> getDiets(Long clientNo);
+    List<Diet> getDiets(Long clientNo);
 
-    public DietDTO getDiet(Long id);
+    DietDTO getDiet(Long id);
 
-    public Diet saveDiet(DietDTO source);
+    Diet saveDiet(DietDTO source);
 
-    public void removeDiet(Long id);
+    void removeDiet(Long id);
 
-    public void updateDiet(Long id, DietDTO source);
+    void updateDiet(Long id, Diet source);
 
 }

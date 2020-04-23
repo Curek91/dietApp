@@ -24,7 +24,7 @@ export class ClientService {
   }
 
   getNewestClients(): Observable<Page> {
-    return this.http.get<Page>(this.apiUrl + 'newestClients', {headers: this.headers});
+    return this.http.get<Page>(this.apiUrl + 'clients/newests', {headers: this.headers});
   }
 
   getClient(id: number): Observable<Client> {

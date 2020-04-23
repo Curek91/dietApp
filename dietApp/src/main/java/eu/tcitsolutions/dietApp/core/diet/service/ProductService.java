@@ -9,20 +9,20 @@ import java.nio.file.Path;
 import java.util.List;
 
 public interface ProductService {
-    public List<Product> getProducts();
+    List<Product> getProducts();
 
-    public Product getProduct(Long id);
+    Product getProduct(Long id);
 
-    public Product saveProduct(ProductDTO source);
+    Product saveProduct(Product source);
 
-    public void removeProduct(Long id);
+    void removeProduct(Long id);
 
-    public void updateProduct(Long id, ProductDTO source);
+    void updateProduct(Long id, Product source);
 
     //Image upload functions
     void store(MultipartFile file, Long id);
 
-    public Resource getImage(Long id);
+    Resource getImage(Long id);
 
     void init();
 
