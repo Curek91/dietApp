@@ -5,6 +5,9 @@ import eu.tcitsolutions.dietApp.core.diet.domain.entity.Product;
 import eu.tcitsolutions.dietApp.core.diet.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.PagedResources;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,6 +20,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
+@CrossOrigin(origins = "${cors.host}")
 @RestController
 public class ProductController {
 
@@ -26,50 +30,48 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @CrossOrigin(origins = "${cors.host}")
-    @RequestMapping(method = RequestMethod.GET, value = "/products")
-    @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody
-    ResponseEntity<List<Product>> productsList(){
-        List<Product> productList = productService.getProducts();
-        return new ResponseEntity<List<Product>>(productList, HttpStatus.OK);
+    @GetMapping(value = "/products", params = {"!sort", "!page", "!size"})
+    public
+    ResponseEntity<List<ProductDTO>> productsList(){
+        List<ProductDTO> products = productService.getProducts();
+        return ResponseEntity.ok(products);
     }
 
-    @CrossOrigin(origins = "${cors.host}")
-    @RequestMapping(method = RequestMethod.GET, value = "/product/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody
-    ResponseEntity<Product> getProduct(@PathVariable Long id){
-        Product product = productService.getProduct(id);
-        return new ResponseEntity<Product>(product, HttpStatus.OK);
+    @GetMapping(value = "/products")
+    public ResponseEntity<PagedResources<ProductDTO>> clientsList(Pageable page, PagedResourcesAssembler assembler) {
+        return ResponseEntity.ok(assembler.toResource(productService.getProducts(page)));
     }
 
-    @CrossOrigin(origins = "${cors.host}")
-    @RequestMapping(method = RequestMethod.POST, value="/product/create", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/products/{id}")
+    ResponseEntity<ProductDTO> getProduct(@PathVariable Long id){
+        return ResponseEntity.ok(productService.getProduct(id));
+    }
+
+    @DeleteMapping( value = "/products/{id}")
     public @ResponseBody
+    ResponseEntity<String> deleteProduct(@PathVariable("id") Long id){
+        productService.removeProduct(id);
+        return ResponseEntity.ok("Product id: " + id + " Deleted with success");
+    }
+
+    @PostMapping(value="/products", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public
     ResponseEntity<Product> createProduct(@RequestBody ProductDTO source){
         Product product = productService.saveProduct(source);
-        return new ResponseEntity<Product>(product, HttpStatus.OK);
+        return ResponseEntity.ok(product);
     }
 
-    @CrossOrigin(origins = "${cors.host}")
-    @RequestMapping(method = RequestMethod.PUT, value = "/product/modify/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/products/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
     ResponseEntity<Product> updateProduct(@PathVariable("id") Long id, @RequestBody ProductDTO source){
-        productService.updateProduct(id, source);
-        return new ResponseEntity<Product>(HttpStatus.OK);
+        return ResponseEntity.ok(productService.updateProduct(id, source));
     }
 
-    @CrossOrigin(origins = "${cors.host}")
-    @RequestMapping(method = RequestMethod.DELETE, value = "/product/delete/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody
-    ResponseEntity<Product> deleteProduct(@PathVariable("id") Long id){
-        productService.removeProduct(id);
-        return new ResponseEntity<Product>(HttpStatus.OK);
+    @PatchMapping(value = "/products/{id}")
+    public ResponseEntity<Product> updateProductByPatch(@PathVariable("id") Long id, @RequestBody ProductDTO source) {
+        return ResponseEntity.ok(productService.updateProduct(id, source));
     }
 
-    @CrossOrigin(origins = "${cors.host}")
     @PostMapping("/addImage/{id}")
     HashMap<String, String> handleFileUpload(@PathVariable("id") Long id, @RequestParam("file0") MultipartFile file){
         System.out.println("Podaj ID: " + id);
@@ -84,20 +86,16 @@ public class ProductController {
         return result;
     }
 
-    @CrossOrigin(origins = "${cors.host}")
     @RequestMapping(method = RequestMethod.GET, value = "/getImage/{id}")
-    @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
     ResponseEntity<Resource> getImage(@PathVariable Long id, HttpServletRequest request){
         Resource resource = productService.getImage(id);
-        // Try to determine file's content type
         String contentType = null;
         try {
             contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
         } catch (IOException ex) {
             System.out.println("Could not determine file type.");
         }
-        // Fallback to the default content type if type could not be determined
         if(contentType == null) {
             contentType = "application/octet-stream";
         }

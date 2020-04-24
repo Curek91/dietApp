@@ -20,7 +20,6 @@ import java.util.stream.Collectors;
 public class ClientServiceImpl implements ClientService {
 
     private ClientRepository clientRepository;
-
     private DTOClientMappingService dtoClientMappingService;
 
     public ClientServiceImpl(ClientRepository clientRepository, DTOClientMappingService dtoClientMappingService){
@@ -30,17 +29,17 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public List<ClientDTO> getClients() {
-        return clientRepository.findAll().stream().map((c) -> dtoClientMappingService.createDTO(c)).collect(Collectors.toList()) ;
+        return clientRepository.findAll().stream().map(dtoClientMappingService::createDTO).collect(Collectors.toList());
     }
 
     @Override
-    public Page<Client> getClients(Pageable page) {
-        return clientRepository.findAll(page);
+    public Page<ClientDTO> getClients(Pageable page) {
+        return clientRepository.findAll(page).map((dtoClientMappingService::createDTO));
     }
 
     @Override
-    public Page<Client> getNewestClients(Pageable page) {
-        return clientRepository.findNewestClients(page);
+    public Page<ClientDTO> getNewestClients(Pageable page) {
+        return clientRepository.findNewestClients(page).map((dtoClientMappingService::createDTO));
     }
 
     @Override
@@ -55,12 +54,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public void removeClient(Long clientNo) {
-        clientRepository.deleteById(clientNo);
-    }
-
-    @Override
-    public void removeClientById(Long id) {
-        clientRepository.deleteById(id);
+        clientRepository.findClientsByClientNo(clientNo).stream().forEach((c) -> clientRepository.deleteById(c.getId()));
     }
 
     @Override
@@ -79,11 +73,19 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public void createNewVersion(Long clientNo, ClientDTO source) {
-        //Mock
+        Client clientNewVersion = dtoClientMappingService.createEntity(source);
+        clientNewVersion.setClientNo(clientNo);
+        clientRepository.save(clientNewVersion);
     }
 
     @Override
     public List<ClientDTO> getClientVersions(Long clientNo) {
-        return clientRepository.findClientsByClientNo(clientNo).stream().map((c) -> dtoClientMappingService.createDTO(c)).collect(Collectors.toList());
+        return clientRepository.findClientsByClientNo(clientNo).stream().map(dtoClientMappingService::createDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public Client getNewestClientVersion(Long clientNo) {
+        Client client = clientRepository.findFirstByClientNoOrderByIdDesc(clientNo);
+        return client;
     }
 }

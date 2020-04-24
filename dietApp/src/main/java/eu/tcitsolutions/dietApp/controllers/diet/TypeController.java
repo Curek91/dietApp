@@ -11,31 +11,26 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "${cors.host}")
 @RestController
 public class TypeController {
 
-    @Autowired
     TypeService typeService;
 
     public TypeController(TypeService typeService){
         this.typeService = typeService;
     }
 
-    @CrossOrigin(origins = "${cors.host}")
-    @RequestMapping(method = RequestMethod.GET, value = "/types")
-    @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody
-    ResponseEntity<List<Type>> typesList(){
-        List<Type> typeList = typeService.getTypes();
-        return new ResponseEntity<List<Type>>(typeList, HttpStatus.OK);
+    @GetMapping(value = "/types", params = {"!sort", "!page", "!size"})
+    public ResponseEntity<List<Type>> types(){
+        List<Type> types = typeService.getTypes();
+        return ResponseEntity.ok(types);
     }
 
-    @CrossOrigin(origins = "${cors.host}")
-    @RequestMapping(method = RequestMethod.GET, value = "/type/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody
+    @GetMapping(value = "/types/{id}")
+    public
     ResponseEntity<Type> getType(@PathVariable Long id){
         Type type = typeService.getType(id);
-        return new ResponseEntity<Type>(type, HttpStatus.OK);
+        return ResponseEntity.ok(type);
     }
 }

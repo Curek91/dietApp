@@ -1,5 +1,6 @@
 package eu.tcitsolutions.dietApp.core.client.domain.repository;
 
+import eu.tcitsolutions.dietApp.core.client.domain.dto.ClientDTO;
 import eu.tcitsolutions.dietApp.core.client.domain.entity.Client;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,4 +23,6 @@ public interface ClientRepository {
     void deleteById(Long id);
 
     Page<Client> findNewestClients(Pageable pageable);
+
+    Client findFirstByClientNoOrderByIdDesc(Long clientNo);
 }

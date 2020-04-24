@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 public class MailUtils {
     public static String createFormatMailText(DietDTO diet){
-        StringBuilder mailContent = new StringBuilder();
+/*        StringBuilder mailContent = new StringBuilder();
         mailContent.append("<html><table border=\"1\">");
         mailContent.append("<tr>");
         mailContent.append("<td>Posiłki</td>");
@@ -31,6 +31,8 @@ public class MailUtils {
             }
         }
         mailContent.append("</table></html>");
-        return mailContent.toString();
+        return mailContent.toString();*/
+
+        return "asd";
     }
 }

@@ -7,9 +7,15 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
-public class TypeDTO {
+public class ProductGetDietDTO {
 
     private Long id;
     private String name;
+    private Long protein;
+    private Long carbs;
+    private Long fat;
+    private Long kcal;
+    private TypeDTO type;
+    private int weight;
 
 }

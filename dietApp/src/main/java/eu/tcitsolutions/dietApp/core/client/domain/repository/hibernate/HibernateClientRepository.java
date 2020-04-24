@@ -1,5 +1,6 @@
 package eu.tcitsolutions.dietApp.core.client.domain.repository.hibernate;
 
+import eu.tcitsolutions.dietApp.core.client.domain.dto.ClientDTO;
 import eu.tcitsolutions.dietApp.core.client.domain.entity.Client;
 import eu.tcitsolutions.dietApp.core.client.domain.repository.ClientRepository;
 import org.springframework.data.domain.Page;
@@ -20,5 +21,7 @@ interface HibernateClientRepository extends ClientRepository, JpaRepository<Clie
     @Override
     @Query(value="select c from client c where c.id in (select max(c2.id) from client c2 group by c2.clientNo)")
     Page<Client> findNewestClients(Pageable pageable);
+
+    Client findFirstByClientNoOrderByIdDesc(Long clientNo);
 
 }

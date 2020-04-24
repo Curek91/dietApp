@@ -10,6 +10,4 @@ public interface DTOClientMappingService {
 
     //create Entities
     public Client createEntity(ClientDTO source);
-    public Client createEntity(Long id, ClientDTO source);
-    public Client createEntity(Long id);
 }

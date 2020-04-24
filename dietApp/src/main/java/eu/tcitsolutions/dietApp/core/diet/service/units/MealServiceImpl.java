@@ -26,24 +26,5 @@ public class MealServiceImpl implements MealService {
         this.dtoMappingService = dtoMappingService;
     }
 
-    @Override
-    public List<Meal> getMeals() {
-        return mealRepository.findAll();
-    }
-
-    @Override
-    public Meal getMeal(Long id) {
-        return mealRepository.findById(id).get();
-    }
-
-    @Override
-    public void saveMeal(Meal meal) {
-        mealRepository.save(meal);
-    }
-
-    @Override
-    public void removeMeal(Long id) {
-        mealRepository.deleteById(id);
-    }
 
 }

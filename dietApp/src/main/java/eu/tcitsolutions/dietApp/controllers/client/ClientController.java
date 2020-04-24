@@ -44,6 +44,7 @@ public class ClientController {
         return ResponseEntity.ok(client);
     }
 
+
     @PostMapping(value = "/clients")
     public ResponseEntity<Client> createClient(@RequestBody ClientDTO source) {
         clientService.saveClient(source);
@@ -51,9 +52,9 @@ public class ClientController {
     }
 
     @PutMapping(value = "/clients/{id}")
-    public ResponseEntity<Client> updateClient(@PathVariable("id") Long id, @RequestBody ClientDTO source) {
+    public ResponseEntity<ClientDTO> updateClient(@PathVariable("id") Long id, @RequestBody ClientDTO source) {
         clientService.updateClient(id, source);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.ok(source);
     }
 
     @PatchMapping(value = "/clients/{id}")
@@ -64,7 +65,7 @@ public class ClientController {
 
     @DeleteMapping(value = "/clients/{clientNo}")
     public ResponseEntity deleteClient(@PathVariable("clientNo") Long id) {
-        clientService.removeClientById(id);
+        clientService.removeClient(id);
         return new ResponseEntity(HttpStatus.OK);
     }
 

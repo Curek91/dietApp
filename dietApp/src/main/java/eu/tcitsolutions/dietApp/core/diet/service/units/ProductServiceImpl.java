@@ -2,6 +2,7 @@ package eu.tcitsolutions.dietApp.core.diet.service.units;
 
 import eu.tcitsolutions.dietApp.core.client.domain.dto.ClientDTO;
 import eu.tcitsolutions.dietApp.core.client.domain.entity.Client;
+import eu.tcitsolutions.dietApp.core.client.service.DTOClientMappingService;
 import eu.tcitsolutions.dietApp.utils.Utils;
 import eu.tcitsolutions.dietApp.core.diet.domain.dto.ProductDTO;
 import eu.tcitsolutions.dietApp.core.diet.domain.entity.Product;
@@ -11,6 +12,8 @@ import eu.tcitsolutions.dietApp.core.diet.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,30 +26,38 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
 public class ProductServiceImpl implements ProductService {
 
     private ProductRepository productRepository;
+    private DTOMappingService dtoMappingService;
 
-    public ProductServiceImpl(ProductRepository productRepository){
+    public ProductServiceImpl(ProductRepository productRepository, DTOMappingService dtoMappingService){
         this.productRepository = productRepository;
+        this.dtoMappingService = dtoMappingService;
     }
 
     @Override
-    public List<Product> getProducts() {
-        return productRepository.findAll();
+    public List<ProductDTO> getProducts() {
+        return productRepository.findAll().stream().map(dtoMappingService::createDTO).collect(Collectors.toList());
     }
 
     @Override
-    public Product getProduct(Long id) {
-        return productRepository.findById(id).get();
+    public Page<ProductDTO> getProducts(Pageable page) {
+        return productRepository.findAll(page).map((dtoMappingService::createDTO));
     }
 
     @Override
-    public Product saveProduct(Product source) {
-       return productRepository.save(source);
+    public ProductDTO getProduct(Long id) {
+        return  dtoMappingService.createDTO(productRepository.findById(id).get());
+    }
+
+    @Override
+    public Product saveProduct(ProductDTO source) {
+       return productRepository.save(dtoMappingService.createEntity(source));
     }
 
     @Override
@@ -55,9 +66,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void updateProduct(Long id, Product source) {
-        source.setId(id);
-        productRepository.save(source);
+    public Product updateProduct(Long id, ProductDTO source) {
+        Product productToUpdate = dtoMappingService.createEntity(source);
+        productToUpdate.setId(id);
+        return productRepository.save(productToUpdate);
     }
 
     @Override

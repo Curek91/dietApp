@@ -8,12 +8,5 @@ import eu.tcitsolutions.dietApp.core.diet.domain.entity.Meal;
 import java.util.List;
 
 public interface MealService {
-    public List<Meal> getMeals();
-
-    public Meal getMeal(Long id);
-
-    public void saveMeal(Meal meal);
-
-    public void removeMeal(Long id);
 
 }

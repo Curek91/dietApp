@@ -28,13 +28,8 @@ public class MealProduct implements Serializable {
     @JoinColumn
     private Product product;
 
-    @Column(name = "WEIGHT")
     private int weight;
 
-    public MealProduct(Product product, int weight){
-        this.product = product;
-        this.weight = weight;
-    }
 
     public MealProduct(Meal meal, Product product, int weight){
         this.meal = meal;

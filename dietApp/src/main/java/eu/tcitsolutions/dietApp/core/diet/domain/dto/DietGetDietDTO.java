@@ -2,6 +2,7 @@ package eu.tcitsolutions.dietApp.core.diet.domain.dto;
 
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Builder
@@ -9,10 +10,9 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-public class MealDTO {
+public class DietGetDietDTO {
 
-    private Set<ProductOnDietDTO> products;
-    private int mealNo;
-    private String suplements;
+    private Long id;
+    private Set<MealGetDietDTO> meals;
 
 }

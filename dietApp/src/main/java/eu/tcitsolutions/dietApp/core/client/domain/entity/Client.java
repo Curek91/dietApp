@@ -12,6 +12,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity(name = "client")
@@ -42,7 +43,7 @@ public class Client extends BaseLogEntity implements Serializable {
     public Client() {
     }
 
-    public Client(String firstname, String lastname, Integer age, Float weight, Integer height, String email, String telephone, Integer biceps, Integer chest, Integer waist, Integer thigh) {
+    public Client(String firstname, String lastname, Integer age, Float weight, Integer height, String email, String telephone, Integer biceps, Integer chest, Integer waist, Integer thigh, Long clientNo) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.age = age;
@@ -54,11 +55,7 @@ public class Client extends BaseLogEntity implements Serializable {
         this.chest = chest;
         this.waist = waist;
         this.thigh = thigh;
-    }
-
-    public Client(Long id, String firstname, String lastname, Integer age, Float weight, Integer height, String email, String telephone, Integer biceps, Integer chest, Integer waist, Integer thigh) {
-        this(firstname, lastname, age, weight, height, email, telephone, biceps, chest, waist, thigh);
-        this.id = id;
+        this.clientNo = clientNo;
     }
 
     public Long getId() {
