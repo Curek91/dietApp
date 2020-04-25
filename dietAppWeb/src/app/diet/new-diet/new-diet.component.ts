@@ -235,7 +235,7 @@ export class NewDietComponent implements OnInit {
 
   addDiet() {
     this.diet.clientNo = this.clientNo;
-    this.dietService.addDiet(this.diet).subscribe((diet) => {
+    this.dietService.addDiet(this.diet, this.clientNo).subscribe((diet) => {
       console.log(diet.id);
       this.dietId = diet.id;
       this.refreshDietsEvent.next(this.clientNo);

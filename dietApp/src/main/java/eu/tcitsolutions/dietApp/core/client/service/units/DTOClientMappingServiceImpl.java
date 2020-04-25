@@ -25,11 +25,34 @@ public class DTOClientMappingServiceImpl implements DTOClientMappingService{
 
     @Override
     public ClientDTO createDTO(Client source) {
-        return new ClientDTO(source.getFirstname(), source.getLastname(), source.getAge(), source.getWeight(), source.getHeight(), source.getEmail(), source.getTelephone(), source.getBiceps(), source.getChest(), source.getWaist(), source.getThigh(), source.getCreationTime(), source.getClientNo());
+        return new ClientDTO(source.getFirstname(),
+                source.getLastname(),
+                source.getAge(),
+                source.getWeight(),
+                source.getHeight(),
+                source.getEmail(),
+                source.getTelephone(),
+                source.getBiceps(),
+                source.getChest(),
+                source.getWaist(),
+                source.getThigh(),
+                source.getCreationTime(),
+                source.getClientNo());
     }
 
     @Override
     public Client createEntity(ClientDTO source){
-        return new Client(source.getFirstname(), source.getLastname(), source.getAge(), source.getWeight(), source.getHeight(), source.getEmail(), source.getTelephone(), source.getBiceps(), source.getChest(), source.getWaist(), source.getThigh(), source.getClientNo());
+        return new Client(source.getFirstname(),
+                source.getLastname(),
+                source.getAge(),
+                source.getWeight(),
+                source.getHeight(),
+                source.getEmail(),
+                source.getTelephone(),
+                source.getBiceps(),
+                source.getChest(),
+                source.getWaist(),
+                source.getThigh(),
+                source.getClientNo());
     }
 }

@@ -3,14 +3,24 @@ package eu.tcitsolutions.dietApp.controllers.client;
 import eu.tcitsolutions.dietApp.core.client.domain.dto.ClientDTO;
 import eu.tcitsolutions.dietApp.core.client.domain.entity.Client;
 import eu.tcitsolutions.dietApp.core.client.service.ClientService;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.Link;
 import org.springframework.hateoas.PagedResources;
+import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.TemplateVariable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.lang.reflect.Method;
 import java.util.List;
+
+import static org.springframework.hateoas.core.DummyInvocationUtils.methodOn;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
 @CrossOrigin(origins = "${cors.host}")
 @RestController
@@ -43,7 +53,6 @@ public class ClientController {
         ClientDTO client = clientService.getClient(id);
         return ResponseEntity.ok(client);
     }
-
 
     @PostMapping(value = "/clients")
     public ResponseEntity<Client> createClient(@RequestBody ClientDTO source) {
@@ -79,5 +88,17 @@ public class ClientController {
     public ResponseEntity<List<ClientDTO>> clientVersions(@PathVariable Long clientNo) {
         List<ClientDTO> clientList = clientService.getClientVersions(clientNo);
         return new ResponseEntity<>(clientList, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/clientsByFirstnameOrLastname", params = {"name"})
+    public ResponseEntity<PagedResources<Client>> clientsListByFirstnameOrLastname(@RequestParam String name, Pageable page, PagedResourcesAssembler assembler) {
+        PagedResources<Client> pr = assembler.toResource(clientService.getClientByName(page, name), new Link(ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString()).withRel("example"));
+        return ResponseEntity.ok(pr);
+    }
+
+    @GetMapping(value = "/clientsByFirstnameOrLastname", params = {"!name"})
+    public ResponseEntity<PagedResources<Client>> clientsListByFirstnameOrLastname(Pageable page, PagedResourcesAssembler assembler) {
+        PagedResources<Client> pr = assembler.toResource(clientService.getClientByName(page, ""), new Link(ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString()).withRel("example"));
+        return ResponseEntity.ok(pr);
     }
 }

@@ -29,4 +29,6 @@ public interface ClientService {
     public List<ClientDTO> getClientVersions(Long clientNo);
 
     public Client getNewestClientVersion(Long clientNo);
+
+    public Page<ClientDTO> getClientByName(Pageable page, String name);
 }

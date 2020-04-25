@@ -59,18 +59,6 @@ public class DTOMappingServiceImpl implements DTOMappingService, ApplicationCont
     //////CREATE DTO/////////
     /////////////////////////
 
-/*
-
-    @Override
-    public MealDTO createDTO(Meal source){
-        return new MealDTO(source.getMealProducts().stream().map(prod -> createDTO(prod.getProduct(), prod.getWeight(), prod.getId())).collect(Collectors.toSet()), source.getMealNo(), 0,source.getSuplements());
-    }
-
-    @Override
-    public ProductDTO createDTO(Product source, int weight, Long sortNo) {
-        return new ProductDTO(source.getId(), createDTO(source.getType()), source.getName(), source.getProtein(), source.getCarbs(), source.getFat(), source.getKcal(), weight, sortNo);
-    }
-*/
 
     @Override
     public DietGetDietDTO createDTO(Diet source) {
@@ -134,20 +122,6 @@ public class DTOMappingServiceImpl implements DTOMappingService, ApplicationCont
         source.getProducts().stream().forEach(p -> meal.addProduct(productRepository.findById(p.getId()).get(), p.getWeight()));
         return meal;
     }
-
-/*    @Override
-    public Diet createEntity(Long id, DietDTO source) {
-        Diet diet = new Diet(id, source.getMeals().stream().map(mealDTO -> createEntity(mealDTO)).collect(Collectors.toSet()), clientRepository.findById(source.getClientNo()).get());
-        return diet;
-    }*/
-
-/*    @Override
-    public Meal createEntity(Long id, MealDTO source) {
-        Meal meal = createEntity(source);
-        meal.setId(id);
-        return meal;
-    }*/
-
 
     @Override
     public Type createEntity(TypeDTO source){

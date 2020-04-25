@@ -119,9 +119,9 @@ export class ShowClientComponent implements OnInit {
   }
 
   loadClientDiets() {
-    const id = +this.route.snapshot.params['clientNo'];
+    const clientNo = +this.route.snapshot.params['clientNo'];
     let dietTemp: Diet;
-    this.clientService.getClientDiets(id).subscribe((diets) => {
+    this.clientService.getClientDiets(clientNo).subscribe((diets) => {
       this.diets = [];
       diets.forEach((diet) => {
         dietTemp = new Diet();

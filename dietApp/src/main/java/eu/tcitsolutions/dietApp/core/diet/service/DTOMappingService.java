@@ -6,13 +6,10 @@ import eu.tcitsolutions.dietApp.core.diet.domain.entity.*;
 public interface DTOMappingService {
 
     //Create DTO's
-   DietGetDietDTO createDTO(Diet source);
-
-/*    MealDTO createDTO(Meal source);
-*/
+    DietGetDietDTO createDTO(Diet source);
 
     ProductDTO createDTO(Product source);
-    public ProductGetDietDTO createGetDietDTO(MealProduct source);
+    ProductGetDietDTO createGetDietDTO(MealProduct source);
 
     TypeDTO createDTO(Type source);
 

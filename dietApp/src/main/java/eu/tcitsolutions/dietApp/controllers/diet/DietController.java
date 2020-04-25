@@ -63,8 +63,4 @@ public class DietController {
         dietService.removeDiet(id);
         return ResponseEntity.ok("Diet id: " + id + " Deleted with success");
     }
-
-
-
-
 }

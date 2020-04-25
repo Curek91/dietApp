@@ -8,5 +8,4 @@ import eu.tcitsolutions.dietApp.core.diet.domain.entity.Meal;
 import java.util.List;
 
 public interface MealService {
-
 }

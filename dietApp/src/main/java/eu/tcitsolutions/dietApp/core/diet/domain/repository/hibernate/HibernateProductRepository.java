@@ -11,5 +11,4 @@ import java.util.List;
 
 @Repository
 interface HibernateProductRepository extends ProductRepository, JpaRepository<Product, Long> {
-
 }

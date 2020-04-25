@@ -49,7 +49,10 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public void saveClient(ClientDTO source) {
-        clientRepository.save(dtoClientMappingService.createEntity(source));
+        Client client = dtoClientMappingService.createEntity(source);
+        if (client.getClientNo() == null)
+            client.setClientNo(clientRepository.getClientSeqNoNextVal());
+        clientRepository.save(client);
     }
 
     @Override
@@ -87,5 +90,11 @@ public class ClientServiceImpl implements ClientService {
     public Client getNewestClientVersion(Long clientNo) {
         Client client = clientRepository.findFirstByClientNoOrderByIdDesc(clientNo);
         return client;
+    }
+
+    @Override
+    public Page<ClientDTO> getClientByName(Pageable page, String name) {
+        Page<Client> pageTmp = clientRepository.findClientsByFirstnameContainsOrLastnameContains(name, name, page);
+        return clientRepository.findClientsByFirstnameContainsOrLastnameContains(name, name, page).map((dtoClientMappingService::createDTO));
     }
 }

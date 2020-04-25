@@ -5,6 +5,7 @@ import eu.tcitsolutions.dietApp.core.client.domain.entity.Client;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,4 +26,8 @@ public interface ClientRepository {
     Page<Client> findNewestClients(Pageable pageable);
 
     Client findFirstByClientNoOrderByIdDesc(Long clientNo);
+
+    Long getClientSeqNoNextVal();
+
+    Page<Client> findClientsByFirstnameContainsOrLastnameContains(@Param("firstname") String firstname, @Param("lastname") String lastname, Pageable pageable);
 }

@@ -55,8 +55,8 @@ export class DietService {
     return this.http.get(this.apiUrl + 'getImage/' + id, { responseType: 'blob', headers: this.headersImage });
   }
 
-  addDiet(data): Observable<Diet> {
-    return this.http.post<Diet>(this.apiUrl + 'diet/create', data, {headers: this.headers});
+  addDiet(data, clientNo): Observable<Diet> {
+    return this.http.post<Diet>(this.apiUrl + 'diets/' + clientNo, data, {headers: this.headers});
   }
 
   deleteDiet(id: number): any {

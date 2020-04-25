@@ -13,5 +13,4 @@ import java.util.List;
 
 @Repository
 interface HibernateTypeRepository extends TypeRepository, JpaRepository<Type, Long> {
-
 }

@@ -24,4 +24,8 @@ interface HibernateClientRepository extends ClientRepository, JpaRepository<Clie
 
     Client findFirstByClientNoOrderByIdDesc(Long clientNo);
 
+    @Query(nativeQuery = true, value="select nextval('client_no_seq')")
+    Long getClientSeqNoNextVal();
+
+    Page<Client> findClientsByFirstnameContainsOrLastnameContains(@Param("firstname") String firstname, @Param("lastname") String lastname, Pageable pageable);
 }

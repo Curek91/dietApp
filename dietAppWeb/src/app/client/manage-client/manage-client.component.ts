@@ -1,7 +1,8 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import {Client} from '../models/Client';
 import {ClientService} from '../client.service';
 import {Links} from '../models/Links';
+import {Page} from '../models/Page';
 
 @Component({
   selector: 'app-manage-client',
@@ -11,63 +12,87 @@ import {Links} from '../models/Links';
 export class ManageClientComponent implements OnInit {
 
   clients: Client[] = new Array();
-  filter: String = '';
-  clientToDelete: number;
-
+  filter = '';
+  links: Links;
+  page: Page;
+  private link: any;
 
   constructor(private clientService: ClientService) {
   }
 
   ngOnInit() {
-    this.loadClients();
+    this.loadClients('');
   }
 
-  loadClients(): void {
-    let clientTemp: Client;
-    this.clientService.getNewestClients().subscribe((page) => {
-      const clients = page._embedded.clientList;
-      const pageJSON = page.page;
-      const links: Links = page._links;
-      this.clients = [];
-      console.log('----------BEGIN-------------------');
-      console.log(page);
-      console.log('----------CLIENTS-------------------');
-      console.log(clients);
-      console.log('----------PAGEJSON-------------------');
-      console.log(pageJSON.totalElements);
-      console.log('----------LINKS-------------------');
-      console.log(links.first != null ? 'First: ' + links.first.href : 'First Link not found');
-      console.log(links.prev != null ? 'Prev: ' + links.prev.href : 'Prev Link not found');
-      console.log(links.self != null ? 'Self: ' + links.self.href : 'Self Link not found');
-      console.log(links.next != null ? 'Next: ' + links.next.href : 'Next Link not found');
-      console.log(links.last != null ? 'Last: ' + links.last.href : 'Last Link not found');
-      clients.forEach((client) => {
-
-        clientTemp = {
-          clientNo: client.clientNo,
-          firstname: client.firstname,
-          lastname: client.lastname,
-          age: client.age,
-          weight: client.weight,
-          height: client.height,
-          email: client.email,
-          telephone: client.telephone,
-          biceps: client.biceps,
-          chest: client.chest,
-          waist: client.waist,
-          thigh: client.thigh,
-          date: client.date
-        };
-         this.clients.push(clientTemp);
-      });
-      console.log(this.clients);
-      this.clients.sort((client1, client2) => client1.clientNo - client2.clientNo);
+  reloadClients(link: string): void {
+    this.clientService.getOhterPage(link).subscribe((page) => {
+      this.fillTable(page);
     });
+  }
+
+  loadClients(name: string): void {
+    this.clientService.getClientsByName(name).subscribe((page) => {
+      this.fillTable(page);
+    });
+  }
+
+  fillTable(page: any) {
+    this.page = page;
+    this.links = page._links;
+    this.clients = [];
+    if (page._embedded != null) {
+    page._embedded.clientDTOList.forEach((client) => {
+      this.clients.push(new Client({
+        clientNo: client.clientNo,
+        firstname: client.firstname,
+        lastname: client.lastname,
+        age: client.age,
+        weight: client.weight,
+        height: client.height,
+        email: client.email,
+        telephone: client.telephone,
+        biceps: client.biceps,
+        chest: client.chest,
+        waist: client.waist,
+        thigh: client.thigh,
+        date: client.date
+      }));
+    });
+    }
   }
 
   deleteClient(clientNo: number): void {
     this.clientService.deleteClient(clientNo).subscribe((response) => {
-      this.loadClients();
+      this.loadClients(this.filter);
     });
+  }
+
+  @HostListener('document:keyup', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    const regex = /^page=\d{1,}$/;
+    console.log(regex.test('pasge=23'));
+
+    if (event.key === 'ArrowRight') {
+      this.reloadClients(this.links.next.href.toString());
+    } else if (event.key === 'ArrowLeft'){
+      this.reloadClients(this.links.prev.href.toString());
+    }
+  }
+
+  valuechange($event: Event) {
+      this.loadClients(this.filter);
+  }
+
+  getTotalPages(): number {
+    return this.page.page.totalPages;
+  }
+
+  getLinkByNumber(x: number): string {
+    const selfLink = this.page._links.self.href;
+    return selfLink.replace(/page=\d+/gi, 'page=' + x);
+  }
+
+  getCurrentPage() {
+    return this.page.page.number;
   }
 }

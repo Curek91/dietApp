@@ -13,5 +13,4 @@ import java.util.List;
 
 @Repository
 interface HibernateMealRepository extends MealRepository, JpaRepository<Meal, Long> {
-
 }

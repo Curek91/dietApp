@@ -13,18 +13,13 @@ export class NewClientComponent implements OnInit {
 
   clientForm: FormGroup;
   showInfo: boolean;
-  showDiets: boolean;
-  showTrainings: boolean;
 
   constructor(private formBuilder: FormBuilder,
               private clientService: ClientService,
-              private router: Router,
-              private route: ActivatedRoute) { }
+              private router: Router) { }
 
   ngOnInit() {
     this.showInfo = true;
-    this.showDiets = false;
-    this.showTrainings = false;
     this.clientForm = this.formBuilder.group({
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
@@ -57,7 +52,7 @@ export class NewClientComponent implements OnInit {
       chest: +this.clientForm.value['chest'],
       waist: +this.clientForm.value['waist'],
       thigh: +this.clientForm.value['thigh'],
-      date: this.clientForm.value['date']
+      date: null
     };
     return client;
   }
@@ -65,7 +60,6 @@ export class NewClientComponent implements OnInit {
   addClient() {
     console.log(this.parseFormToEntity());
     this.clientService.addClient(this.parseFormToEntity()).subscribe(() => {
-
       this.router.navigate(['../manage-client']);
     });
   }
