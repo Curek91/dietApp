@@ -35,8 +35,6 @@ export class NewDietComponent implements OnInit {
   types: ProductType[] = new Array();
   oldDiet: Diet;
 
-  dietToSend: DietToSend;
-
   constructor(private dietService: DietService) {
   }
 
