@@ -12,10 +12,6 @@ import {DietService} from '../../diet/diet.service';
 import {NewDietComponent} from '../../diet/new-diet/new-diet.component';
 import {ModalComponent, ModalModule} from 'angular-custom-modal';
 import {ChartDataSets, ChartOptions} from 'chart.js';
-import {Color} from 'ng2-charts';
-import {range} from "rxjs";
-import {DatePipe} from "@angular/common";
-
 @Component({
   selector: 'app-show-client',
   templateUrl: './show-client.component.html',
@@ -27,16 +23,10 @@ export class ShowClientComponent implements OnInit {
   @ViewChild('deleteDietModal') deleteDietModal: ModalComponent;
   @ViewChild('saveClientModal') saveClientModal: ModalComponent;
 
-  showInfo: boolean;
-  showDiets: boolean;
-  showTrainings: boolean;
-  showProgress: boolean;
-  showGraphs: boolean;
+  showAccordions = new Map();
 
   clientForm: FormGroup;
   diets: Diet[] = new Array();
-
-  dietIdToModify: number;
 
   clientVersions: Client[] = new Array();
   currentClientVersion: number;
@@ -64,11 +54,12 @@ export class ShowClientComponent implements OnInit {
               private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.showInfo = true;
-    this.showDiets = false;
-    this.showProgress = false;
-    this.showGraphs = false;
-    this.showTrainings = false;
+    this.showAccordions.set('info', true);
+    this.showAccordions.set('diets', false);
+    this.showAccordions.set('progress', false);
+    this.showAccordions.set('graphs', false);
+    this.showAccordions.set('trainings', false);
+
     this.clientForm = this.formBuilder.group({
       firstname: ['',  Validators.required],
       lastname: ['', Validators.required],
@@ -128,6 +119,7 @@ export class ShowClientComponent implements OnInit {
         dietTemp.id = diet.id;
         dietTemp.createdBy = diet.createdBy;
         dietTemp.creationTime = diet.creationTime;
+        dietTemp.kcal = diet.kcal;
         this.diets.push(dietTemp);
       });
     });
@@ -203,7 +195,7 @@ export class ShowClientComponent implements OnInit {
     this.clientForm.get('date').setValue(new Date(this.clientVersions[version].date).toUTCString());
   }
 
-  changeClientVersion(version: number){
+  changeClientVersion(version: number) {
     if (version >= 0 && version <= this.clientVersions.length - 1) {
       this.currentClientVersion = version;
       this.fillForm(this.currentClientVersion);
@@ -215,16 +207,21 @@ export class ShowClientComponent implements OnInit {
     this.dietService.deleteDiet(id).subscribe((response) => {
       this.loadClientDiets();
     });
+    if (id === this.newDietRef.dietId) {
+      this.newDietRef.clearNewDiet();
+    }
+    this.deleteDietModal.close();
   }
 
   setDietId(dietId: number): void {
-    this.dietIdToModify = dietId;
+    this.newDietRef.dietId = dietId;
+    this.newDietRef.diet.id = dietId;
     this.newDietRef.getDiet();
   }
 
   createNewDiet(): void {
-    this.dietIdToModify = null;
-    this.showDiets = true;
+    this.newDietRef.dietId = null;
+    this.showAccordions.set('diets', true);
     this.newDietRef.clearNewDiet();
   }
 
@@ -241,7 +238,7 @@ export class ShowClientComponent implements OnInit {
     this.clientForm.enable();
   }
 
-  cancelNewVersion(){
+  cancelNewVersion() {
     this.changeClientVersion(this.clientVersions.length - 1);
     this.clientForm.disable();
   }

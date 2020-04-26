@@ -17,7 +17,7 @@ public class DietDTO {
     private Long id;
     private Set<MealDTO> meals;
     private Double kcal;
-    private String author;
-    private LocalDateTime date;
+    private String createdBy;
+    private LocalDateTime creationTime;
 
 }

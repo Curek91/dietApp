@@ -14,5 +14,7 @@ public class DietGetDietDTO {
 
     private Long id;
     private Set<MealGetDietDTO> meals;
+    private String createdBy;
+    private LocalDateTime creationTime;
 
 }

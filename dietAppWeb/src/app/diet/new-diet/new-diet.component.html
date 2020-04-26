@@ -3,6 +3,14 @@
     <div class="table">
       <div class="row">
         <div class="col-sm-6" style="height: 100%">
+          <div class="row">
+            <div class="col-sm-12 text-left" *ngIf="dietId">
+              Dieta: Id: {{diet.id}}, Utworzona przez: {{diet.createdBy}}, Dnia: {{diet.creationTime}}
+            </div>
+            <div class="col-sm-12 text-left" *ngIf="!dietId">
+              Tworzysz nową dietę
+            </div>
+          </div>
           <div *ngIf="activeMeal" class="row">
             <div class="col-sm-3">
               Porównaj do:
@@ -33,11 +41,11 @@
               <div class="row">
                 <div class="col-sm-12">
                   <span
-                    [ngClass]="{'greater': getProteinsForMeal(mealOnDiet) - getProteinsForMeal(getMealOnOldDiet(mealOnDiet.mealNo)) >= 0, 'lower': getProteinsForMeal(mealOnDiet) - getProteinsForMeal(getMealOnOldDiet(mealOnDiet.mealNo)) < 0}">Białko: </span><br/>
+                    [ngClass]="{'greater': getValuesForMeal(mealOnDiet, 'proteins') - getValuesForMeal(getMealOnOldDiet(mealOnDiet.mealNo), 'proteins') >= 0, 'lower': getValuesForMeal(mealOnDiet, 'proteins') - getValuesForMeal(getMealOnOldDiet(mealOnDiet.mealNo), 'proteins') < 0}">Białko: </span><br/>
                   <span
-                    [ngClass]="{'greater': getCarbsForMeal(mealOnDiet) - getCarbsForMeal(getMealOnOldDiet(mealOnDiet.mealNo)) >= 0, 'lower': getCarbsForMeal(mealOnDiet) - getCarbsForMeal(getMealOnOldDiet(mealOnDiet.mealNo)) < 0}">Węglowodany: </span><br/>
+                    [ngClass]="{'greater': getValuesForMeal(mealOnDiet, 'carbs') - getValuesForMeal(getMealOnOldDiet(mealOnDiet.mealNo), 'carbs') >= 0, 'lower': getValuesForMeal(mealOnDiet, 'carbs') - getValuesForMeal(getMealOnOldDiet(mealOnDiet.mealNo), 'carbs') < 0}">Węglowodany: </span><br/>
                   <span
-                    [ngClass]="{'greater': getFatsForMeal(mealOnDiet) - getFatsForMeal(getMealOnOldDiet(mealOnDiet.mealNo)) >= 0, 'lower': getFatsForMeal(mealOnDiet) - getFatsForMeal(getMealOnOldDiet(mealOnDiet.mealNo)) < 0}">Tłuszcze: </span><br/>
+                    [ngClass]="{'greater': getValuesForMeal(mealOnDiet, 'fats') - getValuesForMeal(getMealOnOldDiet(mealOnDiet.mealNo), 'fats') >= 0, 'lower': getValuesForMeal(mealOnDiet, 'fats') - getValuesForMeal(getMealOnOldDiet(mealOnDiet.mealNo), 'fats') < 0}">Tłuszcze: </span><br/>
                   <button class="btn btn-primary btn-sm" (click)="SuplModal.open()">Suplementy</button>
                   <modal #SuplModal>
                     <ng-template #modalHeader><h5 class="modal-title">Suplementy posiłek {{mealOnDiet.mealNo}}</h5>
@@ -62,21 +70,21 @@
               <div class="row">
                 <div class="col-sm-12">
                   <span
-                    [ngClass]="{'greater': getProteinsForMeal(mealOnDiet) - getProteinsForMeal(getMealOnOldDiet(mealOnDiet.mealNo)) >= 0, 'lower': getProteinsForMeal(mealOnDiet) - getProteinsForMeal(getMealOnOldDiet(mealOnDiet.mealNo)) < 0}">{{ getProteinsForMeal(mealOnDiet) | number:'1.1-2'}}
-                    / {{ getProteinsForMeal(getMealOnOldDiet(mealOnDiet.mealNo)) | number:'1.1-2'}}</span><br/>
+                    [ngClass]="{'greater': getValuesForMeal(mealOnDiet, 'proteins') - getValuesForMeal(getMealOnOldDiet(mealOnDiet.mealNo), 'proteins') >= 0, 'lower': getValuesForMeal(mealOnDiet, 'proteins') - getValuesForMeal(getMealOnOldDiet(mealOnDiet.mealNo), 'proteins') < 0}">{{ getValuesForMeal(mealOnDiet, 'proteins') | number:'1.1-2'}}
+                    / {{ getValuesForMeal(getMealOnOldDiet(mealOnDiet.mealNo), 'proteins') | number:'1.1-2'}}</span><br/>
                   <span
-                    [ngClass]="{'greater': getCarbsForMeal(mealOnDiet) - getCarbsForMeal(getMealOnOldDiet(mealOnDiet.mealNo)) >= 0, 'lower': getCarbsForMeal(mealOnDiet) - getCarbsForMeal(getMealOnOldDiet(mealOnDiet.mealNo)) < 0}">{{ getCarbsForMeal(mealOnDiet) | number:'1.1-2'}}
-                    / {{ getCarbsForMeal(getMealOnOldDiet(mealOnDiet.mealNo)) | number:'1.1-2'}}</span><br/>
+                    [ngClass]="{'greater': getValuesForMeal(mealOnDiet, 'carbs') - getValuesForMeal(getMealOnOldDiet(mealOnDiet.mealNo), 'carbs') >= 0, 'lower': getValuesForMeal(mealOnDiet, 'carbs') - getValuesForMeal(getMealOnOldDiet(mealOnDiet.mealNo), 'carbs') < 0}">{{ getValuesForMeal(mealOnDiet, 'carbs') | number:'1.1-2'}}
+                    / {{ getValuesForMeal(getMealOnOldDiet(mealOnDiet.mealNo), 'carbs') | number:'1.1-2'}}</span><br/>
                   <span
-                    [ngClass]="{'greater': getFatsForMeal(mealOnDiet) - getFatsForMeal(getMealOnOldDiet(mealOnDiet.mealNo)) >= 0, 'lower': getFatsForMeal(mealOnDiet) - getFatsForMeal(getMealOnOldDiet(mealOnDiet.mealNo)) < 0}">{{ getFatsForMeal(mealOnDiet) | number:'1.1-2'}}
-                    / {{ getFatsForMeal(getMealOnOldDiet(mealOnDiet.mealNo)) | number:'1.1-2'}}</span><br/>
+                    [ngClass]="{'greater': getValuesForMeal(mealOnDiet, 'fats') - getValuesForMeal(getMealOnOldDiet(mealOnDiet.mealNo), 'fats') >= 0, 'lower': getValuesForMeal(mealOnDiet, 'fats') - getValuesForMeal(getMealOnOldDiet(mealOnDiet.mealNo), 'fats') < 0}">{{ getValuesForMeal(mealOnDiet, 'fats') | number:'1.1-2'}}
+                    / {{ getValuesForMeal(getMealOnOldDiet(mealOnDiet.mealNo), 'fats') | number:'1.1-2'}}</span><br/>
                 </div>
               </div>
               <div class="row">
                 <div class="col-sm-12 kcal-difference">
                   <span
-                    [ngClass]="{'greater': getEnergyForMeal(mealOnDiet) - getEnergyForMeal(getMealOnOldDiet(mealOnDiet.mealNo)) >= 0, 'lower': getEnergyForMeal(mealOnDiet) - getEnergyForMeal(getMealOnOldDiet(mealOnDiet.mealNo)) < 0}">{{ getEnergyForMeal(mealOnDiet) | number:'1.1-2' }}
-                    <br/> {{ getEnergyForMeal(getMealOnOldDiet(mealOnDiet.mealNo)) | number:'1.1-2'}}</span>
+                    [ngClass]="{'greater': getValuesForMeal(mealOnDiet, 'kcal') - getValuesForMeal(getMealOnOldDiet(mealOnDiet.mealNo), 'kcal') >= 0, 'lower': getValuesForMeal(mealOnDiet, 'kcal') - getValuesForMeal(getMealOnOldDiet(mealOnDiet.mealNo), 'kcal') < 0}">{{ getValuesForMeal(mealOnDiet, 'kcal') | number:'1.1-2' }}
+                    <br/> {{ getValuesForMeal(getMealOnOldDiet(mealOnDiet.mealNo), 'kcal') | number:'1.1-2'}}</span>
                 </div>
               </div>
             </div>
@@ -84,27 +92,27 @@
           <div class="row meal-summary" *ngIf="diet.meals && diet.meals.length > 0">
             <div class="col-sm-3" style="text-align: right;">
               <span
-                [ngClass]="{'greater': getProteinsForDiet(diet) - getProteinsForDiet(oldDiet) >= 0, 'lower': getProteinsForDiet(diet) - getProteinsForDiet(oldDiet) < 0}">Białko: </span><br/>
+                [ngClass]="{'greater': getValuesForDiet(diet, 'proteins') - getValuesForDiet(oldDiet, 'proteins') >= 0, 'lower': getValuesForDiet(diet, 'proteins') - getValuesForDiet(oldDiet, 'proteins') < 0}">Białko: </span><br/>
               <span
-                [ngClass]="{'greater': getCarbsForDiet(diet) - getCarbsForDiet(oldDiet) >= 0, 'lower': getCarbsForDiet(diet) - getCarbsForDiet(oldDiet) < 0}">Węglowodany: </span><br/>
+                [ngClass]="{'greater': getValuesForDiet(diet, 'carbs') - getValuesForDiet(oldDiet, 'carbs') >= 0, 'lower': getValuesForDiet(diet, 'carbs') - getValuesForDiet(oldDiet, 'carbs') < 0}">Węglowodany: </span><br/>
               <span
-                [ngClass]="{'greater': getFatsForDiet(diet) - getFatsForDiet(oldDiet) >= 0, 'lower': getFatsForDiet(diet) - getFatsForDiet(oldDiet) < 0}">Tłuszcze: </span><br/>
+                [ngClass]="{'greater': getValuesForDiet(diet, 'fats') - getValuesForDiet(oldDiet, 'fats') >= 0, 'lower': getValuesForDiet(diet, 'fats') - getValuesForDiet(oldDiet, 'fats') < 0}">Tłuszcze: </span><br/>
               <span
-                [ngClass]="{'greater': getEnergyForDiet(diet) - getEnergyForDiet(oldDiet) >= 0, 'lower': getEnergyForDiet(diet) - getEnergyForDiet(oldDiet) < 0}">Kcal: </span><br/>
+                [ngClass]="{'greater': getValuesForDiet(diet, 'kcal') - getValuesForDiet(oldDiet, 'kcal') >= 0, 'lower': getValuesForDiet(diet, 'kcal') - getValuesForDiet(oldDiet, 'kcal') < 0}">Kcal: </span><br/>
             </div>
             <div class="col-sm-5 meal-summary">
               <span
-                [ngClass]="{'greater': getProteinsForDiet(diet) - getProteinsForDiet(oldDiet) >= 0, 'lower': getProteinsForDiet(diet) - getProteinsForDiet(oldDiet) < 0}">{{ getProteinsForDiet(diet) | number:'1.1-2'}}
-                / {{ getProteinsForDiet(oldDiet) | number:'1.1-2'}}</span><br/>
+                [ngClass]="{'greater': getValuesForDiet(diet, 'proteins') - getValuesForDiet(oldDiet, 'proteins') >= 0, 'lower': getValuesForDiet(diet, 'proteins') - getValuesForDiet(oldDiet, 'proteins') < 0}">{{ getValuesForDiet(diet, 'proteins') | number:'1.1-2'}}
+                / {{ getValuesForDiet(oldDiet, 'proteins') | number:'1.1-2'}}</span><br/>
               <span
-                [ngClass]="{'greater': getCarbsForDiet(diet) - getCarbsForDiet(oldDiet) >= 0, 'lower': getCarbsForDiet(diet) - getCarbsForDiet(oldDiet) < 0}">{{ getCarbsForDiet(diet) | number:'1.1-2'}}
-                / {{ getCarbsForDiet(oldDiet) | number:'1.1-2'}}</span><br/>
+                [ngClass]="{'greater': getValuesForDiet(diet, 'carbs') - getValuesForDiet(oldDiet, 'carbs') >= 0, 'lower': getValuesForDiet(diet, 'carbs') - getValuesForDiet(oldDiet, 'carbs') < 0}">{{ getValuesForDiet(diet, 'carbs') | number:'1.1-2'}}
+                / {{ getValuesForDiet(oldDiet, 'carbs') | number:'1.1-2'}}</span><br/>
               <span
-                [ngClass]="{'greater': getFatsForDiet(diet) - getFatsForDiet(oldDiet) >= 0, 'lower': getFatsForDiet(diet) - getFatsForDiet(oldDiet) < 0}">{{ getFatsForDiet(diet) | number:'1.1-2'}}
-                / {{ getFatsForDiet(oldDiet) | number:'1.1-2'}}</span><br/>
+                [ngClass]="{'greater': getValuesForDiet(diet, 'fats') - getValuesForDiet(oldDiet, 'fats') >= 0, 'lower': getValuesForDiet(diet, 'fats') - getValuesForDiet(oldDiet, 'fats') < 0}">{{ getValuesForDiet(diet, 'fats') | number:'1.1-2'}}
+                / {{ getValuesForDiet(oldDiet, 'fats') | number:'1.1-2'}}</span><br/>
               <span
-                [ngClass]="{'greater': getEnergyForDiet(diet) - getEnergyForDiet(oldDiet) >= 0, 'lower': getEnergyForDiet(diet) - getEnergyForDiet(oldDiet) < 0}">{{ getEnergyForDiet(diet) | number:'1.1-2'}}
-                / {{ getEnergyForDiet(oldDiet) | number:'1.1-2'}}</span><br/>
+                [ngClass]="{'greater': getValuesForDiet(diet, 'kcal') - getValuesForDiet(oldDiet, 'kcal') >= 0, 'lower': getValuesForDiet(diet, 'kcal') - getValuesForDiet(oldDiet, 'kcal') < 0}">{{ getValuesForDiet(diet, 'kcal') | number:'1.1-2'}}
+                / {{ getValuesForDiet(oldDiet, 'kcal') | number:'1.1-2'}}</span><br/>
             </div>
             <div class="col-sm-4">
 
@@ -117,10 +125,10 @@
               </button>
               <button type="button" class="btn btn-sm btn-success addDietBtn center" (click)="addMeal()">Dodaj posiłek
               </button>
-              <button *ngIf="diet.meals && diet.meals.length > 0 && dietId == null" type="button" (click)="createDietModal.open()"
+              <button *ngIf="diet.meals && diet.meals.length > 0 && diet.id == null" type="button" (click)="createDietModal.open()"
                       class="btn btn-sm btn-success addDietBtn text-right">Zapisz Diete
               </button>
-              <button *ngIf="diet.meals && diet.meals.length > 0 && dietId != null" type="button" (click)="updateDietModal.open()"
+              <button *ngIf="diet.meals && diet.meals.length > 0 && diet.id != null" type="button" (click)="updateDietModal.open()"
                       class="btn btn-sm btn-success addDietBtn text-right">Aktualizuj diete
               </button>
             </div>

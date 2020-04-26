@@ -9,7 +9,7 @@ public class DietUtils {
         Double kcal = 0.0;
         for(Meal meal : diet.getMeals()){
             for (MealProduct mp : meal.getMealProducts()){
-                kcal += mp.getProduct().getKcal();
+                kcal += (mp.getProduct().getKcal() * mp.getWeight() / 100);
             }
         }
         return kcal;

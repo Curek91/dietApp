@@ -38,7 +38,7 @@ public class DietServiceImpl implements DietService {
     public List<DietDTO> getDiets(Long clientNo) {
         return dietRepository.findDietsByClient_ClientNo(clientNo)
                 .stream()
-                .map((d) -> new DietDTO(d.getId(), null, DietUtils.calculateKcal(d), d.getModifiedBy(), d.getModificationTime()))
+                .map((d) -> new DietDTO(d.getId(), null, DietUtils.calculateKcal(d), d.getCreatedBy(), d.getModificationTime()))
                 .collect(Collectors.toList());
     }
 

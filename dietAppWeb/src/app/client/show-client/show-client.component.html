@@ -1,12 +1,12 @@
 <div class="container product-container">
   <div class="accordion-panel">
-    <div class="accordion-header" (click)="showInfo = !showInfo">
+    <div class="accordion-header" (click)="showAccordions.set('info', !showAccordions.get('info'))">
       <h3>
-        <i class="fa " [ngClass]="{'fa-angle-down': showInfo === true, 'fa-angle-right': showInfo === false}"></i>
+        <i class="fa " [ngClass]="{'fa-angle-down': showAccordions.get('info') === true, 'fa-angle-right': showAccordions.get('info') === false}"></i>
         <span>Informacje</span>
       </h3>
     </div>
-    <div class="accordion-body" *ngIf="showInfo">
+    <div class="accordion-body" *ngIf="showAccordions.get('info')">
       <form [formGroup]="clientForm">
         <div class="row form-group">
           <div class="col-sm-4">
@@ -95,15 +95,15 @@
     <div class="accordion-header">
       <h3>
         <div class="row">
-          <div class="col-sm-10" (click)="showProgress = !showProgress">
+          <div class="col-sm-10" (click)="showAccordions.set('progress', !showAccordions.get('progress'))">
             <i class="fa "
-               [ngClass]="{'fa-angle-down': showProgress === true, 'fa-angle-right': showProgress === false}"></i>
+               [ngClass]="{'fa-angle-down': showAccordions.get('progress') === true, 'fa-angle-right': showAccordions.get('progress') === false}"></i>
             <span>Postępy</span>
           </div>
         </div>
       </h3>
     </div>
-    <div class="accordion-body" *ngIf="showProgress">
+    <div class="accordion-body" *ngIf="showAccordions.get('progress')">
       <div class="row">
         <div class="col-sm-12">
           <table class="table table-striped">
@@ -137,15 +137,15 @@
     <div class="accordion-header">
       <h3>
         <div class="row">
-          <div class="col-sm-10" (click)="showGraphs = !showGraphs">
+          <div class="col-sm-10" (click)="showAccordions.set('graphs', !showAccordions.get('graphs'))">
             <i class="fa "
-               [ngClass]="{'fa-angle-down': showGraphs === true, 'fa-angle-right': showGraphs === false}"></i>
+               [ngClass]="{'fa-angle-down': showAccordions.get('graphs') === true, 'fa-angle-right': showAccordions.get('graphs') === false}"></i>
             <span>Wykresy</span>
           </div>
         </div>
       </h3>
     </div>
-    <div class="accordion-body" *ngIf="showGraphs">
+    <div class="accordion-body" *ngIf="showAccordions.get('graphs')">
       <div class="row">
       <div class="col-sm-12">
         <canvas baseChart width="800" height="200"
@@ -164,19 +164,19 @@
     <div class="accordion-header">
       <h3>
         <div class="row">
-          <div class="col-sm-10" (click)="showDiets = !showDiets">
-            <i class="fa " [ngClass]="{'fa-angle-down': showDiets === true, 'fa-angle-right': showDiets === false}"></i>
+          <div class="col-sm-10" (click)="showAccordions.set('diets', !showAccordions.get('diets'))">
+            <i class="fa " [ngClass]="{'fa-angle-down': showAccordions.get('diets') === true, 'fa-angle-right': showAccordions.get('diets') === false}"></i>
             <span>Diety</span>
           </div>
           <div class="col-sm-2">
-            <button class="btn btn-sm btn-success" (click)="createNewDiet()">Utwórz nową diete</button>
+            <button class="btn btn-sm btn-success" *ngIf="showAccordions.get('diets')" (click)="createNewDiet()">Utwórz nową diete</button>
           </div>
         </div>
       </h3>
     </div>
 
 
-    <div class="accordion-body" *ngIf="showDiets">
+    <div class="accordion-body" *ngIf="showAccordions.get('diets')">
       <div class="row">
         <table class="table table-striped">
           <thead>
@@ -184,6 +184,7 @@
             <th>Lp</th>
             <th>Utworzona przez</th>
             <th>Data utworzenia</th>
+            <th>Kalorie</th>
             <th></th>
             <th></th>
           </tr>
@@ -193,6 +194,7 @@
             <td (click)="setDietId(clientDiet.id)">{{clientDiet.id}}</td>
             <td (click)="setDietId(clientDiet.id)">{{clientDiet.createdBy}}</td>
             <td (click)="setDietId(clientDiet.id)">{{clientDiet.creationTime}} </td>
+            <td (click)="setDietId(clientDiet.id)">{{clientDiet.kcal}} </td>
             <td>
               <button class="btn btn-sm btn-danger" (click)="deleteDietModal.open()">Usuń</button>
             </td>
@@ -213,8 +215,7 @@
           </tbody>
         </table>
       </div>
-      <app-new-diet #newDietRef (refreshDietsEvent)="loadClientDiets()" [clientNo]="route.snapshot.params['clientNo']"
-                    [dietId]="dietIdToModify" [oldDiets]="diets"></app-new-diet>
+      <app-new-diet #newDietRef (refreshDietsEvent)="loadClientDiets()" [clientNo]="route.snapshot.params['clientNo']" [oldDiets]="diets"></app-new-diet>
     </div>
   </div>
 

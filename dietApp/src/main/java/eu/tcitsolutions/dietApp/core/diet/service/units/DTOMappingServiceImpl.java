@@ -62,7 +62,7 @@ public class DTOMappingServiceImpl implements DTOMappingService, ApplicationCont
 
     @Override
     public DietGetDietDTO createDTO(Diet source) {
-        DietGetDietDTO dietGetDietDTO = new DietGetDietDTO(source.getId(), new HashSet<MealGetDietDTO>());
+        DietGetDietDTO dietGetDietDTO = new DietGetDietDTO(source.getId(), new HashSet<MealGetDietDTO>(), source.getCreatedBy(), source.getCreationTime());
         MealGetDietDTO mealGetDietDTO;
 
 

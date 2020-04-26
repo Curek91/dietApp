@@ -27,10 +27,6 @@ export class ClientService {
     return this.http.delete<any>(this.apiUrl + 'clients/' + clientNo, {headers: this.headers});
   }
 
-  getClientDiets(clientNo: number): Observable<Diet[]> {
-    return this.http.get<Diet[]>(this.apiUrl + 'diets/byClientNo/' + clientNo, {headers: this.headers});
-  }
-
   sendEmail(dietId): Observable<Diet> {
     return this.http.post<Diet>(this.apiUrl + 'api/sendEmail', dietId, {headers: this.headers});
   }
@@ -56,6 +52,13 @@ export class ClientService {
       .append('size', size)
       .append('name', name);
     return this.http.get<Page>(this.apiUrl + 'clientsByFirstnameOrLastname', {headers: this.headers, params: searchParams});
+  }
+
+
+
+
+  getClientDiets(clientNo: number): Observable<Diet[]> {
+    return this.http.get<Diet[]>(this.apiUrl + 'diets/byClientNo/' + clientNo, {headers: this.headers});
   }
 
 }
