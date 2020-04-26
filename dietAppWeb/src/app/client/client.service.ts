@@ -49,12 +49,13 @@ export class ClientService {
     return this.http.get<Page>(link, {headers: this.headers});
   }
 
-  getClientsByName(name: string) {
+  getClientsByName(name: string, sortBy: string = 'firstname', direction: string = 'asc', size: string = '5', page: string = '0') {
     const searchParams = new HttpParams()
-      .append('sort', 'lastname')
-      .append('page', '0')
-      .append('size', '4')
+      .append('sort', sortBy + ',' + direction)
+      .append('page', page)
+      .append('size', size)
       .append('name', name);
     return this.http.get<Page>(this.apiUrl + 'clientsByFirstnameOrLastname', {headers: this.headers, params: searchParams});
   }
+
 }

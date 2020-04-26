@@ -21,3 +21,20 @@
   color: blue;
 }
 
+th
+{
+  cursor: default;
+}
+
+tr
+{
+  cursor: pointer;
+}
+
+.activate-sorting
+{
+  color: red;
+  font-size: larger;
+  font-weight: bolder;
+}
+

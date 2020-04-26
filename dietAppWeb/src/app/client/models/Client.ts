@@ -5,7 +5,7 @@ import {IClient} from './IClient';
 
 
 export class Client implements IClient {
-  clientNo: number
+  clientNo: number;
   firstname: string;
   lastname: string;
   age: number;

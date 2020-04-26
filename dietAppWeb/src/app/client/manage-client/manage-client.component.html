@@ -3,7 +3,8 @@
     <div class="col-md-5 float-md-left">
       <div class="input-group">
         <span class="input-group-addon glyphicon glyphicon-search"></span>
-        <input type="text" class="form-control" [(ngModel)]="filter" (change)="valuechange($event)" placeholder="Szukaj...">
+        <input type="text" class="form-control" [(ngModel)]="filter" (change)="valuechange($event)"
+               placeholder="Szukaj...">
       </div>
     </div>
     <div class="col-md-7">
@@ -14,9 +15,18 @@
     <table class="table table-striped">
       <thead>
       <tr>
-        <th>Lp</th>
-        <th>Imię</th>
-        <th>Nazwisko</th>
+        <th (click)="sorting('clientNo')">Numer Klienta<i class="fa fa-angle-down"
+                                                  [ngClass]="{'activate-sorting': this.sort.sortBy === 'clientNo' && this.sort.direction === 'desc'}"></i><i
+          class="fa fa-angle-up"
+          [ngClass]="{'activate-sorting': this.sort.sortBy === 'clientNo' && this.sort.direction === 'asc'}"></i></th>
+        <th (click)="sorting('firstname')">Imię<i class="fa fa-angle-down"
+                                                  [ngClass]="{'activate-sorting': this.sort.sortBy === 'firstname' && this.sort.direction === 'desc'}"></i><i
+          class="fa fa-angle-up"
+          [ngClass]="{'activate-sorting': this.sort.sortBy === 'firstname' && this.sort.direction === 'asc'}"></i></th>
+        <th (click)="sorting('lastname')">Nazwisko<i class="fa fa-angle-down"
+                                                     [ngClass]="{'activate-sorting': this.sort.sortBy === 'lastname' && this.sort.direction === 'desc'}"></i><i
+          class="fa fa-angle-up"
+          [ngClass]="{'activate-sorting': this.sort.sortBy === 'lastname' && this.sort.direction === 'asc'}"></i></th>
         <th>Wiek</th>
         <th>Waga</th>
         <th>Wzrost</th>
@@ -35,11 +45,18 @@
         <td [routerLink]="['/client', client.clientNo]">{{client.height}}</td>
         <td [routerLink]="['/client', client.clientNo]">{{client.email}}</td>
         <td [routerLink]="['/client', client.clientNo]">{{client.telephone}}</td>
-        <td><button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal" (click)="deleteClientModal.open()">Usuń</button></td>
+        <td>
+          <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal"
+                  (click)="deleteClientModal.open()">Usuń
+          </button>
+        </td>
         <modal #deleteClientModal>
-          <ng-template #modalHeader><h5 class="modal-title">Czy napewno chcesz usunąć klienta o numerze {{client.clientNo}}?</h5></ng-template>
+          <ng-template #modalHeader><h5 class="modal-title">Czy napewno chcesz usunąć klienta o
+            numerze {{client.clientNo}}?</h5></ng-template>
           <ng-template #modalFooter>
-            <button type="button" class="btn btn-success btn-sm" data-dismiss="modal" (click)="deleteClient(client.clientNo)">Usuń</button>
+            <button type="button" class="btn btn-success btn-sm" data-dismiss="modal"
+                    (click)="deleteClient(client.clientNo)">Usuń
+            </button>
             <button type="button" class="btn btn-danger btn-sm" (click)="deleteClientModal.close()">Anuluj</button>
           </ng-template>
         </modal>
@@ -49,25 +66,26 @@
   </div>
   <div class="row">
     <div class="col-sm-12">
-    <nav aria-label="Page navigation example">
-      <ul class="pagination pagination-lg justify-content-center">
-        <li class="page-item" [ngClass]="{'disabled': this.getCurrentPage() <= 0}">
-          <a class="page-link" (click)="reloadClients(this.links.prev.href)" aria-label="Previous">
-            <span aria-hidden="true">&laquo;</span>
-            <span class="sr-only">Previous</span>
-          </a>
-        </li>
-        <li *ngFor="let element of [].constructor(this.getTotalPages()), let x = index" class="page-item" [ngClass]="{'active': x === this.getCurrentPage()}">
-          <a class="page-link" (click)="reloadClients(this.getLinkByNumber(x))">{{x + 1}}</a>
-        </li>
-        <li class="page-item" [ngClass]="{'disabled': this.getCurrentPage() >= this.getTotalPages() - 1}">
-          <a class="page-link" (click)="reloadClients(this.links.next.href)" aria-label="Next">
-            <span aria-hidden="true">&raquo;</span>
-            <span class="sr-only">Next</span>
-          </a>
-        </li>
-      </ul>
-    </nav>
+      <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+          <li class="page-item" [ngClass]="{'disabled': this.getCurrentPage() <= 0}">
+            <a class="page-link" (click)="reloadClients(this.links.prev.href)" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+              <span class="sr-only">Previous</span>
+            </a>
+          </li>
+          <li *ngFor="let element of [].constructor(this.getTotalPages()), let x = index" class="page-item"
+              [ngClass]="{'active': x === this.getCurrentPage()}">
+            <a class="page-link" (click)="reloadClients(this.getLinkByNumber(x))">{{x + 1}}</a>
+          </li>
+          <li class="page-item" [ngClass]="{'disabled': this.getCurrentPage() >= this.getTotalPages() - 1}">
+            <a class="page-link" (click)="reloadClients(this.links.next.href)" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+              <span class="sr-only">Next</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
     </div>
   </div>
 </div>

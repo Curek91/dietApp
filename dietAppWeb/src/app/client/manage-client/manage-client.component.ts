@@ -3,6 +3,7 @@ import {Client} from '../models/Client';
 import {ClientService} from '../client.service';
 import {Links} from '../models/Links';
 import {Page} from '../models/Page';
+import {Sort} from '../models/Sort';
 
 @Component({
   selector: 'app-manage-client',
@@ -15,13 +16,13 @@ export class ManageClientComponent implements OnInit {
   filter = '';
   links: Links;
   page: Page;
-  private link: any;
+  sort: Sort = new Sort();
 
   constructor(private clientService: ClientService) {
   }
 
   ngOnInit() {
-    this.loadClients('');
+    this.loadClients();
   }
 
   reloadClients(link: string): void {
@@ -30,8 +31,9 @@ export class ManageClientComponent implements OnInit {
     });
   }
 
-  loadClients(name: string): void {
-    this.clientService.getClientsByName(name).subscribe((page) => {
+  loadClients(name: string = '', sortBy: string = 'firstname', direction: string = 'asc', size: string = '5', page: string = '0'): void {
+    // tslint:disable-next-line:no-shadowed-variable
+    this.clientService.getClientsByName(name, sortBy, direction, size, page).subscribe((page) => {
       this.fillTable(page);
     });
   }
@@ -94,5 +96,15 @@ export class ManageClientComponent implements OnInit {
 
   getCurrentPage() {
     return this.page.page.number;
+  }
+
+  sorting(sortBy: string) {
+    this.sort.sortBy = sortBy;
+    if (this.sort.direction == null || this.sort.direction === 'desc' || this.sort.sortBy !== sortBy) {
+      this.sort.direction = 'asc';
+    } else {
+      this.sort.direction = 'desc';
+    }
+    this.loadClients(this.filter, this.sort.sortBy, this.sort.direction);
   }
 }
