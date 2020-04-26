@@ -3,7 +3,7 @@
     <div class="col-md-5 float-md-left">
       <div class="input-group">
         <span class="input-group-addon glyphicon glyphicon-search"></span>
-        <input type="text" class="form-control" [(ngModel)]="filter" (change)="valuechange($event)"
+        <input type="text" class="form-control" [(ngModel)]="filter" (change)="valuechange()"
                placeholder="Szukaj...">
       </div>
     </div>
@@ -36,30 +36,31 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let client of clients">
-        <td [routerLink]="['/client', client.clientNo]">{{client.clientNo}}</td>
-        <td [routerLink]="['/client', client.clientNo]">{{client.firstname}}</td>
-        <td [routerLink]="['/client', client.clientNo]">{{client.lastname}} </td>
-        <td [routerLink]="['/client', client.clientNo]">{{client.age}}</td>
-        <td [routerLink]="['/client', client.clientNo]">{{client.weight}}</td>
-        <td [routerLink]="['/client', client.clientNo]">{{client.height}}</td>
-        <td [routerLink]="['/client', client.clientNo]">{{client.email}}</td>
-        <td [routerLink]="['/client', client.clientNo]">{{client.telephone}}</td>
-        <td>
+      <tr *ngFor="let client of clients" [routerLink]="['/client', client.clientNo]">
+        <td>{{client.clientNo}}</td>
+        <td>{{client.firstname}}</td>
+        <td>{{client.lastname}} </td>
+        <td>{{client.age}}</td>
+        <td>{{client.weight}}</td>
+        <td>{{client.height}}</td>
+        <td>{{client.email}}</td>
+        <td>{{client.telephone}}</td>
+        <td (click)="$event.stopPropagation()">
           <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal"
                   (click)="deleteClientModal.open()">Usuń
           </button>
+          <modal #deleteClientModal [closeOnOutsideClick]="true">
+            <ng-template #modalHeader><h5 class="modal-title">Czy napewno chcesz usunąć klienta o
+              numerze {{client.clientNo}}?</h5></ng-template>
+            <ng-template #modalFooter>
+              <button type="button" class="btn btn-success btn-sm" data-dismiss="modal"
+                      (click)="deleteClient(client.clientNo)">Usuń
+              </button>
+              <button type="button" class="btn btn-danger btn-sm" (click)="deleteClientModal.close()">Anuluj</button>
+            </ng-template>
+          </modal>
         </td>
-        <modal #deleteClientModal>
-          <ng-template #modalHeader><h5 class="modal-title">Czy napewno chcesz usunąć klienta o
-            numerze {{client.clientNo}}?</h5></ng-template>
-          <ng-template #modalFooter>
-            <button type="button" class="btn btn-success btn-sm" data-dismiss="modal"
-                    (click)="deleteClient(client.clientNo)">Usuń
-            </button>
-            <button type="button" class="btn btn-danger btn-sm" (click)="deleteClientModal.close()">Anuluj</button>
-          </ng-template>
-        </modal>
+
       </tr>
       </tbody>
     </table>
@@ -68,18 +69,18 @@
     <div class="col-sm-12">
       <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
-          <li class="page-item" [ngClass]="{'disabled': this.getCurrentPage() <= 0}">
-            <a class="page-link" (click)="reloadClients(this.links.prev.href)" aria-label="Previous">
+          <li class="page-item" [ngClass]="{'disabled': this.page.page.number <= 0}">
+            <a class="page-link" (click)="reloadClients(page._links.prev.href)" aria-label="Previous">
               <span aria-hidden="true">&laquo;</span>
               <span class="sr-only">Previous</span>
             </a>
           </li>
-          <li *ngFor="let element of [].constructor(this.getTotalPages()), let x = index" class="page-item"
-              [ngClass]="{'active': x === this.getCurrentPage()}">
+          <li *ngFor="let element of [].constructor(page.page.totalPages), let x = index" class="page-item"
+              [ngClass]="{'active': x === this.page.page.number}">
             <a class="page-link" (click)="reloadClients(this.getLinkByNumber(x))">{{x + 1}}</a>
           </li>
-          <li class="page-item" [ngClass]="{'disabled': this.getCurrentPage() >= this.getTotalPages() - 1}">
-            <a class="page-link" (click)="reloadClients(this.links.next.href)" aria-label="Next">
+          <li class="page-item" [ngClass]="{'disabled': page.page.number >= page.page.totalPages - 1}">
+            <a class="page-link" (click)="reloadClients(page._links.next.href)" aria-label="Next">
               <span aria-hidden="true">&raquo;</span>
               <span class="sr-only">Next</span>
             </a>
@@ -88,6 +89,4 @@
       </nav>
     </div>
   </div>
-</div>
-
-
+</div>\

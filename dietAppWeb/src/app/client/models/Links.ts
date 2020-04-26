@@ -7,4 +7,12 @@ export class Links {
   self: Link;
   next: Link;
   last: Link;
+
+  constructor(){
+  this.first = new Link();
+  this.prev = new Link();
+  this.self = new Link();
+  this.next = new Link();
+  this.last = new Link();
+  }
 }

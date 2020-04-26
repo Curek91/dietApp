@@ -1,9 +1,10 @@
-import {Component, HostListener, OnInit} from '@angular/core';
+import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
 import {Client} from '../models/Client';
 import {ClientService} from '../client.service';
 import {Links} from '../models/Links';
 import {Page} from '../models/Page';
 import {Sort} from '../models/Sort';
+import {ModalComponent} from "angular-custom-modal";
 
 @Component({
   selector: 'app-manage-client',
@@ -14,8 +15,7 @@ export class ManageClientComponent implements OnInit {
 
   clients: Client[] = new Array();
   filter = '';
-  links: Links;
-  page: Page;
+  page: Page = new Page();
   sort: Sort = new Sort();
 
   constructor(private clientService: ClientService) {
@@ -40,26 +40,25 @@ export class ManageClientComponent implements OnInit {
 
   fillTable(page: any) {
     this.page = page;
-    this.links = page._links;
     this.clients = [];
     if (page._embedded != null) {
-    page._embedded.clientDTOList.forEach((client) => {
-      this.clients.push(new Client({
-        clientNo: client.clientNo,
-        firstname: client.firstname,
-        lastname: client.lastname,
-        age: client.age,
-        weight: client.weight,
-        height: client.height,
-        email: client.email,
-        telephone: client.telephone,
-        biceps: client.biceps,
-        chest: client.chest,
-        waist: client.waist,
-        thigh: client.thigh,
-        date: client.date
-      }));
-    });
+      page._embedded.clientDTOList.forEach((client) => {
+        this.clients.push(new Client({
+          clientNo: client.clientNo,
+          firstname: client.firstname,
+          lastname: client.lastname,
+          age: client.age,
+          weight: client.weight,
+          height: client.height,
+          email: client.email,
+          telephone: client.telephone,
+          biceps: client.biceps,
+          chest: client.chest,
+          waist: client.waist,
+          thigh: client.thigh,
+          date: client.date
+        }));
+      });
     }
   }
 
@@ -71,22 +70,15 @@ export class ManageClientComponent implements OnInit {
 
   @HostListener('document:keyup', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
-    const regex = /^page=\d{1,}$/;
-    console.log(regex.test('pasge=23'));
-
     if (event.key === 'ArrowRight') {
-      this.reloadClients(this.links.next.href.toString());
-    } else if (event.key === 'ArrowLeft'){
-      this.reloadClients(this.links.prev.href.toString());
+      this.reloadClients(this.page._links.next.href.toString());
+    } else if (event.key === 'ArrowLeft') {
+      this.reloadClients(this.page._links.prev.href.toString());
     }
   }
 
-  valuechange($event: Event) {
-      this.loadClients(this.filter);
-  }
-
-  getTotalPages(): number {
-    return this.page.page.totalPages;
+  valuechange() {
+    this.loadClients(this.filter);
   }
 
   getLinkByNumber(x: number): string {
@@ -107,4 +99,5 @@ export class ManageClientComponent implements OnInit {
     }
     this.loadClients(this.filter, this.sort.sortBy, this.sort.direction);
   }
+
 }
