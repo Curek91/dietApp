@@ -190,13 +190,17 @@
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let clientDiet of diets" class="diet-row">
-            <td (click)="setDietId(clientDiet.id)">{{clientDiet.id}}</td>
-            <td (click)="setDietId(clientDiet.id)">{{clientDiet.createdBy}}</td>
-            <td (click)="setDietId(clientDiet.id)">{{clientDiet.creationTime}} </td>
-            <td (click)="setDietId(clientDiet.id)">{{clientDiet.kcal}} </td>
-            <td>
+          <tr *ngFor="let clientDiet of diets" class="diet-row" [ngClass]="{'active-diet':clientDiet.id === newDietRef.dietId}">
+            <td (click)="setDietId(clientDiet.id)" [ngClass]="{'active-diet': clientDiet.id === newDietRef.dietId}">{{clientDiet.id}}</td>
+            <td (click)="setDietId(clientDiet.id)" [ngClass]="{'active-diet': clientDiet.id === newDietRef.dietId}">{{clientDiet.createdBy}}</td>
+            <td (click)="setDietId(clientDiet.id)" [ngClass]="{'active-diet': clientDiet.id === newDietRef.dietId}">{{clientDiet.creationTime}} </td>
+            <td (click)="setDietId(clientDiet.id)" [ngClass]="{'active-diet': clientDiet.id === newDietRef.dietId}">{{clientDiet.kcal}} </td>
+            <td [ngClass]="{'active-diet':clientDiet.id === newDietRef.dietId}">
               <button class="btn btn-sm btn-danger" (click)="deleteDietModal.open()">Usuń</button>
+            </td>
+
+            <td [ngClass]="{'active-diet' :clientDiet.id === newDietRef.dietId}">
+              <button class="btn btn-sm btn-info" (click)="sendEmail(clientDiet.id)">Wyślij email</button>
             </td>
             <modal #deleteDietModal>
               <ng-template #modalHeader><h5 class="modal-title">Czy napewno chcesz usunąć dietę o id {{clientDiet.id}}
@@ -208,9 +212,6 @@
                 <button type="button" class="btn btn-danger btn-sm" (click)="deleteDietModal.close()">Anuluj</button>
               </ng-template>
             </modal>
-            <td>
-              <button class="btn btn-sm btn-info" (click)="sendEmail(clientDiet.id)">Wyślij email</button>
-            </td>
           </tr>
           </tbody>
         </table>
