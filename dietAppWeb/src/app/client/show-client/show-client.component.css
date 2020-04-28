@@ -30,3 +30,28 @@
 {
   margin-top: 5%;
 }
+
+.diet-row:hover
+{
+  background: burlywood;
+}
+
+.accordion-title
+{
+  cursor: pointer;
+}
+
+.accordion-title:hover
+{
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.accordion-active
+{
+  text-decoration: underline;
+  font-weight: bold;
+  color: red;
+}
+
+

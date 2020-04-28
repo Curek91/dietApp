@@ -34,13 +34,25 @@ export class NewDietComponent implements OnInit {
   productTypeSelected: String = null;
   types: ProductType[] = new Array();
   oldDiet: Diet;
+  dietView: string;
+  productsView: string;
 
   constructor(private dietService: DietService) {
   }
 
   ngOnInit() {
+    this.dietView = 'list';
+    this.productsView = 'list';
     this.loadProducts();
     this.loadProductTypes();
+  }
+
+  changeDietView(view: string) {
+    this.dietView = view;
+  }
+
+  changeProductsView(view: string) {
+    this.productsView = view;
   }
 
   loadProductTypes(): void {
@@ -83,6 +95,7 @@ export class NewDietComponent implements OnInit {
 
   addToMeal(product: Product): void {
     const prod: Product = new Product(product);
+    prod.weight = null;
     this.diet.meals[this.activeMeal - 1].products.push(prod);
   }
 

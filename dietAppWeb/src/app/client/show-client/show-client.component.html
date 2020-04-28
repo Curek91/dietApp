@@ -1,9 +1,9 @@
 <div class="container product-container">
   <div class="accordion-panel">
-    <div class="accordion-header" (click)="showAccordions.set('info', !showAccordions.get('info'))">
-      <h3>
+    <div class="accordion-header" [ngClass]="{'accordion-active': showAccordions.get('info') === true}" (click)="showAccordions.set('info', !showAccordions.get('info'))">
+      <h3 class="accordion-title">
         <i class="fa " [ngClass]="{'fa-angle-down': showAccordions.get('info') === true, 'fa-angle-right': showAccordions.get('info') === false}"></i>
-        <span>Informacje</span>
+        <span>Ogólne Informacje</span>
       </h3>
     </div>
     <div class="accordion-body" *ngIf="showAccordions.get('info')">
@@ -92,8 +92,8 @@
 
 
   <div class="accordion-panel">
-    <div class="accordion-header">
-      <h3>
+    <div class="accordion-header" [ngClass]="{'accordion-active': showAccordions.get('progress') === true}">
+      <h3 class="accordion-title">
         <div class="row">
           <div class="col-sm-10" (click)="showAccordions.set('progress', !showAccordions.get('progress'))">
             <i class="fa "
@@ -134,13 +134,13 @@
   </div>
 
   <div class="accordion-panel">
-    <div class="accordion-header">
-      <h3>
+    <div class="accordion-header accordion-title" [ngClass]="{'accordion-active': showAccordions.get('graphs') === true}">
+      <h3 class="accordion-title">
         <div class="row">
           <div class="col-sm-10" (click)="showAccordions.set('graphs', !showAccordions.get('graphs'))">
             <i class="fa "
                [ngClass]="{'fa-angle-down': showAccordions.get('graphs') === true, 'fa-angle-right': showAccordions.get('graphs') === false}"></i>
-            <span>Wykresy</span>
+            <span >Wykresy</span>
           </div>
         </div>
       </h3>
@@ -161,8 +161,8 @@
   </div>
 
   <div class="accordion-panel">
-    <div class="accordion-header">
-      <h3>
+    <div class="accordion-header" [ngClass]="{'accordion-active': showAccordions.get('diets') === true}" >
+      <h3 class="accordion-title">
         <div class="row">
           <div class="col-sm-10" (click)="showAccordions.set('diets', !showAccordions.get('diets'))">
             <i class="fa " [ngClass]="{'fa-angle-down': showAccordions.get('diets') === true, 'fa-angle-right': showAccordions.get('diets') === false}"></i>
@@ -190,7 +190,7 @@
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let clientDiet of diets">
+          <tr *ngFor="let clientDiet of diets" class="diet-row">
             <td (click)="setDietId(clientDiet.id)">{{clientDiet.id}}</td>
             <td (click)="setDietId(clientDiet.id)">{{clientDiet.createdBy}}</td>
             <td (click)="setDietId(clientDiet.id)">{{clientDiet.creationTime}} </td>

@@ -17,7 +17,7 @@
 }
 
 .products-row{
-   height: 30vh;
+   height: 60vh;
    overflow: hidden;
    overflow-y: scroll;
    margin-top: 3%;
@@ -61,3 +61,27 @@
   -webkit-transition: opacity .10s linear;
   transition: opacity .10s linear;
 }
+
+.product-on-table
+{
+  font-size: x-small;
+}
+
+.summary-row {
+  color: red;
+  font-size: medium;
+  font-weight: bolder;
+}
+
+.prod-row
+{
+  cursor: cell;
+}
+
+.prod-row:hover
+{
+  background: burlywood;
+  cursor: cell;
+}
+
+

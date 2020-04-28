@@ -4,10 +4,24 @@
       <div class="row">
         <div class="col-sm-6" style="height: 100%">
           <div class="row">
+            <div class="col-sm-12">
+              <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-info active" (click)="changeDietView('list')">
+                  <input type="radio" name="view" id="listView" value="list"
+                         autocomplete="off" checked> Lista
+                </label>
+                <label class="btn btn-info" (click)="changeDietView('images')">
+                  <input type="radio" name="view" id="imagesView" value="images"
+                         autocomplete="off"> Obrazki
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
             <div class="col-sm-12 text-left" *ngIf="dietId">
               Dieta: Id: {{diet.id}}, Utworzona przez: {{diet.createdBy}}, Dnia: {{diet.creationTime}}
             </div>
-            <div class="col-sm-12 text-left" *ngIf="!dietId">
+            <div class="col-sm-12 text-center" *ngIf="!dietId">
               Tworzysz nową dietę
             </div>
           </div>
@@ -15,7 +29,7 @@
             <div class="col-sm-3">
               Porównaj do:
             </div>
-            <div class="col-sm-9">
+            <div class="col-sm-9" style="margin-bottom: 10%">
               <select id="typeOldId" (change)="getOldDiet($event.target.value)" class="form-control">
                 <option [ngValue]="null"></option>
                 <option *ngFor="let oldDiet of oldDiets" value="{{ oldDiet.id }}">{{oldDiet.id}} - {{oldDiet.createdBy}}
@@ -26,18 +40,78 @@
           <div class="row dietRow" [ngClass]="{'active-row': mealOnDiet.mealNo == activeMeal}"
                *ngFor="let mealOnDiet of diet.meals" (click)="setActiveMeal(mealOnDiet.mealNo)"
                dnd-droppable (onDropSuccess)="moveToMeal($event, mealOnDiet.mealNo)">
-            <div class="col-sm-1">
-              <p>{{ mealOnDiet.mealNo }}</p>
+            <div class="col-sm-12 text-sm-left" *ngIf="dietView === 'list'">
+              <table class="table table-striped">
+                <thead>
+                <th class="product-on-table text-center" style="width: 15%; border-right: 1px solid">Posiłek
+                  nr {{ mealOnDiet.mealNo }}</th>
+                <th class="product-on-table text-center" style="width: 15%">B</th>
+                <th class="product-on-table text-center" style="width: 15%">W</th>
+                <th class="product-on-table text-center" style="width: 15%">T</th>
+                <th class="product-on-table text-center" style="width: 15%">K</th>
+                <th class="product-on-table text-center" style="width: 25%">Waga</th>
+                </thead>
+                <tbody>
+                <tr class="prod-row" *ngFor="let productOnMeal of mealOnDiet.products; let i = index"
+                    (dblclick)="deleteFromMeal(i)">
+                  <td class="product-on-table text-center"
+                      style="font-weight: bold; font-size: large; width: 15%; border-right: 1px solid">{{productOnMeal.name}}</td>
+                  <td class="product-on-table text-center"
+                      style="width: 15%">{{productOnMeal.protein * productOnMeal.weight / 100 | number:'1.1-2'}}</td>
+                  <td class="product-on-table text-center"
+                      style="width: 15%">{{productOnMeal.carbs * productOnMeal.weight / 100 | number:'1.1-2'}}</td>
+                  <td class="product-on-table text-center"
+                      style="width: 15%">{{productOnMeal.fat * productOnMeal.weight / 100 | number:'1.1-2'}}</td>
+                  <td class="product-on-table text-center"
+                      style="width: 15%">{{productOnMeal.kcal * productOnMeal.weight / 100 | number:'1.1-2'}}</td>
+                  <td class="product-on-table text-center" style="width: 25%"><input type="number" maxlength="3"
+                                                                                     placeholder="Waga..."
+                                                                                     [(ngModel)]="productOnMeal.weight"
+                                                                                     class="w-100 text-center form-control form-control-sm product-on-table">
+                  </td>
+                </tr>
+                <tr class="summary-row" style="border-bottom: 1px solid black">
+                  <td class="text-center" style="width: 15%; border-right: 1px solid black">
+                    <button class="btn btn-primary btn-sm" (click)="SuplModal.open()">Suplementy</button>
+                  </td>
+                  <td class="text-center"
+                      style="width: 15%">{{getValuesForMeal(mealOnDiet, 'proteins')  | number:'1.1-2'}}</td>
+                  <td class="text-center"
+                      style="width: 15%">{{getValuesForMeal(mealOnDiet, 'carbs')  | number:'1.1-2'}}</td>
+                  <td class="text-center"
+                      style="width: 15%">{{getValuesForMeal(mealOnDiet, 'fats')  | number:'1.1-2'}}</td>
+                  <td class="text-center"
+                      style="width: 15%">{{getValuesForMeal(mealOnDiet, 'kcal')  | number:'1.1-2'}}</td>
+                  <td class="text-center" style="width: 25%"></td>
+                </tr>
+                </tbody>
+              </table>
             </div>
-            <div class="col-sm-7 text-sm-center">
-              <div class="row products-row-2">
+            <modal #SuplModal>
+              <ng-template #modalHeader><h5 class="modal-title">Suplementy posiłek {{mealOnDiet.mealNo}}</h5>
+              </ng-template>
+              <ng-template #modalBody>
+                      <textarea [(ngModel)]="diet.meals[mealOnDiet.mealNo - 1].suplements" class="form-control"
+                                rows="5"></textarea>
+              </ng-template>
+              <ng-template #modalFooter>
+                <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal"
+                        (click)="SuplModal.close()">Anuluj
+                </button>
+                <button type="button" class="btn btn-success btn-sm" data-dismiss="modal"
+                        (click)="SuplModal.close()">Zapisz
+                </button>
+              </ng-template>
+            </modal>
+            <div class="col-sm-8" *ngIf="dietView === 'images'">
+              <div class="row">
                 <div *ngFor="let productOnMeal of mealOnDiet.products; let i = index" class="col-sm-4">
                   <app-product-on-diet [productInput]="productOnMeal"
                                        (dblclick)="deleteFromMeal(i)"></app-product-on-diet>
                 </div>
               </div>
             </div>
-            <div class="col-sm-2 meal-summary">
+            <div class="col-sm-2 meal-summary" *ngIf="dietView === 'images'">
               <div class="row">
                 <div class="col-sm-12">
                   <span
@@ -66,7 +140,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-sm-2 meal-summary">
+            <div class="col-sm-2 meal-summary" *ngIf="dietView === 'images'">
               <div class="row">
                 <div class="col-sm-12">
                   <span
@@ -89,10 +163,10 @@
               </div>
             </div>
           </div>
-          <div class="row meal-summary" *ngIf="diet.meals && diet.meals.length > 0">
+          <div class="row meal-summary" *ngIf="dietView === 'images' && diet.meals && diet.meals.length > 0">
             <div class="col-sm-3" style="text-align: right;">
-              <span
-                [ngClass]="{'greater': getValuesForDiet(diet, 'proteins') - getValuesForDiet(oldDiet, 'proteins') >= 0, 'lower': getValuesForDiet(diet, 'proteins') - getValuesForDiet(oldDiet, 'proteins') < 0}">Białko: </span><br/>
+                        <span
+                          [ngClass]="{'greater': getValuesForDiet(diet, 'proteins') - getValuesForDiet(oldDiet, 'proteins') >= 0, 'lower': getValuesForDiet(diet, 'proteins') - getValuesForDiet(oldDiet, 'proteins') < 0}">Białko: </span><br/>
               <span
                 [ngClass]="{'greater': getValuesForDiet(diet, 'carbs') - getValuesForDiet(oldDiet, 'carbs') >= 0, 'lower': getValuesForDiet(diet, 'carbs') - getValuesForDiet(oldDiet, 'carbs') < 0}">Węglowodany: </span><br/>
               <span
@@ -101,9 +175,9 @@
                 [ngClass]="{'greater': getValuesForDiet(diet, 'kcal') - getValuesForDiet(oldDiet, 'kcal') >= 0, 'lower': getValuesForDiet(diet, 'kcal') - getValuesForDiet(oldDiet, 'kcal') < 0}">Kcal: </span><br/>
             </div>
             <div class="col-sm-5 meal-summary">
-              <span
-                [ngClass]="{'greater': getValuesForDiet(diet, 'proteins') - getValuesForDiet(oldDiet, 'proteins') >= 0, 'lower': getValuesForDiet(diet, 'proteins') - getValuesForDiet(oldDiet, 'proteins') < 0}">{{ getValuesForDiet(diet, 'proteins') | number:'1.1-2'}}
-                / {{ getValuesForDiet(oldDiet, 'proteins') | number:'1.1-2'}}</span><br/>
+                        <span
+                          [ngClass]="{'greater': getValuesForDiet(diet, 'proteins') - getValuesForDiet(oldDiet, 'proteins') >= 0, 'lower': getValuesForDiet(diet, 'proteins') - getValuesForDiet(oldDiet, 'proteins') < 0}">{{ getValuesForDiet(diet, 'proteins') | number:'1.1-2'}}
+                          / {{ getValuesForDiet(oldDiet, 'proteins') | number:'1.1-2'}}</span><br/>
               <span
                 [ngClass]="{'greater': getValuesForDiet(diet, 'carbs') - getValuesForDiet(oldDiet, 'carbs') >= 0, 'lower': getValuesForDiet(diet, 'carbs') - getValuesForDiet(oldDiet, 'carbs') < 0}">{{ getValuesForDiet(diet, 'carbs') | number:'1.1-2'}}
                 / {{ getValuesForDiet(oldDiet, 'carbs') | number:'1.1-2'}}</span><br/>
@@ -115,8 +189,26 @@
                 / {{ getValuesForDiet(oldDiet, 'kcal') | number:'1.1-2'}}</span><br/>
             </div>
             <div class="col-sm-4">
-
             </div>
+          </div>
+          <div class="row dietRow" *ngIf="dietView === 'list' && activeMeal">
+            <table class="table table-striped">
+              <thead>
+              <td class="text-center" style="width: 25%">Białko</td>
+              <td class="text-center" style="width: 25%">Węglowodany</td>
+              <td class="text-center" style="width: 25%">Tłuszcze</td>
+              <td class="text-center" style="width: 25%">Kalorie</td>
+              </thead>
+              <tbody>
+              <tr class="summary-row">
+                <td class="text-center"
+                    style="width: 25%">{{getValuesForDiet(diet, 'proteins') | number:'1.1-2'}}</td>
+                <td class="text-center" style="width: 25%">{{getValuesForDiet(diet, 'carbs') | number:'1.1-2'}}</td>
+                <td class="text-center" style="width: 25%">{{getValuesForDiet(diet, 'fats') | number:'1.1-2'}}</td>
+                <td class="text-center" style="width: 25%">{{getValuesForDiet(diet, 'kcal') | number:'1.1-2'}}</td>
+              </tr>
+              </tbody>
+            </table>
           </div>
           <div class="row">
             <div class="col-sm-12 center-block">
@@ -125,16 +217,32 @@
               </button>
               <button type="button" class="btn btn-sm btn-success addDietBtn center" (click)="addMeal()">Dodaj posiłek
               </button>
-              <button *ngIf="diet.meals && diet.meals.length > 0 && diet.id == null" type="button" (click)="createDietModal.open()"
+              <button *ngIf="diet.meals && diet.meals.length > 0 && diet.id == null" type="button"
+                      (click)="createDietModal.open()"
                       class="btn btn-sm btn-success addDietBtn text-right">Zapisz Diete
               </button>
-              <button *ngIf="diet.meals && diet.meals.length > 0 && diet.id != null" type="button" (click)="updateDietModal.open()"
+              <button *ngIf="diet.meals && diet.meals.length > 0 && diet.id != null" type="button"
+                      (click)="updateDietModal.open()"
                       class="btn btn-sm btn-success addDietBtn text-right">Aktualizuj diete
               </button>
             </div>
           </div>
         </div>
         <div class="col-sm-6 product-column">
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-info active" (click)="changeProductsView('list')">
+                  <input type="radio" name="view" id="prodListView" value="list"
+                         autocomplete="off" checked> Lista
+                </label>
+                <label class="btn btn-info" (click)="changeProductsView('images')">
+                  <input type="radio" name="view" id="prodImagesView" value="images"
+                         autocomplete="off"> Obrazki
+                </label>
+              </div>
+            </div>
+          </div>
           <div class="row filter-row">
             <div class="col-sm-6">
               <input type="text" [(ngModel)]="filter" class="form-control" placeholder="Wpisz nazwę produktu...">
@@ -146,25 +254,43 @@
               </select>
             </div>
           </div>
-          <div class="row products-row">
+          <div class="row products-row" *ngIf="productsView === 'images'">
             <div *ngFor="let product of products | productFilter:filter:productTypeSelected"
                  (dblclick)="addToMeal(product)" dnd-draggable [dragEnabled]="true" [dragData]="product"
                  class="col-sm-3">
               <app-product [productInput]="product"></app-product>
             </div>
           </div>
-          <div class="row">
-            <div class="col-sm-12">
-              <button class="btn btn-success btn-sm" [routerLink]="['/manage-products']">Zarządzaj produktami</button>
-            </div>
+
+          <div class="row" *ngIf="productsView === 'list'">
+            <table class="table table-striped">
+              <thead>
+              <td class="text-center" style="width: 20%">Nazwa</td>
+              <td class="text-center" style="width: 20%">Białko</td>
+              <td class="text-center" style="width: 20%">Węglowodany</td>
+              <td class="text-center" style="width: 20%">Tłuszcze</td>
+              <td class="text-center" style="width: 20%">Kalorie</td>
+              </thead>
+              <tbody>
+              <tr class="prod-row" *ngFor="let product of products | productFilter:filter:productTypeSelected"
+                  (dblclick)="addToMeal(product)" dnd-draggable [dragEnabled]="true" [dragData]="product" >
+                <td class="text-center" style="width: 20%">{{product.name}}</td>
+                <td class="text-center" style="width: 20%">{{product.protein}}</td>
+                <td class="text-center" style="width: 20%">{{product.carbs}}</td>
+                <td class="text-center" style="width: 20%">{{product.fat}}</td>
+                <td class="text-center" style="width: 20%">{{product.kcal}}</td>
+              </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-sm-12 text-center">
-      Copyright by Curek, 2019
+
+      <div class="row">
+        <!--            <div class="col-sm-12">
+                      <button class="btn btn-success btn-sm" [routerLink]="['/manage-products']">Zarządzaj produktami</button>
+                    </div>-->
+      </div>
     </div>
   </div>
 </div>
@@ -184,3 +310,6 @@
     <button type="button" class="btn btn-danger btn-sm" (click)="updateDietModal.close()">Anuluj</button>
   </ng-template>
 </modal>
+
+
+

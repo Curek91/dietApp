@@ -38,3 +38,9 @@ tr
   font-weight: bolder;
 }
 
+.client-row:hover
+{
+  background: burlywood;
+}
+
+
