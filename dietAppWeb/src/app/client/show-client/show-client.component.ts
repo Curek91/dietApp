@@ -156,16 +156,12 @@ export class ShowClientComponent implements OnInit {
 
       this.currentClientVersion = this.clientVersions.length - 1;
       this.fillForm(this.currentClientVersion);
-      console.log('Ogarniay');
-      console.log(this.clientVersions);
-      console.log(this.clientVersions.map((client) => client.biceps));
 
       this.fillChartValues(this.clientVersions);
     });
   }
 
   fillChartValues(clients: Client[]) {
-    console.log('Filling charts values');
     this.lineChartData = [
       {data: clients.map((client) => client.biceps), label: 'Biceps'},
       {data: clients.map((client) => client.chest), label: 'Klatka'},

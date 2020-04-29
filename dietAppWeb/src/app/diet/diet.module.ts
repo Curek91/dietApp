@@ -14,7 +14,8 @@ import {AngularFontAwesomeModule} from 'angular-font-awesome';
 import {AngularFileUploaderModule} from 'angular-file-uploader';
 import {DndModule, DraggableComponent, DraggableHandleComponent} from 'ng2-dnd';
 import {AppComponent} from '../app.component';
-import {ModalModule} from "angular-custom-modal";
+import {ModalModule} from 'angular-custom-modal';
+import {ChartsModule} from 'ng2-charts';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import {ModalModule} from "angular-custom-modal";
     AngularFontAwesomeModule,
     AngularFileUploaderModule,
     DndModule.forRoot(),
-    ModalModule
+    ModalModule,
+    ChartsModule
   ],
   bootstrap: [AppComponent],
   providers: [CanActivateAuthGuard],

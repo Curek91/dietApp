@@ -75,6 +75,7 @@
 
 .prod-row
 {
+  height: 1vh;
   cursor: cell;
 }
 

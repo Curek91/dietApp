@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {Product} from '../models/Product';
 import {Diet} from '../models/Diet';
 import {DietService} from '../diet.service';
@@ -7,9 +7,11 @@ import {ProductType} from '../models/ProductType';
 import {IProduct} from '../models/IProduct';
 import {ClientService} from '../../client/client.service';
 import {ModalComponent} from 'angular-custom-modal';
-import {DietToSend} from "../models/DietToSend";
-import {MealToSend} from "../models/MealToSend";
-import {ProductToSend} from "../models/ProductToSend";
+import {DietToSend} from '../models/DietToSend';
+import {MealToSend} from '../models/MealToSend';
+import {ProductToSend} from '../models/ProductToSend';
+import {ChartDataSets, MultiDataSet, Label, ChartType, ChartOptions, Chart} from 'chart.js';
+import 'chartjs-plugin-datalabels';
 
 @Component({
   selector: 'app-new-diet',
@@ -27,6 +29,8 @@ export class NewDietComponent implements OnInit {
   @ViewChild('createDietModal') createDietModal: ModalComponent;
   @ViewChild('updateDietModal') updateDietModal: ModalComponent;
 
+  @ViewChild('summaryMealModal') summaryMealModal: ModalComponent;
+
   diet: Diet = new Diet();
   products: Product[] = new Array();
   activeMeal: number;
@@ -37,10 +41,13 @@ export class NewDietComponent implements OnInit {
   dietView: string;
   productsView: string;
 
+  doughnutChartType: ChartType = 'pie';
+
   constructor(private dietService: DietService) {
   }
 
   ngOnInit() {
+
     this.dietView = 'list';
     this.productsView = 'list';
     this.loadProducts();
@@ -252,21 +259,21 @@ export class NewDietComponent implements OnInit {
     }
     if (meal.products.length > 0) {
       if (whatINeed === 'kcal') {
-        return meal.products
+        return Math.round(meal.products
           .map((product) => +product.kcal * (product.weight / 100))
-          .reduce((prev, next) => prev + next);
+          .reduce((prev, next) => prev + next));
       } else if (whatINeed === 'proteins') {
-        return meal.products
+        return Math.round(meal.products
           .map((product) => +product.protein * (product.weight / 100))
-          .reduce((prev, next) => prev + next);
+          .reduce((prev, next) => prev + next));
       } else if (whatINeed === 'carbs') {
-        return meal.products
+        return Math.round(meal.products
           .map((product) => +product.carbs * (product.weight / 100))
-          .reduce((prev, next) => prev + next);
+          .reduce((prev, next) => prev + next));
       } else if (whatINeed === 'fats') {
-        return meal.products
+        return Math.round(meal.products
           .map((product) => +product.fat * (product.weight / 100))
-          .reduce((prev, next) => prev + next);
+          .reduce((prev, next) => prev + next));
       }
     } else {
       return 0;
@@ -285,6 +292,5 @@ export class NewDietComponent implements OnInit {
       return 0;
     }
   }
-
 
 }
