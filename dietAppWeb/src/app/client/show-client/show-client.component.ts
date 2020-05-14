@@ -12,6 +12,8 @@ import {DietService} from '../../diet/diet.service';
 import {NewDietComponent} from '../../diet/new-diet/new-diet.component';
 import {ModalComponent, ModalModule} from 'angular-custom-modal';
 import {ChartDataSets, ChartOptions} from 'chart.js';
+import {MatSlider} from '@angular/material';
+
 @Component({
   selector: 'app-show-client',
   templateUrl: './show-client.component.html',

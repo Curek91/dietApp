@@ -57,18 +57,17 @@
                   <td class="product-on-table text-right"
                       style="font-weight: bold; padding: 5px 0; width: 40%; border-right: 1px solid">{{productOnMeal.name}}</td>
                   <td class="product-on-table text-center"
-                      style="width: 15%; padding: 5px 0">{{productOnMeal.protein * productOnMeal.weight / 100 | number:'1.1-2'}} [g]</td>
+                      style="width: 15%; padding: 5px 0">{{productOnMeal.protein * productOnMeal.weight / 100 | number:'1.1-2'}} </td>
                   <td class="product-on-table text-center"
-                      style="width: 15%; padding: 5px 0">{{productOnMeal.carbs * productOnMeal.weight / 100 | number:'1.1-2'}} [g]</td>
+                      style="width: 15%; padding: 5px 0">{{productOnMeal.carbs * productOnMeal.weight / 100 | number:'1.1-2'}} </td>
                   <td class="product-on-table text-center"
-                      style="width: 15%; padding: 5px 0">{{productOnMeal.fat * productOnMeal.weight / 100 | number:'1.1-2'}} [g]</td>
+                      style="width: 15%; padding: 5px 0">{{productOnMeal.fat * productOnMeal.weight / 100 | number:'1.1-2'}} </td>
                   <td class="product-on-table text-center"
-                      style="width: 15%; padding: 5px 0">{{productOnMeal.kcal * productOnMeal.weight / 100 | number:'1.1-2'}} [kcal]</td>
-                  <td class="product-on-table text-center" style="width: 10%; padding: 5px 0"><input type="number"
+                      style="width: 15%; padding: 5px 0">{{productOnMeal.kcal * productOnMeal.weight / 100 | number:'1.1-2'}} </td>
+                  <td class="product-on-table text-center" style="width: 10%; padding: 5px 0"><mat-form-field class="example-full-width"><input matInput
                                                                                                    maxlength="3" (click)="$event.stopPropagation()" (dblclick)="$event.stopPropagation()"
-                                                                                                   placeholder="Waga..."
                                                                                                    [(ngModel)]="productOnMeal.weight"
-                                                                                                   class="col-6 text-center form-control form-control-sm" style="display: table-column; height: calc(1.5em); padding: .25rem .5rem; font-size: .600rem; line-height: 1; border-radius: .2rem"> [g]
+                                                                                                                                                class="col-4 text-center" style="display: table-column; height: calc(1.5em); padding: .25rem .5rem; font-size: .600rem; line-height: 1; border-radius: .2rem"></mat-form-field> [g]
                   </td>
                 </tr>
                 <tr class="summary-row" style="border-bottom: 1px solid black">
@@ -281,18 +280,18 @@
           </div>
           <div class="row">
             <div class="col-sm-12 center-block">
-              <button *ngIf="diet.meals && diet.meals.length > 0" type="button"
-                      class="btn btn-sm btn-danger addDietBtn text-center" (click)="deleteMeal()">Usuń posiłek
+              <button *ngIf="diet.meals && diet.meals.length > 0" mat-raised-button color="warn"
+                      class="addDietBtn text-center" (click)="deleteMeal()">Usuń posiłek
               </button>
-              <button type="button" class="btn btn-sm btn-success addDietBtn center" (click)="addMeal()">Dodaj posiłek
+              <button mat-raised-button color="primary" class="addDietBtn center" (click)="addMeal()">Dodaj posiłek
               </button>
-              <button *ngIf="diet.meals && diet.meals.length > 0 && diet.id == null" type="button"
-                      (click)="createDietModal.open()"
-                      class="btn btn-sm btn-success addDietBtn text-right">Zapisz Diete
+              <button *ngIf="diet.meals && diet.meals.length > 0 && diet.id == null"
+                      (click)="createDietModal.open()" mat-raised-button color="primary"
+                      class="addDietBtn text-right">Zapisz Diete
               </button>
-              <button *ngIf="diet.meals && diet.meals.length > 0 && diet.id != null" type="button"
-                      (click)="updateDietModal.open()"
-                      class="btn btn-sm btn-success addDietBtn text-right">Aktualizuj diete
+              <button *ngIf="diet.meals && diet.meals.length > 0 && diet.id != null"
+                      (click)="updateDietModal.open()" mat-raised-button color="primary"
+                      class=" addDietBtn text-right">Aktualizuj diete
               </button>
             </div>
           </div>
@@ -314,13 +313,18 @@
           </div>
           <div class="row filter-row">
             <div class="col-sm-6">
-              <input type="text" [(ngModel)]="filter" class="form-control" placeholder="Wpisz nazwę produktu...">
+              <mat-form-field class="example-full-width">
+              <input type="text" [(ngModel)]="filter" matInput placeholder="Szukaj produktu..." />
+                </mat-form-field>
+
             </div>
             <div class="col-sm-6">
-              <select id="type" [(ngModel)]="productTypeSelected" class="form-control">
-                <option [ngValue]="null">Każdy typ</option>
-                <option *ngFor="let item of types" value="{{ item.name }}">{{item.name}}</option>
-              </select>
+              <mat-form-field>
+              <mat-select id="type" [(ngModel)]="productTypeSelected" placeholder="Wybierz Typ">
+                <mat-option [value]="null">Każdy typ</mat-option>
+                <mat-option *ngFor="let item of types" value="{{ item.name }}">{{item.name}}</mat-option>
+              </mat-select>
+              </mat-form-field>
             </div>
           </div>
           <div class="row products-row" *ngIf="productsView === 'images'">

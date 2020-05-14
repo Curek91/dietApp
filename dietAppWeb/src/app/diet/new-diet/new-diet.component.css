@@ -64,7 +64,7 @@
 
 .product-on-table
 {
-  font-size: x-small;
+  font-size: smaller;
 }
 
 .summary-row {
@@ -81,8 +81,10 @@
 
 .prod-row:hover
 {
-  background: burlywood;
+  background: #ffe419;
   cursor: cell;
 }
 
-
+.example-full-width {
+  width: 30%;
+}

@@ -3,12 +3,14 @@
     <div class="col-md-5 float-md-left">
       <div class="input-group">
         <span class="input-group-addon glyphicon glyphicon-search"></span>
-        <input type="text" class="form-control" [(ngModel)]="filter" (change)="valuechange()"
+        <mat-form-field class="example-full-width">
+        <input matInput [(ngModel)]="filter" (change)="valuechange()"
                placeholder="Szukaj...">
+        </mat-form-field>
       </div>
     </div>
-    <div class="col-md-7">
-      <button class="btn btn-success btn-sm" [routerLink]="['/new-client']">Nowy klient</button>
+    <div class="col-md-7 text-right">
+      <button mat-raised-button color="primary" [routerLink]="['/new-client']">Nowy klient</button>
     </div>
   </div>
   <div class="row">
@@ -46,17 +48,17 @@
         <td>{{client.email}}</td>
         <td>{{client.telephone}}</td>
         <td (click)="$event.stopPropagation()">
-          <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal"
+          <button mat-raised-button color="warn" data-toggle="modal" data-target="#deleteModal"
                   (click)="deleteClientModal.open()">Usuń
           </button>
           <modal #deleteClientModal [closeOnOutsideClick]="true">
             <ng-template #modalHeader><h5 class="modal-title">Czy napewno chcesz usunąć klienta o
               numerze {{client.clientNo}}?</h5></ng-template>
             <ng-template #modalFooter>
-              <button type="button" class="btn btn-success btn-sm" data-dismiss="modal"
+              <button mat-raised-button color="warn" data-dismiss="modal"
                       (click)="deleteClient(client.clientNo)">Usuń
               </button>
-              <button type="button" class="btn btn-danger btn-sm" (click)="deleteClientModal.close()">Anuluj</button>
+              <button mat-raised-button color="primary" (click)="deleteClientModal.close()">Anuluj</button>
             </ng-template>
           </modal>
         </td>

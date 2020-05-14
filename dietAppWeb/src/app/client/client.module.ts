@@ -11,6 +11,8 @@ import {ModalModule} from "angular-custom-modal";
 import {ProductFilterPipe} from "../product-filter.pipe";
 import {ClientFilterPipe} from "../client-filter.pipe";
 import {ChartsModule} from "ng2-charts";
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatExpansionModule, MatButtonModule, MatCheckboxModule, MatDividerModule, MatInputModule} from '@angular/material';
 
 @NgModule({
   imports: [
@@ -21,8 +23,15 @@ import {ChartsModule} from "ng2-charts";
     AngularFontAwesomeModule,
     DietModule,
     ModalModule,
-    ChartsModule
+    ChartsModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    MatInputModule,
+    MatDividerModule,
+    MatExpansionModule
   ],
+  exports: [MatButtonModule, MatCheckboxModule],
   declarations: [ManageClientComponent, NewClientComponent, ShowClientComponent, ClientFilterPipe]
 })
 export class ClientModule { }

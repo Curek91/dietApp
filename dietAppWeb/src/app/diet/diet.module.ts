@@ -16,6 +16,14 @@ import {DndModule, DraggableComponent, DraggableHandleComponent} from 'ng2-dnd';
 import {AppComponent} from '../app.component';
 import {ModalModule} from 'angular-custom-modal';
 import {ChartsModule} from 'ng2-charts';
+import {
+  MatButtonModule,
+  MatCheckboxModule,
+  MatInputModule,
+  MatOptionModule,
+  MatSelectModule,
+  MatTableModule
+} from '@angular/material';
 
 
 @NgModule({
@@ -28,7 +36,13 @@ import {ChartsModule} from 'ng2-charts';
     AngularFileUploaderModule,
     DndModule.forRoot(),
     ModalModule,
-    ChartsModule
+    ChartsModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    MatInputModule,
+    MatSelectModule,
+    MatOptionModule,
+    MatTableModule
   ],
   bootstrap: [AppComponent],
   providers: [CanActivateAuthGuard],
