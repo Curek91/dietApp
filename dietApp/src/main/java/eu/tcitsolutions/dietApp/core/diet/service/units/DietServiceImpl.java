@@ -42,6 +42,8 @@ public class DietServiceImpl implements DietService {
                 .collect(Collectors.toList());
     }
 
+
+
     @Override
     public DietGetDietDTO getDiet(Long id) {
         DietGetDietDTO dietGetDietDTO = dtoMappingService.createDTO(dietRepository.findById(id).get());

@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-sm-6" style="height: 100%">
           <div class="row">
-            <div class="col-sm-12">
+            <div class="col-sm-4">
               <div class="btn-group btn-group-toggle" data-toggle="buttons">
                 <label class="btn btn-info active" (click)="changeDietView('list')">
                   <input type="radio" name="view" id="listView" value="list"
@@ -16,20 +16,10 @@
                 </label>
               </div>
             </div>
-          </div>
-<!--          <div class="row">
-            <div class="col-sm-12 text-left" *ngIf="dietId">
-              Dieta: Id: {{diet.id}}, Utworzona przez: {{diet.createdBy}}, Dnia: {{diet.creationTime}}
-            </div>
-            <div class="col-sm-12 text-center" *ngIf="!dietId">
-              Tworzysz nową dietę
-            </div>
-          </div>-->
-          <div *ngIf="activeMeal" class="row">
             <div class="col-sm-3">
               Porównaj do:
             </div>
-            <div class="col-sm-9" style="margin-bottom: 10%">
+            <div class="col-sm-5" style="margin-bottom: 10%">
               <select id="typeOldId" (change)="getOldDiet($event.target.value)" class="form-control">
                 <option [ngValue]="null"></option>
                 <option *ngFor="let oldDiet of oldDiets" value="{{ oldDiet.id }}">{{oldDiet.id}} - {{oldDiet.createdBy}}
@@ -313,7 +303,7 @@
           </div>
           <div class="row filter-row">
             <div class="col-sm-6">
-              <mat-form-field class="example-full-width">
+              <mat-form-field class="filter-width">
               <input type="text" [(ngModel)]="filter" matInput placeholder="Szukaj produktu..." />
                 </mat-form-field>
 

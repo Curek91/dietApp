@@ -51,7 +51,11 @@ export class DietService {
 // Products //////////////////////////////////////////
 //////////////////////////////////////////////////////
   getProduct(id: number): Observable<Product> {
-    return this.http.get<Product>(this.apiUrl + 'product/' + id, {headers: this.headers});
+    return this.http.get<Product>(this.apiUrl + 'products/' + id, {headers: this.headers});
+  }
+
+  getProductByName(name: string): Observable<Product> {
+    return this.http.get<Product>(this.apiUrl + 'products/byName/' + name, {headers: this.headers});
   }
 
   getProducts(): Observable<Product[]> {

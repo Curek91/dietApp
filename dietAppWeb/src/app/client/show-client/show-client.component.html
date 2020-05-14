@@ -214,6 +214,19 @@
       </div>
       <app-new-diet #newDietRef (refreshDietsEvent)="loadClientDiets()" [clientNo]="route.snapshot.params['clientNo']" [oldDiets]="diets"></app-new-diet>
     </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <h4>Treningi</h4>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="row">
+        <div class="col-sm-12">
+          Under Construction - Be Patient
+        </div>
+      </div>
+    </mat-expansion-panel>
 </mat-accordion>
 
 <modal #saveClientModal>
@@ -223,3 +236,60 @@
     <button type="button" mat-raised-button color="warn" (click)="saveClientModal.close()">Anuluj</button>
   </ng-template>
 </modal>
+
+  <div class="box" [ngClass]="{'box-show': leftBoxShow === true}">
+    <div class="box__content">
+      <div class="box__title" (click)="leftBoxShow = !leftBoxShow">Podejrzyj</div>
+      <div class="box__description">
+        <form class="example-form">
+          <mat-form-field class="example-full-width">
+            <input type="text" placeholder="Nazwa produktu" aria-label="Number" matInput [formControl]="leftProductsForm" [matAutocomplete]="autoLeft" (change)="leftProductValueChange()">
+            <mat-autocomplete autoActiveFirstOption #autoLeft="matAutocomplete">
+              <mat-option *ngFor="let product of leftFilteredProducts | async" [value]="product">
+                {{product}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </form>
+        <app-product *ngIf="leftProduct != null" [productInput]="leftProduct"></app-product>
+        <div *ngIf="leftProduct != null" class="row">
+          <div class="col-sm-12">
+        Białko: {{leftProduct.protein}} <span *ngIf="rightProduct != null"> / {{rightProduct.protein}}</span><br />
+        Węglowodany: {{leftProduct.carbs}} <span *ngIf="rightProduct != null"> / {{rightProduct.carbs}}</span><br />
+        Tłuszcze: {{leftProduct.fat}} <span *ngIf="rightProduct != null"> / {{rightProduct.fat}}</span><br />
+        Kalorie: {{leftProduct.kcal}} <span *ngIf="rightProduct != null"> / {{rightProduct.kcal}}</span><br />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box box--right" [ngClass]="{'box--right-show': rightBoxShow === true}">
+  <div class="box__content">
+    <div class="box__title" (click)="rightBoxShow = !rightBoxShow">Podejrzyj</div>
+    <div class="box__description">
+      <form class="example-form">
+        <mat-form-field class="example-full-width">
+          <input type="text" placeholder="Nazwa produktu" aria-label="Number" matInput [formControl]="rightProductsForm" [matAutocomplete]="autoRight" (change)="rightProductValueChange()">
+          <mat-autocomplete autoActiveFirstOption #autoRight="matAutocomplete">
+            <mat-option *ngFor="let product of rightFilteredProducts | async" [value]="product">
+              {{product}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </form>
+      <app-product *ngIf="rightProduct != null" [productInput]="rightProduct"></app-product>
+      <div *ngIf="rightProduct != null" class="row">
+        <div class="col-sm-12">
+          Białko: {{rightProduct.protein}} <span *ngIf="leftProduct != null"> / {{leftProduct.protein}}</span> <br />
+          Węglowodany: {{rightProduct.carbs}} <span *ngIf="leftProduct != null"> / {{leftProduct.carbs}}</span> <br />
+          Tłuszcze: {{rightProduct.fat}} <span *ngIf="leftProduct != null"> / {{leftProduct.fat}}</span><br />
+          Kalorie: {{rightProduct.kcal}} <span *ngIf="leftProduct != null"> / {{leftProduct.kcal}}</span><br />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+

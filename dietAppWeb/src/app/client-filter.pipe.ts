@@ -3,7 +3,7 @@ import {Product} from "./diet/models/Product";
 import {Client} from "./client/models/Client";
 
 @Pipe({
-  name: 'clientFilter'
+  name: 'Filter'
 })
 export class ClientFilterPipe implements PipeTransform {
 

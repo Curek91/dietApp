@@ -23,6 +23,8 @@ public interface ProductService {
 
     Product updateProduct(Long id, ProductDTO source);
 
+    ProductDTO getProductByName(String name);
+
     //Image upload functions
     void store(MultipartFile file, Long id);
 

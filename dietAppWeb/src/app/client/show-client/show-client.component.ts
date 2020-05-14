@@ -5,7 +5,7 @@ import {
 } from '@angular/core';
 import {ClientService} from '../client.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Client} from '../models/Client';
 import {Diet} from '../../diet/models/Diet';
 import {DietService} from '../../diet/diet.service';
@@ -13,6 +13,9 @@ import {NewDietComponent} from '../../diet/new-diet/new-diet.component';
 import {ModalComponent, ModalModule} from 'angular-custom-modal';
 import {ChartDataSets, ChartOptions} from 'chart.js';
 import {MatSlider} from '@angular/material';
+import {Observable} from "rxjs";
+import {map, startWith} from "rxjs/operators";
+import {Product} from "../../diet/models/Product";
 
 @Component({
   selector: 'app-show-client',
@@ -25,7 +28,18 @@ export class ShowClientComponent implements OnInit {
   @ViewChild('deleteDietModal') deleteDietModal: ModalComponent;
   @ViewChild('saveClientModal') saveClientModal: ModalComponent;
 
-  showAccordions = new Map();
+  leftBoxShow = false;
+  rightBoxShow = false;
+
+  productsList: Product[] = new Array();
+
+  leftProductsForm = new FormControl();
+  leftFilteredProducts: Observable<string[]>;
+  leftProduct: Product;
+
+  rightProductsForm = new FormControl();
+  rightFilteredProducts: Observable<string[]>;
+  rightProduct: Product;
 
   clientForm: FormGroup;
   diets: Diet[] = new Array();
@@ -56,11 +70,17 @@ export class ShowClientComponent implements OnInit {
               private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.showAccordions.set('info', true);
-    this.showAccordions.set('diets', false);
-    this.showAccordions.set('progress', false);
-    this.showAccordions.set('graphs', false);
-    this.showAccordions.set('trainings', false);
+    this.loadProducts();
+
+    this.leftFilteredProducts = this.leftProductsForm.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filterLeft(value))
+    );
+
+    this.rightFilteredProducts = this.rightProductsForm.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filterRight(value))
+    );
 
     this.clientForm = this.formBuilder.group({
       firstname: ['',  Validators.required],
@@ -79,6 +99,19 @@ export class ShowClientComponent implements OnInit {
     this.clientForm.disable();
     this.loadClientVersions();
     this.loadClientDiets();
+  }
+
+  private _filterLeft(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.productsList.map(product => product.name)
+                            .filter(product => product.toLowerCase().indexOf(filterValue) === 0);
+  }
+
+
+  private _filterRight(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.productsList.map(product => product.name)
+      .filter(product => product.toLowerCase().indexOf(filterValue) === 0);
   }
 
   @HostListener('document:keyup', ['$event'])
@@ -219,7 +252,6 @@ export class ShowClientComponent implements OnInit {
 
   createNewDiet(): void {
     this.newDietRef.dietId = null;
-    this.showAccordions.set('diets', true);
     this.newDietRef.clearNewDiet();
   }
 
@@ -250,5 +282,38 @@ export class ShowClientComponent implements OnInit {
         this.saveClientModal.close();
       }
     );
+  }
+
+  loadProducts(): void {
+    let prodTemp: Product;
+    this.dietService.getProducts().subscribe((products) => {
+      products.forEach((product) => {
+
+        prodTemp = {
+          id: product.id,
+          type: null,
+          name: product.name,
+          protein: null,
+          carbs: null,
+          fat: null,
+          kcal: null,
+          weight: 0,
+          sortNo: null
+        };
+        this.productsList.push(prodTemp);
+      });
+    });
+  }
+
+  leftProductValueChange() {
+    this.dietService.getProductByName(this.leftProductsForm.value).subscribe((product) => {
+      this.leftProduct = new Product(product);
+    });
+  }
+
+  rightProductValueChange() {
+    this.dietService.getProductByName(this.rightProductsForm.value).subscribe((product) => {
+      this.rightProduct = new Product(product);
+    });
   }
 }

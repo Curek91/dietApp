@@ -72,3 +72,67 @@
 .navigate-arrow{
   color: grey;
 }
+
+.box {
+  background: #ffc000;
+  border-radius: 0px 4px 4px 0px;
+  left: -254px;
+  padding: 4px 4px 4px 0px;
+  position: fixed;
+  bottom: 20%;
+  transition: transform 0.4s;
+  width: 250px;
+  z-index: 1;
+}
+
+.box--right {
+  border-radius: 4px 0px 0px 4px;
+  left: auto;
+  right: -254px;
+  padding: 4px 0px 4px 4px;
+}
+
+.box-show {
+  transform: translateX(254px);
+}
+
+.box--right-show {
+  transform: translateX(-254px);
+}
+
+.box .box__content {
+  background: #fff;
+  min-height: 400px;
+  padding: 10px;
+  position: relative;
+}
+
+.box .box__title {
+  background: #fff;
+  border: solid #ffc000;
+  border-radius: 0px 0px 4px 4px;
+  border-width: 0px 4px 4px;
+  cursor: default;
+  font-size: 16px;
+  height: 30px;
+  line-height: 30px;
+  position: absolute;
+  right: -74px;
+  text-align: center;
+  top: 70px;
+  transform: rotate(-90deg);
+  width: 106px;
+  cursor: pointer;
+}
+
+.box .box__title:hover {
+  background: #ffe419;
+
+}
+
+.box--right .box__title {
+  border-radius: 4px 4px 0px 0px;
+  border-width: 4px 4px 0px;
+  position: absolute;
+  left: -74px;
+}

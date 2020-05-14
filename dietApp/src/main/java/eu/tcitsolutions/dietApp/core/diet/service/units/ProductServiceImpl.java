@@ -73,6 +73,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public ProductDTO getProductByName(String name){
+        return dtoMappingService.createDTO(productRepository.findProductsByName(name));
+    }
+
+    @Override
     public void store(MultipartFile file, Long id) {
         String filename = id.toString() + "." + Utils.getExtensionByStringHandling(file.getOriginalFilename()).get();
         Path rootLocation = Paths.get("upload-dir");

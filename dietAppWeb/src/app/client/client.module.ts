@@ -12,7 +12,14 @@ import {ProductFilterPipe} from "../product-filter.pipe";
 import {ClientFilterPipe} from "../client-filter.pipe";
 import {ChartsModule} from "ng2-charts";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatExpansionModule, MatButtonModule, MatCheckboxModule, MatDividerModule, MatInputModule} from '@angular/material';
+import {
+  MatExpansionModule,
+  MatButtonModule,
+  MatCheckboxModule,
+  MatDividerModule,
+  MatInputModule,
+  MatAutocompleteModule
+} from '@angular/material';
 
 @NgModule({
   imports: [
@@ -29,7 +36,8 @@ import {MatExpansionModule, MatButtonModule, MatCheckboxModule, MatDividerModule
     MatCheckboxModule,
     MatInputModule,
     MatDividerModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatAutocompleteModule
   ],
   exports: [MatButtonModule, MatCheckboxModule],
   declarations: [ManageClientComponent, NewClientComponent, ShowClientComponent, ClientFilterPipe]
