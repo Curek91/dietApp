@@ -101,4 +101,16 @@ public class ClientController {
         PagedResources<Client> pr = assembler.toResource(clientService.getClientByName(page, ""), new Link(ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString()).withRel("example"));
         return ResponseEntity.ok(pr);
     }
+
+    @GetMapping(value = "/clientsNewestsByFirstnameOrLastname", params = {"name"})
+    public ResponseEntity<PagedResources<Client>> clientsNewestsListByFirstnameOrLastname(@RequestParam String name, Pageable page, PagedResourcesAssembler assembler) {
+        PagedResources<Client> pr = assembler.toResource(clientService.getNewestClientsByFirstnameContainsOrLastnameContains(page, name), new Link(ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString()).withRel("example"));
+        return ResponseEntity.ok(pr);
+    }
+
+    @GetMapping(value = "/clientsNewestsByFirstnameOrLastname", params = {"!name"})
+    public ResponseEntity<PagedResources<Client>> clientsNewestsListByFirstnameOrLastname(Pageable page, PagedResourcesAssembler assembler) {
+        PagedResources<Client> pr = assembler.toResource(clientService.getNewestClientsByFirstnameContainsOrLastnameContains(page, ""), new Link(ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString()).withRel("example"));
+        return ResponseEntity.ok(pr);
+    }
 }

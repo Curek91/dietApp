@@ -28,6 +28,8 @@ public interface ClientService {
 
     public List<ClientDTO> getClientVersions(Long clientNo);
 
+    public Page<ClientDTO> getNewestClientsByFirstnameContainsOrLastnameContains(Pageable page, String name);
+
     public Client getNewestClientVersion(Long clientNo);
 
     public Page<ClientDTO> getClientByName(Pageable page, String name);

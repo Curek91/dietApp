@@ -22,6 +22,10 @@ interface HibernateClientRepository extends ClientRepository, JpaRepository<Clie
     @Query(value="select c from client c where c.id in (select max(c2.id) from client c2 group by c2.clientNo)")
     Page<Client> findNewestClients(Pageable pageable);
 
+    @Override
+    @Query(value="select c from client c where (c.firstname like concat('%', :firstname, '%') or c.lastname like concat('%', :lastname, '%')) and c.id in (select max(c2.id) from client c2 group by c2.clientNo)")
+    Page<Client> findNewestClientsByFirstnameContainsOrLastnameContains(String firstname, String lastname, Pageable pageable);
+
     Client findFirstByClientNoOrderByIdDesc(Long clientNo);
 
     @Query(nativeQuery = true, value="select nextval('client_no_seq')")

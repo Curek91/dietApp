@@ -51,7 +51,7 @@ export class ClientService {
       .append('page', page)
       .append('size', size)
       .append('name', name);
-    return this.http.get<Page>(this.apiUrl + 'clientsByFirstnameOrLastname', {headers: this.headers, params: searchParams});
+    return this.http.get<Page>(this.apiUrl + 'clientsNewestsByFirstnameOrLastname', {headers: this.headers, params: searchParams});
   }
 
 

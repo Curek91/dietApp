@@ -30,4 +30,6 @@ public interface ClientRepository {
     Long getClientSeqNoNextVal();
 
     Page<Client> findClientsByFirstnameContainsOrLastnameContains(@Param("firstname") String firstname, @Param("lastname") String lastname, Pageable pageable);
+
+    Page<Client> findNewestClientsByFirstnameContainsOrLastnameContains(String firstname, String lastname, Pageable pageable);
 }

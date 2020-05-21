@@ -96,4 +96,9 @@ public class ClientServiceImpl implements ClientService {
     public Page<ClientDTO> getClientByName(Pageable page, String name) {
         return clientRepository.findClientsByFirstnameContainsOrLastnameContains(name, name, page).map((dtoClientMappingService::createDTO));
     }
+
+    @Override
+    public Page<ClientDTO> getNewestClientsByFirstnameContainsOrLastnameContains(Pageable page, String name) {
+        return clientRepository.findNewestClientsByFirstnameContainsOrLastnameContains(name, name, page).map((dtoClientMappingService::createDTO));
+    }
 }
