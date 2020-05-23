@@ -11,20 +11,16 @@ import {Client} from '../models/Client';
 })
 export class NewClientComponent implements OnInit {
 
+
   clientForm: FormGroup;
   showInfo: boolean;
-  showDiets: boolean;
-  showTrainings: boolean;
 
   constructor(private formBuilder: FormBuilder,
               private clientService: ClientService,
-              private router: Router,
-              private route: ActivatedRoute) { }
+              private router: Router) { }
 
   ngOnInit() {
     this.showInfo = true;
-    this.showDiets = false;
-    this.showTrainings = false;
     this.clientForm = this.formBuilder.group({
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
@@ -32,7 +28,12 @@ export class NewClientComponent implements OnInit {
       weight: ['', Validators.required],
       height: ['', Validators.required],
       email: ['', Validators.required],
-      telephone: ['', Validators.required]
+      telephone: ['', Validators.required],
+      biceps: [''],
+      chest: [''],
+      waist: [''],
+      thigh: [''],
+      date: ['']
     });
   }
 
@@ -40,14 +41,19 @@ export class NewClientComponent implements OnInit {
     let client: Client;
 
     client = {
-      id: null,
+      clientNo: null,
       firstname: this.clientForm.value['firstname'].toString(),
       lastname: this.clientForm.value['lastname'].toString(),
       age: +this.clientForm.value['age'],
       weight: +this.clientForm.value['weight'],
       height: +this.clientForm.value['height'],
       email: this.clientForm.value['email'].toString(),
-      telephone: this.clientForm.value['telephone'].toString()
+      telephone: this.clientForm.value['telephone'].toString(),
+      biceps: +this.clientForm.value['height'],
+      chest: +this.clientForm.value['chest'],
+      waist: +this.clientForm.value['waist'],
+      thigh: +this.clientForm.value['thigh'],
+      date: this.clientForm.value['date']
     };
     return client;
   }
@@ -55,7 +61,6 @@ export class NewClientComponent implements OnInit {
   addClient() {
     console.log(this.parseFormToEntity());
     this.clientService.addClient(this.parseFormToEntity()).subscribe(() => {
-
       this.router.navigate(['../manage-client']);
     });
   }

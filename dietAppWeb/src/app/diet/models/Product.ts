@@ -26,4 +26,5 @@ export class Product implements IProduct {
     this.weight = product.weight;
     this.sortNo = product.sortNo;
   }
+
 }

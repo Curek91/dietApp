@@ -1,65 +1,109 @@
 <div class="container product-container">
-  <div class="accordion-panel">
-    <div class="accordion-header" (click)="showInfo = !showInfo">
-      <h3>
-        <i class="fa " [ngClass]="{'fa-angle-down': showInfo === true, 'fa-angle-right': showInfo === false}"></i>
-        <span>Informacje</span>
-      </h3>
-    </div>
-    <div class="accordion-body" *ngIf="showInfo">
+  <mat-accordion>
+    <mat-expansion-panel [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <h4>Ogólne Informacje</h4>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
       <form [formGroup]="clientForm">
         <div class="row form-group">
-          <div class="col-sm-6">
-            <label class="new-product-label">Imię:</label>
-            <input class="form-control" formControlName="firstname" placeholder="Imię...">
+          <div class="col-sm-4">
+            <mat-form-field class="example-full-width">
+              <input matInput formControlName="firstname" placeholder="Imię...">
+            </mat-form-field>
           </div>
-          <div class="col-sm-6 align-self-end ">
-            <label class="new-product-label">Nazwisko:</label>
-            <input class="form-control" formControlName="lastname" placeholder="Nazwisko...">
+          <div class="col-sm-4 align-self-end ">
+            <mat-form-field class="example-full-width">
+              <input matInput formControlName="lastname" placeholder="Nazwisko...">
+            </mat-form-field>
+          </div>
+          <div class="col-sm-4 align-self-end ">
+            <mat-form-field>
+              <mat-label>Data</mat-label>
+              <input matInput [matDatepicker]="picker" formControlName="date">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
           </div>
         </div>
         <div class="row form-group">
           <div class="col-sm-4">
-            <label class="new-product-label">Wiek:</label>
-            <input class="form-control" formControlName="age" placeholder="Wiek...">
+            <mat-form-field class="example-full-width">
+              <input matInput formControlName="age" placeholder="Wiek...">
+            </mat-form-field>
           </div>
           <div class="col-sm-4">
-            <label class="new-product-label">Waga:</label>
-            <input class="form-control" formControlName="weight" placeholder="Waga...">
+            <mat-form-field class="example-full-width">
+              <input matInput formControlName="email" placeholder="Email...">
+            </mat-form-field>
           </div>
-          <div class="col-sm-4 align-self-end">
-            <label class="new-product-label">Wzrost:</label>
-            <input class="form-control" formControlName="height" placeholder="Wzrost...">
+          <div class="col-sm-4 align-self-end ">
+            <mat-form-field class="example-full-width">
+              <input matInput formControlName="telephone" placeholder="Telefon...">
+            </mat-form-field>
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+        <mat-divider></mat-divider>
+        <mat-divider></mat-divider>
+        <div class="row form-group size-row">
+          <div class="col-sm-3">
+            <mat-form-field class="example-full-width">
+              <input matInput formControlName="biceps" placeholder="Biceps...">
+            </mat-form-field>
+          </div>
+          <div class="col-sm-3 align-self-end ">
+            <mat-form-field class="example-full-width">
+              <input matInput formControlName="chest" placeholder="Klatka...">
+            </mat-form-field>
+          </div>
+          <div class="col-sm-3">
+            <mat-form-field class="example-full-width">
+              <input matInput formControlName="waist" placeholder="Talia...">
+            </mat-form-field>
+          </div>
+          <div class="col-sm-3 align-self-end ">
+            <mat-form-field class="example-full-width">
+              <input matInput formControlName="thigh" placeholder="Udo...">
+            </mat-form-field>
           </div>
         </div>
         <div class="row form-group">
-          <div class="col-sm-6">
-            <label class="new-product-label">Email:</label>
-            <input class="form-control" formControlName="email" placeholder="Email...">
+          <div class="col-sm-3">
+            <mat-form-field class="example-full-width">
+              <input matInput formControlName="weight" placeholder="Waga">
+            </mat-form-field>
           </div>
-          <div class="col-sm-6 align-self-end ">
-            <label class="new-product-label">Nazwisko:</label>
-            <input class="form-control" formControlName="telephone" placeholder="Telefon...">
+          <div class="col-sm-3 align-self-end">
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Wzrost" formControlName="height"/>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-6">
           </div>
         </div>
         <div class="row form-group">
           <div class="col-sm-12 text-right">
-            <button class="btn btn-primary btn-md" style="margin-right: 2%" [disabled]="clientForm.invalid"
+            <button mat-raised-button color="primary" style="margin-right: 2%" type="submit" [disabled]="clientForm.invalid"
                     (click)="createClientModal.open()">Zapisz
             </button>
-            <button class="btn btn-danger btn-md" type="submit" [routerLink]="['/manage-client']">Wróć</button>
+            <button mat-raised-button color="warn" [routerLink]="['/manage-client']">Wróć</button>
           </div>
         </div>
       </form>
-    </div>
-  </div>
-</div>
+</mat-expansion-panel>
+</mat-accordion>
+
+  <pre>
+    {{clientJson | json}}
+  </pre>
 
 <modal #createClientModal>
   <ng-template #modalHeader><h5 class="modal-title">Czy napewno chcesz utworzyć klienta?</h5></ng-template>
   <ng-template #modalFooter>
-    <button type="button" class="btn btn-success btn-sm" data-dismiss="modal" (click)="addClient()">Zapisz</button>
-    <button type="button" class="btn btn-danger btn-sm" (click)="createClientModal.close()">Anuluj</button>
+    <button mat-raised-button color="primary" data-dismiss="modal" (click)="addClient()">Zapisz</button>
+    <button mat-raised-button color="warn" (click)="createClientModal.close()">Anuluj</button>
   </ng-template>
 </modal>
 

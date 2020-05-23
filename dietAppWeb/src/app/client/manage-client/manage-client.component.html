@@ -3,20 +3,32 @@
     <div class="col-md-5 float-md-left">
       <div class="input-group">
         <span class="input-group-addon glyphicon glyphicon-search"></span>
-        <input type="text" class="form-control" [(ngModel)]="filter" placeholder="Szukaj...">
+        <mat-form-field class="example-full-width">
+        <input matInput [(ngModel)]="filter" (change)="valuechange()"
+               placeholder="Szukaj...">
+        </mat-form-field>
       </div>
     </div>
-    <div class="col-md-7">
-      <button class="btn btn-success btn-sm" [routerLink]="['/new-client']">Nowy klient</button>
+    <div class="col-md-7 text-right">
+      <button mat-raised-button color="primary" [routerLink]="['/new-client']">Nowy klient</button>
     </div>
   </div>
   <div class="row">
     <table class="table table-striped">
       <thead>
       <tr>
-        <th>Lp</th>
-        <th>Imię</th>
-        <th>Nazwisko</th>
+        <th (click)="sorting('clientNo')">Numer Klienta<i class="fa fa-angle-down"
+                                                  [ngClass]="{'activate-sorting': this.sort.sortBy === 'clientNo' && this.sort.direction === 'desc'}"></i><i
+          class="fa fa-angle-up"
+          [ngClass]="{'activate-sorting': this.sort.sortBy === 'clientNo' && this.sort.direction === 'asc'}"></i></th>
+        <th (click)="sorting('firstname')">Imię<i class="fa fa-angle-down"
+                                                  [ngClass]="{'activate-sorting': this.sort.sortBy === 'firstname' && this.sort.direction === 'desc'}"></i><i
+          class="fa fa-angle-up"
+          [ngClass]="{'activate-sorting': this.sort.sortBy === 'firstname' && this.sort.direction === 'asc'}"></i></th>
+        <th (click)="sorting('lastname')">Nazwisko<i class="fa fa-angle-down"
+                                                     [ngClass]="{'activate-sorting': this.sort.sortBy === 'lastname' && this.sort.direction === 'desc'}"></i><i
+          class="fa fa-angle-up"
+          [ngClass]="{'activate-sorting': this.sort.sortBy === 'lastname' && this.sort.direction === 'asc'}"></i></th>
         <th>Wiek</th>
         <th>Waga</th>
         <th>Wzrost</th>
@@ -26,27 +38,57 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let client of clients | clientFilter:filter">
-        <td [routerLink]="['/client', client.id]">{{client.id}}</td>
-        <td [routerLink]="['/client', client.id]">{{client.firstname}}</td>
-        <td [routerLink]="['/client', client.id]">{{client.lastname}} </td>
-        <td [routerLink]="['/client', client.id]">{{client.age}}</td>
-        <td [routerLink]="['/client', client.id]">{{client.weight}}</td>
-        <td [routerLink]="['/client', client.id]">{{client.height}}</td>
-        <td [routerLink]="['/client', client.id]">{{client.email}}</td>
-        <td [routerLink]="['/client', client.id]">{{client.telephone}}</td>
-        <td><button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal" (click)="deleteClientModal.open()">Usuń</button></td>
-        <modal #deleteClientModal>
-          <ng-template #modalHeader><h5 class="modal-title">Czy napewno chcesz usunąć klienta o id {{client.id}}?</h5></ng-template>
-          <ng-template #modalFooter>
-            <button type="button" class="btn btn-success btn-sm" data-dismiss="modal" (click)="deleteClient(client.id)">Zapisz</button>
-            <button type="button" class="btn btn-danger btn-sm" (click)="deleteClientModal.close()">Anuluj</button>
-          </ng-template>
-        </modal>
+      <tr class="client-row" *ngFor="let client of clients" [routerLink]="['/client', client.clientNo]">
+        <td>{{client.clientNo}}</td>
+        <td>{{client.firstname}}</td>
+        <td>{{client.lastname}} </td>
+        <td>{{client.age}}</td>
+        <td>{{client.weight}}</td>
+        <td>{{client.height}}</td>
+        <td>{{client.email}}</td>
+        <td>{{client.telephone}}</td>
+        <td (click)="$event.stopPropagation()">
+          <button mat-raised-button color="warn" data-toggle="modal" data-target="#deleteModal"
+                  (click)="deleteClientModal.open()">Usuń
+          </button>
+          <modal #deleteClientModal [closeOnOutsideClick]="true">
+            <ng-template #modalHeader><h5 class="modal-title">Czy napewno chcesz usunąć klienta o
+              numerze {{client.clientNo}}?</h5></ng-template>
+            <ng-template #modalFooter>
+              <button mat-raised-button color="warn" data-dismiss="modal"
+                      (click)="deleteClient(client.clientNo)">Usuń
+              </button>
+              <button mat-raised-button color="primary" (click)="deleteClientModal.close()">Anuluj</button>
+            </ng-template>
+          </modal>
+        </td>
+
       </tr>
       </tbody>
     </table>
   </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+          <li class="page-item" [ngClass]="{'disabled': this.page.page.number <= 0}">
+            <a class="page-link" (click)="reloadClients(page._links.prev.href)" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+              <span class="sr-only">Previous</span>
+            </a>
+          </li>
+          <li *ngFor="let element of [].constructor(page.page.totalPages), let x = index" class="page-item"
+              [ngClass]="{'active': x === this.page.page.number}">
+            <a class="page-link" (click)="reloadClients(this.getLinkByNumber(x))">{{x + 1}}</a>
+          </li>
+          <li class="page-item" [ngClass]="{'disabled': page.page.number >= page.page.totalPages - 1}">
+            <a class="page-link" (click)="reloadClients(page._links.next.href)" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+              <span class="sr-only">Next</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
 </div>
-
-

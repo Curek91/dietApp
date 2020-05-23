@@ -1,8 +1,10 @@
 package eu.tcitsolutions.dietApp.core.client.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import eu.tcitsolutions.dietApp.core.common.entity.BaseLogEntity;
 import eu.tcitsolutions.dietApp.core.diet.domain.entity.Diet;
 import eu.tcitsolutions.dietApp.core.diet.domain.entity.Meal;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,6 +13,9 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Set;
 
 @Entity(name = "client")
@@ -22,6 +27,10 @@ public class Client extends BaseLogEntity implements Serializable {
     @SequenceGenerator(name="client_seq_generator", sequenceName = "client_seq", allocationSize=1)
     @NaturalId
     private Long id;
+
+    @Column(name = "client_no", updatable = false)
+    private Long clientNo;
+
     private String firstname;
     private String lastname;
     private Integer age;
@@ -29,30 +38,29 @@ public class Client extends BaseLogEntity implements Serializable {
     private Integer height;
     private String email;
     private String telephone;
-
-
-    public Client(String firstname, String lastname, Integer age, Float weight, Integer height, String email, String telephone) {
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.age = age;
-        this.weight = weight;
-        this.height = height;
-        this.email = email;
-        this.telephone = telephone;
-    }
-
-    public Client(Long id, String firstname, String lastname, Integer age, Float weight, Integer height, String email, String telephone) {
-        this.id = id;
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.age = age;
-        this.weight = weight;
-        this.height = height;
-        this.email = email;
-        this.telephone = telephone;
-    }
+    private Integer biceps;
+    private Integer chest;
+    private Integer waist;
+    private Integer thigh;
+    private LocalDateTime date;
 
     public Client() {
+    }
+
+    public Client(String firstname, String lastname, Integer age, Float weight, Integer height, String email, String telephone, Integer biceps, Integer chest, Integer waist, Integer thigh, Long clientNo, LocalDateTime date) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.age = age;
+        this.weight = weight;
+        this.height = height;
+        this.email = email;
+        this.telephone = telephone;
+        this.biceps = biceps;
+        this.chest = chest;
+        this.waist = waist;
+        this.thigh = thigh;
+        this.clientNo = clientNo;
+        this.date = date;
     }
 
     public Long getId() {
@@ -117,5 +125,53 @@ public class Client extends BaseLogEntity implements Serializable {
 
     public void setTelephone(String telephone) {
         this.telephone = telephone;
+    }
+
+    public Long getClientNo() {
+        return clientNo;
+    }
+
+    public void setClientNo(Long clientNo) {
+        this.clientNo = clientNo;
+    }
+
+    public Integer getBiceps() {
+        return biceps;
+    }
+
+    public void setBiceps(Integer biceps) {
+        this.biceps = biceps;
+    }
+
+    public Integer getChest() {
+        return chest;
+    }
+
+    public void setChest(Integer chest) {
+        this.chest = chest;
+    }
+
+    public Integer getWaist() {
+        return waist;
+    }
+
+    public void setWaist(Integer waist) {
+        this.waist = waist;
+    }
+
+    public Integer getThigh() {
+        return thigh;
+    }
+
+    public void setThigh(Integer thigh) {
+        this.thigh = thigh;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
     }
 }

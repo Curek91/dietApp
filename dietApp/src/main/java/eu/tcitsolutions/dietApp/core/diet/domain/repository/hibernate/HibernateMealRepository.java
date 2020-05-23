@@ -4,6 +4,7 @@ import eu.tcitsolutions.dietApp.core.diet.domain.entity.Diet;
 import eu.tcitsolutions.dietApp.core.diet.domain.entity.Meal;
 import eu.tcitsolutions.dietApp.core.diet.domain.repository.DietRepository;
 import eu.tcitsolutions.dietApp.core.diet.domain.repository.MealRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -11,49 +12,5 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
-public class HibernateMealRepository implements MealRepository {
-
-    @PersistenceContext
-    private EntityManager entityManager;
-
-    @Override
-    public List<Meal> getMeals() {
-        String hql = "select m from meal m";
-        return (List<Meal>) entityManager.createQuery(hql).getResultList();
-    }
-
-    @Override
-    public Meal getMeal(Long id) {
-        return entityManager.find(Meal.class, id);
-    }
-
-    @Override
-    public Meal save(Meal meal) {
-        entityManager.persist(meal);
-        entityManager.flush();
-        return meal;
-    }
-
-    @Override
-    public void delete(Meal meal)
-    {
-        entityManager.remove(meal);
-    }
-
-    @Override
-    public void delete(Long id) {
-        entityManager.remove(entityManager.find(Meal.class, id));
-    }
-
-    @Override
-    public void update(Meal meal) {
-        entityManager.merge(meal);
-    }
-
-    @Override
-    public void delete(Long mealId, Long dietId)
-    {
-        String hql = "delete from diet_meal where diet_id = :diet_id";
-        entityManager.createQuery(hql).setParameter("diet_id", dietId).executeUpdate();
-    }
+interface HibernateMealRepository extends MealRepository, JpaRepository<Meal, Long> {
 }

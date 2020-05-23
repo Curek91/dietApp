@@ -7,17 +7,19 @@ import eu.tcitsolutions.dietApp.core.client.service.ClientService;
 import eu.tcitsolutions.dietApp.core.client.service.DTOClientMappingService;
 import eu.tcitsolutions.dietApp.core.diet.service.DTOMappingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
 public class ClientServiceImpl implements ClientService {
 
     private ClientRepository clientRepository;
-
     private DTOClientMappingService dtoClientMappingService;
 
     public ClientServiceImpl(ClientRepository clientRepository, DTOClientMappingService dtoClientMappingService){
@@ -26,27 +28,77 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public List<Client> getClients() {
-        return clientRepository.getClients();
+    public List<ClientDTO> getClients() {
+        return clientRepository.findAll().stream().map(dtoClientMappingService::createDTO).collect(Collectors.toList());
     }
 
     @Override
-    public Client getClient(Long id) {
-        return clientRepository.getClient(id);
+    public Page<ClientDTO> getClients(Pageable page) {
+        return clientRepository.findAll(page).map((dtoClientMappingService::createDTO));
+    }
+
+    @Override
+    public Page<ClientDTO> getNewestClients(Pageable page) {
+        return clientRepository.findNewestClients(page).map((dtoClientMappingService::createDTO));
+    }
+
+    @Override
+    public ClientDTO getClient(Long id) {
+        return dtoClientMappingService.createDTO(clientRepository.findById(id).get());
     }
 
     @Override
     public void saveClient(ClientDTO source) {
-        clientRepository.save(dtoClientMappingService.createEntity(source));
+        Client client = dtoClientMappingService.createEntity(source);
+        if (client.getClientNo() == null)
+            client.setClientNo(clientRepository.getClientSeqNoNextVal());
+        clientRepository.save(client);
     }
 
     @Override
-    public void removeClient(Long id) {
-        clientRepository.delete(id);
+    public void removeClient(Long clientNo) {
+        clientRepository.findClientsByClientNo(clientNo).stream().forEach((c) -> clientRepository.deleteById(c.getId()));
     }
 
     @Override
     public void updateClient(Long id, ClientDTO source) {
-        clientRepository.update(dtoClientMappingService.createEntity(id ,source));
+        Client clientToUpdate = dtoClientMappingService.createEntity(source);
+        clientToUpdate.setId(id);
+        clientRepository.save(clientToUpdate);
+    }
+
+    @Override
+    public void updateClientByPatch(Long id, ClientDTO source) {
+        Client clientToUpdate = dtoClientMappingService.createEntity(source);
+        clientToUpdate.setId(id);
+        clientRepository.save(clientToUpdate);
+    }
+
+    @Override
+    public void createNewVersion(Long clientNo, ClientDTO source) {
+        Client clientNewVersion = dtoClientMappingService.createEntity(source);
+        clientNewVersion.setClientNo(clientNo);
+        clientRepository.save(clientNewVersion);
+    }
+
+    @Override
+    public List<ClientDTO> getClientVersions(Long clientNo) {
+        return clientRepository.findClientsByClientNo(clientNo).stream().map(dtoClientMappingService::createDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public Client getNewestClientVersion(Long clientNo) {
+        Client client = clientRepository.findFirstByClientNoOrderByIdDesc(clientNo);
+        return client;
+    }
+
+    @Override
+    public Page<ClientDTO> getClientByName(Pageable page, String name) {
+        return clientRepository.findClientsByFirstnameContainsOrLastnameContains(name, name, page).map((dtoClientMappingService::createDTO));
+    }
+
+    @Override
+    public Page<ClientDTO> getNewestClientsByFirstnameContainsOrLastnameContains(Pageable page, String name) {
+        return clientRepository.findNewestClientsByFirstnameContainsOrLastnameContains(name, name, page).map((dtoClientMappingService::createDTO));
     }
 }

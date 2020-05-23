@@ -6,10 +6,8 @@ import eu.tcitsolutions.dietApp.core.client.domain.entity.Client;
 public interface DTOClientMappingService {
 
     //Create DTO's
-    public ClientDTO createDTO(Client source);
+    ClientDTO createDTO(Client source);
 
     //create Entities
-    public Client createEntity(ClientDTO source);
-    public Client createEntity(Long id, ClientDTO source);
-    public Client createEntity(Long id);
+    Client createEntity(ClientDTO source);
 }

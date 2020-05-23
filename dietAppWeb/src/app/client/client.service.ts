@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {AuthService} from '../auth/auth.service';
 import {Client} from './models/Client';
 import {Observable} from 'rxjs/Rx';
-import {Diet} from "../diet/models/Diet";
+import {Diet} from '../diet/models/Diet';
+import {Page} from './models/Page';
 
 @Injectable({
   providedIn: 'root'
@@ -14,34 +15,50 @@ export class ClientService {
     'Content-Type': 'application/json',
     'Authorization': 'Bearer ' + this.authService.getToken()
   });
+
   constructor(private http: HttpClient, private authService: AuthService) {
   }
 
-  getClients(): Observable<Client[]> {
-    return this.http.get<Client[]>(this.apiUrl + 'clients', {headers: this.headers});
-  }
-
-  getClient(id: number): Observable<Client> {
-    return this.http.get<Client>(this.apiUrl + 'client/' + id, {headers: this.headers});
-  }
-
   addClient(data): Observable<Client> {
-    return this.http.post<Client>(this.apiUrl + 'client', data, {headers: this.headers});
+    return this.http.post<Client>(this.apiUrl + 'clients', data, {headers: this.headers});
   }
 
-  deleteClient(id: number): any {
-    return this.http.delete<any>(this.apiUrl + 'client/' + id, {headers: this.headers});
+  deleteClient(clientNo: number): any {
+    return this.http.delete<any>(this.apiUrl + 'clients/' + clientNo, {headers: this.headers});
   }
 
-  modifyClient(data): Observable<Client> {
-    return this.http.put<Client>(this.apiUrl + 'client/' + data.id, data, {headers: this.headers});
-  }
-
-  getClientDiets(clientId: number): Observable<Diet[]> {
-    return this.http.get<Diet[]>(this.apiUrl + 'diets/' + clientId, {headers: this.headers});
-  }
-
-  sendEmail(dietId): Observable<Diet>{
+  sendEmail(dietId): Observable<Diet> {
     return this.http.post<Diet>(this.apiUrl + 'api/sendEmail', dietId, {headers: this.headers});
   }
+
+  createNewVersion(clientNo: number, data): Observable<Client> {
+    return this.http.post<Client>(this.apiUrl + 'clients/createNewVersion/' + clientNo, data, {
+      headers: this.headers,
+    });
+  }
+
+  getClientVersions(clientNo: number): Observable<Client[]> {
+    return this.http.get<Client[]>(this.apiUrl + 'clients/clientVersions/' + clientNo, {headers: this.headers});
+  }
+
+  getOhterPage(link: string, ) {
+    return this.http.get<Page>(link, {headers: this.headers});
+  }
+
+  getClientsByName(name: string, sortBy: string = 'firstname', direction: string = 'asc', size: string = '5', page: string = '0') {
+    const searchParams = new HttpParams()
+      .append('sort', sortBy + ',' + direction)
+      .append('page', page)
+      .append('size', size)
+      .append('name', name);
+    return this.http.get<Page>(this.apiUrl + 'clientsNewestsByFirstnameOrLastname', {headers: this.headers, params: searchParams});
+  }
+
+
+
+
+  getClientDiets(clientNo: number): Observable<Diet[]> {
+    return this.http.get<Diet[]>(this.apiUrl + 'diets/byClientNo/' + clientNo, {headers: this.headers});
+  }
+
 }

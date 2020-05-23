@@ -17,43 +17,43 @@ import javax.transaction.Transactional;
 @Lazy
 @Service
 @Transactional
-public class DTOClientMappingServiceImpl implements DTOClientMappingService, ApplicationContextAware {
+public class DTOClientMappingServiceImpl implements DTOClientMappingService{
 
-    private ClientRepository clientRepository;
 
-    private ApplicationContext applicationContext;
-
-    public DTOClientMappingServiceImpl(ClientRepository clientRepository, ApplicationContext applicationContext){
-        this.clientRepository = clientRepository;
-        this.applicationContext = applicationContext;
-    }
-
-    public void setApplicationContext(final ApplicationContext applicationContext) throws BeansException {
-        this.applicationContext = applicationContext;
-    }
-
-    @PostConstruct
-    public void handleDependencies() {
-        this.clientRepository = applicationContext.getBean(ClientRepository.class);
+    public DTOClientMappingServiceImpl(){
     }
 
     @Override
     public ClientDTO createDTO(Client source) {
-        return new ClientDTO(source.getFirstname(), source.getLastname(), source.getAge(), source.getWeight(), source.getHeight(), source.getEmail(), source.getTelephone());
+        return new ClientDTO(source.getFirstname(),
+                source.getLastname(),
+                source.getAge(),
+                source.getWeight(),
+                source.getHeight(),
+                source.getEmail(),
+                source.getTelephone(),
+                source.getBiceps(),
+                source.getChest(),
+                source.getWaist(),
+                source.getThigh(),
+                source.getDate(),
+                source.getClientNo());
     }
 
     @Override
     public Client createEntity(ClientDTO source){
-        return new Client(source.getFirstname(), source.getLastname(), source.getAge(), source.getWeight(), source.getHeight(), source.getEmail(), source.getTelephone());
-    }
-
-    @Override
-    public Client createEntity(Long id, ClientDTO source){
-        return new Client(id, source.getFirstname(), source.getLastname(), source.getAge(), source.getWeight(), source.getHeight(), source.getEmail(), source.getTelephone());
-    }
-
-    @Override
-    public Client createEntity(Long id){
-        return clientRepository.getClient(id);
+        return new Client(source.getFirstname(),
+                source.getLastname(),
+                source.getAge(),
+                source.getWeight(),
+                source.getHeight(),
+                source.getEmail(),
+                source.getTelephone(),
+                source.getBiceps(),
+                source.getChest(),
+                source.getWaist(),
+                source.getThigh(),
+                source.getClientNo(),
+                source.getDate());
     }
 }

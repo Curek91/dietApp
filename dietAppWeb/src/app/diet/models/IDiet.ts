@@ -7,7 +7,7 @@ export interface IDiet {
   id: number;
   meals: Meal[];
   kcal: number;
-  clientId: number;
+  clientNo: number;
   creationTime: Date;
   createdBy: string;
 }

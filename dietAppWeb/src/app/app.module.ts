@@ -20,7 +20,6 @@ import {CanActivateAuthGuard} from './can-activate.authguard';
 import {ClientModule} from './client/client.module';
 import {ClientRoutingModule} from './client/client-routing.module';
 import {AngularFontAwesomeModule} from 'angular-font-awesome';
-import { ClientFilterPipe } from './client-filter.pipe';
 
 
 @NgModule({

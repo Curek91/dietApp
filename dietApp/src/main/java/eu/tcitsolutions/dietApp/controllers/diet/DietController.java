@@ -2,6 +2,7 @@ package eu.tcitsolutions.dietApp.controllers.diet;
 
 import eu.tcitsolutions.dietApp.core.client.domain.entity.Client;
 import eu.tcitsolutions.dietApp.core.diet.domain.dto.DietDTO;
+import eu.tcitsolutions.dietApp.core.diet.domain.dto.DietGetDietDTO;
 import eu.tcitsolutions.dietApp.core.diet.domain.dto.ProductDTO;
 import eu.tcitsolutions.dietApp.core.diet.domain.entity.Diet;
 import eu.tcitsolutions.dietApp.core.diet.domain.entity.Meal;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "${cors.host}")
 @RestController
 public class DietController {
 
@@ -28,42 +30,37 @@ public class DietController {
         this.dietService = dietService;
     }
 
-    @CrossOrigin(origins = "${cors.host}")
-    @GetMapping("/diets/{clientId}")
-    @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody
-    ResponseEntity<List<Diet>> dietsList(@PathVariable Long clientId){
-        return new ResponseEntity<List<Diet>>(dietService.getDiets(clientId), HttpStatus.OK);
+    @PostMapping(value="/diets/{clientNo}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public
+    ResponseEntity<Diet> createDiet(@RequestBody DietDTO source, @PathVariable Long clientNo){
+        Diet diet = dietService.saveDiet(clientNo, source);
+        return ResponseEntity.ok(diet);
     }
 
-    @CrossOrigin(origins = "${cors.host}")
-    @PostMapping(value="/diet", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody
-    ResponseEntity<Diet> createDiet(@RequestBody DietDTO source){
-        return new ResponseEntity<>(dietService.saveDiet(source), HttpStatus.OK);
+    @GetMapping(value = "/diets/byClientNo/{clientNo}")
+    public
+    ResponseEntity<List<DietDTO>> dietsByClientNoList(@PathVariable Long clientNo){
+        List<DietDTO> dietList = dietService.getDiets(clientNo);
+        return ResponseEntity.ok(dietList);
     }
 
-    @CrossOrigin(origins = "${cors.host}")
-    @GetMapping("/diet/{id}")
+    @GetMapping(value = "/diets/{id}")
     public @ResponseBody
-    ResponseEntity<DietDTO> getDiet(@PathVariable Long id){
-        return new ResponseEntity<>(dietService.getDiet(id), HttpStatus.OK);
+    ResponseEntity<DietGetDietDTO> getDiet(@PathVariable Long id){
+        DietGetDietDTO dietGetDietDTO = dietService.getDiet(id);
+        return ResponseEntity.ok(dietGetDietDTO);
     }
 
-    @CrossOrigin(origins = "${cors.host}")
-    @PutMapping(value = "/diet/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody
-    ResponseEntity<Diet> updateDiet(@PathVariable("id") Long id, @RequestBody DietDTO source){
-        dietService.updateDiet(id, source);
-        return new ResponseEntity<>(HttpStatus.OK);
+    @PutMapping(value = "/diets/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public
+    ResponseEntity<Diet> updateDiet(@RequestBody DietDTO source, @PathVariable("id") Long id){
+        Diet diet = dietService.updateDiet(id, source);
+        return ResponseEntity.ok(diet);
     }
 
-    @CrossOrigin(origins = "${cors.host}")
-    @DeleteMapping(value = "/diet/{id}")
-    public @ResponseBody
-    ResponseEntity<Diet> deleteDiet(@PathVariable("id") Long id){
+    @DeleteMapping(value = "/diets/{id}")
+    public ResponseEntity<String> deleteDiet(@PathVariable("id") Long id){
         dietService.removeDiet(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.ok("Diet id: " + id + " Deleted with success");
     }
-
 }

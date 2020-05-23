@@ -23,7 +23,7 @@ public class MailController {
     @Autowired
     private DietService dietService;
 
-    @CrossOrigin(origins = "${cors.host}")
+/*    @CrossOrigin(origins = "${cors.host}")
     @RequestMapping(method = RequestMethod.POST, value="/api/sendEmail")
     public @ResponseBody
     ResponseEntity send(@RequestBody Long dietId) {
@@ -32,5 +32,5 @@ public class MailController {
         System.out.println(mailText);
         emailService.sendEmail("bukszpanek91@gmail.com", "Dieta", mailText);
         return new ResponseEntity(HttpStatus.OK);
-    }
+    }*/
 }

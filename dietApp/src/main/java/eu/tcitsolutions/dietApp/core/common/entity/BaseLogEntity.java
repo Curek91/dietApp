@@ -11,7 +11,10 @@ import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
+import java.sql.Types;
 import java.time.LocalDateTime;
+
+
 
 @Getter
 @MappedSuperclass

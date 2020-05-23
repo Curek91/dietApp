@@ -1,12 +1,11 @@
 import {IClient} from './IClient';
-import {Diet} from "../../diet/models/Diet";
 /**
  * Created by tomasz.cur on 04.03.2019.
  */
 
 
 export class Client implements IClient {
-  id: number;
+  clientNo: number;
   firstname: string;
   lastname: string;
   age: number;
@@ -14,9 +13,14 @@ export class Client implements IClient {
   height: number;
   email: string;
   telephone: string;
+  biceps: number;
+  chest: number;
+  waist: number;
+  thigh: number;
+  date: Date;
 
   constructor(client: Client) {
-    this.id = client.id;
+    this.clientNo = client.clientNo;
     this.firstname = client.firstname;
     this.lastname = client.lastname;
     this.age = client.age;
@@ -24,5 +28,10 @@ export class Client implements IClient {
     this.height = client.height;
     this.email = client.email;
     this.telephone = client.telephone;
+    this.biceps = client.biceps;
+    this.chest = client.chest;
+    this.waist = client.waist;
+    this.thigh = client.thigh;
+    this.date = client.date;
   }
 }

@@ -57,3 +57,34 @@
   -webkit-transition: opacity .10s linear;
   transition: opacity .10s linear;
 }
+
+.product-on-table
+{
+  font-size: smaller;
+}
+
+.summary-row {
+  color: red;
+  font-size: medium;
+  font-weight: bolder;
+}
+
+.prod-row
+{
+  height: 1vh;
+  cursor: cell;
+}
+
+.prod-row:hover
+{
+  background: #ffe419;
+  cursor: cell;
+}
+
+.example-full-width {
+  width: 30%;
+}
+
+.filter-width{
+  width: 100%;
+}

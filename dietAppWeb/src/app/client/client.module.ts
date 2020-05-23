@@ -10,6 +10,16 @@ import {DietModule} from "../diet/diet.module";
 import {ModalModule} from "angular-custom-modal";
 import {ProductFilterPipe} from "../product-filter.pipe";
 import {ClientFilterPipe} from "../client-filter.pipe";
+import {ChartsModule} from "ng2-charts";
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {
+  MatExpansionModule,
+  MatButtonModule,
+  MatCheckboxModule,
+  MatDividerModule,
+  MatInputModule,
+  MatAutocompleteModule, MatDatepickerModule, MatNativeDateModule
+} from '@angular/material';
 
 @NgModule({
   imports: [
@@ -19,8 +29,19 @@ import {ClientFilterPipe} from "../client-filter.pipe";
     ReactiveFormsModule,
     AngularFontAwesomeModule,
     DietModule,
-    ModalModule
+    ModalModule,
+    ChartsModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    MatInputModule,
+    MatDividerModule,
+    MatExpansionModule,
+    MatAutocompleteModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
+  exports: [MatButtonModule, MatCheckboxModule],
   declarations: [ManageClientComponent, NewClientComponent, ShowClientComponent, ClientFilterPipe]
 })
 export class ClientModule { }

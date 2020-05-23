@@ -1,6 +1,5 @@
-import {Diet} from "../../diet/models/Diet";
 export interface IClient {
-  id: number;
+  clientNo: number;
   firstname: string;
   lastname: string;
   age: number;
@@ -8,4 +7,9 @@ export interface IClient {
   height: number;
   email: string;
   telephone: string;
+  biceps: number;
+  chest: number;
+  waist: number;
+  thigh: number;
+  date: Date;
 }

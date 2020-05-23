@@ -3,26 +3,32 @@ package eu.tcitsolutions.dietApp.core.diet.service;
 import eu.tcitsolutions.dietApp.core.diet.domain.dto.ProductDTO;
 import eu.tcitsolutions.dietApp.core.diet.domain.entity.Product;
 import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.nio.file.Path;
 import java.util.List;
 
 public interface ProductService {
-    public List<Product> getProducts();
+    List<ProductDTO> getProducts();
 
-    public Product getProduct(Long id);
+    Page<ProductDTO> getProducts(Pageable page);
 
-    public Product saveProduct(ProductDTO source);
+    ProductDTO getProduct(Long id);
 
-    public void removeProduct(Long id);
+    Product saveProduct(ProductDTO source);
 
-    public void updateProduct(Long id, ProductDTO source);
+    void removeProduct(Long id);
+
+    Product updateProduct(Long id, ProductDTO source);
+
+    ProductDTO getProductByName(String name);
 
     //Image upload functions
     void store(MultipartFile file, Long id);
 
-    public Resource getImage(Long id);
+    Resource getImage(Long id);
 
     void init();
 

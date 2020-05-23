@@ -50,11 +50,6 @@ public class Diet extends BaseLogEntity implements Serializable {
         this.meals = meals;
     }
 
-    public void addMeal(Meal meal){
-        meals.add(meal);
-    }
-
-
     public Long getId() {
         return id;
     }

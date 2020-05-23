@@ -1,5 +1,8 @@
 package eu.tcitsolutions.dietApp.core.diet.service.units;
 
+import eu.tcitsolutions.dietApp.core.client.domain.dto.ClientDTO;
+import eu.tcitsolutions.dietApp.core.client.domain.entity.Client;
+import eu.tcitsolutions.dietApp.core.client.service.DTOClientMappingService;
 import eu.tcitsolutions.dietApp.utils.Utils;
 import eu.tcitsolutions.dietApp.core.diet.domain.dto.ProductDTO;
 import eu.tcitsolutions.dietApp.core.diet.domain.entity.Product;
@@ -9,6 +12,8 @@ import eu.tcitsolutions.dietApp.core.diet.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,6 +26,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -35,13 +41,18 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getProducts() {
-        return productRepository.getProducts();
+    public List<ProductDTO> getProducts() {
+        return productRepository.findAll().stream().map(dtoMappingService::createDTO).collect(Collectors.toList());
     }
 
     @Override
-    public Product getProduct(Long id) {
-        return productRepository.getProduct(id);
+    public Page<ProductDTO> getProducts(Pageable page) {
+        return productRepository.findAll(page).map((dtoMappingService::createDTO));
+    }
+
+    @Override
+    public ProductDTO getProduct(Long id) {
+        return  dtoMappingService.createDTO(productRepository.findById(id).get());
     }
 
     @Override
@@ -51,12 +62,19 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void removeProduct(Long id) {
-        productRepository.delete(id);
+        productRepository.deleteById(id);
     }
 
     @Override
-    public void updateProduct(Long id, ProductDTO source) {
-        productRepository.update(dtoMappingService.createEntity(id, source));
+    public Product updateProduct(Long id, ProductDTO source) {
+        Product productToUpdate = dtoMappingService.createEntity(source);
+        productToUpdate.setId(id);
+        return productRepository.save(productToUpdate);
+    }
+
+    @Override
+    public ProductDTO getProductByName(String name){
+        return dtoMappingService.createDTO(productRepository.findProductsByName(name));
     }
 
     @Override
@@ -65,7 +83,7 @@ public class ProductServiceImpl implements ProductService {
         Path rootLocation = Paths.get("upload-dir");
         try {
             if (file.isEmpty()) {
-                throw new RuntimeException("Nie można zapisać pustego pliku: " + filename);
+                throw new RuntimeException("Cannot store empty file: " + filename);
             }
             if (filename.contains("..")) {
                 // This is a security check

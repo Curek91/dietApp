@@ -1,77 +1,181 @@
 <div class="container product-container">
-  <div class="accordion-panel">
-    <div class="accordion-header" (click)="showInfo = !showInfo">
-      <h3>
-        <i class="fa " [ngClass]="{'fa-angle-down': showInfo === true, 'fa-angle-right': showInfo === false}"></i>
-        <span>Informacje</span>
-      </h3>
-    </div>
-    <div class="accordion-body" *ngIf="showInfo">
-      <form [formGroup]="clientForm">
-        <div class="row form-group">
-          <div class="col-sm-6">
-            <label class="new-product-label">Imię:</label>
-            <input class="form-control" formControlName="firstname" placeholder="Imię...">
+  <mat-accordion>
+    <mat-expansion-panel [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <h4>Ogólne Informacje</h4>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+        <form [formGroup]="clientForm">
+          <div class="row form-group">
+            <div class="col-sm-4">
+              <mat-form-field class="example-full-width">
+                <input matInput formControlName="firstname" placeholder="Imię...">
+              </mat-form-field>
+            </div>
+            <div class="col-sm-4 align-self-end ">
+              <mat-form-field class="example-full-width">
+                <input matInput formControlName="lastname" placeholder="Nazwisko...">
+              </mat-form-field>
+            </div>
+            <div class="col-sm-4 align-self-end ">
+              <mat-form-field>
+                <mat-label>Data</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="date">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+            </div>
           </div>
-          <div class="col-sm-6 align-self-end ">
-            <label class="new-product-label">Nazwisko:</label>
-            <input class="form-control" formControlName="lastname" placeholder="Nazwisko...">
+          <div class="row form-group">
+            <div class="col-sm-4">
+              <mat-form-field class="example-full-width">
+                <input matInput formControlName="age" placeholder="Wiek...">
+              </mat-form-field>
+            </div>
+            <div class="col-sm-4">
+              <mat-form-field class="example-full-width">
+                <input matInput formControlName="email" placeholder="Email...">
+              </mat-form-field>
+            </div>
+            <div class="col-sm-4 align-self-end ">
+              <mat-form-field class="example-full-width">
+                <input matInput formControlName="telephone" placeholder="Telefon...">
+              </mat-form-field>
+            </div>
           </div>
-        </div>
-        <div class="row form-group">
-          <div class="col-sm-4">
-            <label class="new-product-label">Wiek:</label>
-            <input class="form-control" formControlName="age" placeholder="Wiek...">
+          <mat-divider></mat-divider>
+          <mat-divider></mat-divider>
+          <mat-divider></mat-divider>
+          <div class="row form-group size-row">
+            <div class="col-sm-3">
+              <mat-form-field class="example-full-width">
+                <input matInput formControlName="biceps" placeholder="Biceps...">
+              </mat-form-field>
+            </div>
+            <div class="col-sm-3 align-self-end ">
+              <mat-form-field class="example-full-width">
+                <input matInput formControlName="chest" placeholder="Klatka...">
+              </mat-form-field>
+            </div>
+            <div class="col-sm-3">
+              <mat-form-field class="example-full-width">
+                <input matInput formControlName="waist" placeholder="Talia...">
+              </mat-form-field>
+            </div>
+            <div class="col-sm-3 align-self-end ">
+              <mat-form-field class="example-full-width">
+                <input matInput formControlName="thigh" placeholder="Udo...">
+              </mat-form-field>
+            </div>
           </div>
-          <div class="col-sm-4">
-            <label class="new-product-label">Waga:</label>
-            <input class="form-control" formControlName="weight" placeholder="Waga...">
+          <div class="row form-group">
+            <div class="col-sm-3">
+              <mat-form-field class="example-full-width">
+                <input matInput formControlName="weight" placeholder="Waga">
+              </mat-form-field>
+            </div>
+            <div class="col-sm-3 align-self-end">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Wzrost" formControlName="height"/>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-6">
+            </div>
           </div>
-          <div class="col-sm-4 align-self-end">
-            <label class="new-product-label">Wzrost:</label>
-            <input class="form-control" formControlName="height" placeholder="Wzrost...">
+          <div class="row form-group">
+            <div class="col-sm-4 text-left">
+              <i class="fa fa-angle-double-left fa-2x navigate-angle navigate-arrow" (click)="changeClientVersion(0)"></i>
+              <i class="fa fa-angle-left fa-2x navigate-angle navigate-arrow" (click)="changeClientVersion(currentClientVersion - 1)"></i>
+              <span *ngIf="clientForm.disabled">{{currentClientVersion + 1}} .. {{clientVersions.length}}</span>
+              <span *ngIf="!clientForm.disabled">Nowa wersja</span>
+              <i class="fa fa-angle-right fa-2x navigate-angle navigate-arrow" (click)="changeClientVersion(currentClientVersion + 1)"></i>
+              <i class="fa fa-angle-double-right fa-2x navigate-angle navigate-arrow" (click)="changeClientVersion(clientVersions.length - 1)"></i>
+            </div>
+            <div class="col-sm-8 text-right">
+              <button mat-raised-button color="warn" style="margin-right: 2%"
+                      (click)="cancelNewVersion()" *ngIf="!clientForm.disabled">Wycofaj
+              </button>
+              <button mat-raised-button color="primary" style="margin-right: 2%" [disabled]="clientForm.invalid"
+                      (click)="saveClientModal.open()" *ngIf="!clientForm.disabled">Zapisz
+              </button>
+              <button mat-raised-button color="primary" (click)="createNewVersion()" *ngIf="clientForm.disabled">Utwórz nową wersję</button>
+            </div>
           </div>
-        </div>
-        <div class="row form-group">
-          <div class="col-sm-6">
-            <label class="new-product-label">Email:</label>
-            <input class="form-control" formControlName="email" placeholder="Email...">
-          </div>
-          <div class="col-sm-6 align-self-end ">
-            <label class="new-product-label">Nazwisko:</label>
-            <input class="form-control" formControlName="telephone" placeholder="Telefon...">
-          </div>
-        </div>
-        <div class="row form-group">
-          <div class="col-sm-12 text-right">
-            <button class="btn btn-primary btn-md" style="margin-right: 2%" [disabled]="clientForm.invalid"
-                    (click)="saveClientModal.open()">Zapisz
-            </button>
-            <button class="btn btn-danger btn-md" type="submit" [routerLink]="['/manage-client']">Wróć</button>
-          </div>
-        </div>
-      </form>
-    </div>
-  </div>
+        </form>
+    </mat-expansion-panel>
 
-  <div class="accordion-panel">
-    <div class="accordion-header" >
-      <h3>
-        <div class="row">
-          <div class="col-sm-10" (click)="showDiets = !showDiets">
-            <i class="fa " [ngClass]="{'fa-angle-down': showDiets === true, 'fa-angle-right': showDiets === false}"></i>
-            <span >Diety</span>
-          </div>
-          <div class="col-sm-2">
-            <button class="btn btn-sm btn-success" (click)="createNewDiet()">Utwórz nową diete</button>
-          </div>
+
+
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <h4>Postępy</h4>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+      <div class="row">
+        <div class="col-sm-12">
+          <table class="table table-striped">
+            <thead>
+            <th>Lp</th>
+            <th>Waga</th>
+            <th>Wzrost</th>
+            <th>Biceps</th>
+            <th>Klatka</th>
+            <th>Talia</th>
+            <th>Udo</th>
+            </thead>
+            <tbody>
+            <tr *ngFor="let version of clientVersions; let i = index">
+              <td>{{i + 1}}</td>
+              <td>{{version.weight}}</td>
+              <td>{{version.height}}</td>
+              <td>{{version.biceps}}</td>
+              <td>{{version.chest}}</td>
+              <td>{{version.waist}}</td>
+              <td>{{version.thigh}}</td>
+            </tr>
+            </tbody>
+          </table>
         </div>
-      </h3>
-    </div>
+      </div>
+</mat-expansion-panel>
+
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <h4>Wykresy</h4>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+      <div class="row">
+      <div class="col-sm-12">
+        <canvas baseChart width="800" height="200"
+                [datasets]="lineChartData"
+                [options]="lineChartOptions"
+                [legend]="lineChartLegend"
+                [labels]="lineChartLabels"
+                [chartType]="lineChartType">
+        </canvas>
+      </div>
+      </div>
+  </mat-expansion-panel>
 
 
 
-    <div class="accordion-body" *ngIf="showDiets">
+
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <h4>Diety</h4>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+<div class="row">
+  <div class="col-sm-12 text-right"><button mat-raised-button color="primary" (click)="createNewDiet()">Utwórz nową diete</button></div>
+</div>
       <div class="row">
         <table class="table table-striped">
           <thead>
@@ -79,37 +183,116 @@
             <th>Lp</th>
             <th>Utworzona przez</th>
             <th>Data utworzenia</th>
+            <th>Kalorie</th>
             <th></th>
             <th></th>
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let clientDiet of diets">
-            <td (click)="setDietId(clientDiet.id)">{{clientDiet.id}}</td>
-            <td (click)="setDietId(clientDiet.id)">{{clientDiet.createdBy}}</td>
-            <td (click)="setDietId(clientDiet.id)">{{clientDiet.creationTime}} </td>
-            <td><button class="btn btn-sm btn-danger" (click)="deleteDietModal.open()">Usuń</button></td>
+          <tr *ngFor="let clientDiet of diets" class="diet-row" [ngClass]="{'active-diet':clientDiet.id === newDietRef.dietId}">
+            <td (click)="setDietId(clientDiet.id)" [ngClass]="{'active-diet': clientDiet.id === newDietRef.dietId}">{{clientDiet.id}}</td>
+            <td (click)="setDietId(clientDiet.id)" [ngClass]="{'active-diet': clientDiet.id === newDietRef.dietId}">{{clientDiet.createdBy}}</td>
+            <td (click)="setDietId(clientDiet.id)" [ngClass]="{'active-diet': clientDiet.id === newDietRef.dietId}">{{clientDiet.creationTime}} </td>
+            <td (click)="setDietId(clientDiet.id)" [ngClass]="{'active-diet': clientDiet.id === newDietRef.dietId}">{{clientDiet.kcal}} </td>
+            <td [ngClass]="{'active-diet':clientDiet.id === newDietRef.dietId}">
+              <button mat-raised-button color="warn" (click)="deleteDietModal.open()">Usuń</button>
+            </td>
+
+            <td [ngClass]="{'active-diet' :clientDiet.id === newDietRef.dietId}">
+              <button mat-raised-button color="primary" (click)="sendEmail(clientDiet.id)">Wyślij email</button>
+            </td>
             <modal #deleteDietModal>
-              <ng-template #modalHeader><h5 class="modal-title">Czy napewno chcesz usunąć dietę o id {{clientDiet.id}}?</h5></ng-template>
+              <ng-template #modalHeader><h5 class="modal-title">Czy napewno chcesz usunąć dietę o id {{clientDiet.id}}
+                ?</h5></ng-template>
               <ng-template #modalFooter>
-                <button type="button" class="btn btn-success btn-sm" data-dismiss="modal" (click)="deleteDiet(clientDiet.id)">Usuń</button>
-                <button type="button" class="btn btn-danger btn-sm" (click)="deleteDietModal.close()">Anuluj</button>
+                <button  mat-raised-button color="primary" data-dismiss="modal"
+                        (click)="deleteDiet(clientDiet.id)">Usuń
+                </button>
+                <button mat-raised-button color="warn" (click)="deleteDietModal.close()">Anuluj</button>
               </ng-template>
             </modal>
-            <td><button class="btn btn-sm btn-info" (click)="sendEmail(clientDiet.id)">Wyślij email</button></td>
           </tr>
           </tbody>
         </table>
       </div>
-      <app-new-diet #newDietRef (refreshDietsEvent)="loadClientDiets()" [clientId]="route.snapshot.params['id']" [dietId]="dietIdToModify" [oldDiets]="diets"></app-new-diet>
-    </div>
-  </div>
-</div>
+      <app-new-diet #newDietRef (refreshDietsEvent)="loadClientDiets()" [clientNo]="route.snapshot.params['clientNo']" [oldDiets]="diets"></app-new-diet>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <h4>Treningi</h4>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="row">
+        <div class="col-sm-12">
+          Under Construction - Be Patient
+        </div>
+      </div>
+    </mat-expansion-panel>
+</mat-accordion>
 
 <modal #saveClientModal>
   <ng-template #modalHeader><h5 class="modal-title">Czy napewno chcesz zapisać klienta?</h5></ng-template>
   <ng-template #modalFooter>
-    <button type="button" class="btn btn-success btn-sm" data-dismiss="modal" (click)="modifyClient()">Zapisz</button>
-    <button type="button" class="btn btn-danger btn-sm" (click)="saveClientModal.close()">Anuluj</button>
+    <button type="button" mat-raised-button color="primary" data-dismiss="modal" (click)="commitNewVersion()">Zapisz</button>
+    <button type="button" mat-raised-button color="warn" (click)="saveClientModal.close()">Anuluj</button>
   </ng-template>
 </modal>
+
+  <div class="box" [ngClass]="{'box-show': leftBoxShow === true}">
+    <div class="box__content">
+      <div class="box__title" (click)="leftBoxShow = !leftBoxShow">Podejrzyj</div>
+      <div class="box__description">
+        <form class="example-form">
+          <mat-form-field class="example-full-width">
+            <input type="text" placeholder="Nazwa produktu" aria-label="Number" matInput [formControl]="leftProductsForm" [matAutocomplete]="autoLeft" (change)="leftProductValueChange()">
+            <mat-autocomplete autoActiveFirstOption #autoLeft="matAutocomplete">
+              <mat-option *ngFor="let product of leftFilteredProducts | async" [value]="product">
+                {{product}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </form>
+        <app-product *ngIf="leftProduct != null" [productInput]="leftProduct"></app-product>
+        <div *ngIf="leftProduct != null" class="row">
+          <div class="col-sm-12">
+        Białko: {{leftProduct.protein}} <span *ngIf="rightProduct != null"> / {{rightProduct.protein}}</span><br />
+        Węglowodany: {{leftProduct.carbs}} <span *ngIf="rightProduct != null"> / {{rightProduct.carbs}}</span><br />
+        Tłuszcze: {{leftProduct.fat}} <span *ngIf="rightProduct != null"> / {{rightProduct.fat}}</span><br />
+        Kalorie: {{leftProduct.kcal}} <span *ngIf="rightProduct != null"> / {{rightProduct.kcal}}</span><br />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box box--right" [ngClass]="{'box--right-show': rightBoxShow === true}">
+  <div class="box__content">
+    <div class="box__title" (click)="rightBoxShow = !rightBoxShow">Podejrzyj</div>
+    <div class="box__description">
+      <form class="example-form">
+        <mat-form-field class="example-full-width">
+          <input type="text" placeholder="Nazwa produktu" aria-label="Number" matInput [formControl]="rightProductsForm" [matAutocomplete]="autoRight" (change)="rightProductValueChange()">
+          <mat-autocomplete autoActiveFirstOption #autoRight="matAutocomplete">
+            <mat-option *ngFor="let product of rightFilteredProducts | async" [value]="product">
+              {{product}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </form>
+      <app-product *ngIf="rightProduct != null" [productInput]="rightProduct"></app-product>
+      <div *ngIf="rightProduct != null" class="row">
+        <div class="col-sm-12">
+          Białko: {{rightProduct.protein}} <span *ngIf="leftProduct != null"> / {{leftProduct.protein}}</span> <br />
+          Węglowodany: {{rightProduct.carbs}} <span *ngIf="leftProduct != null"> / {{leftProduct.carbs}}</span> <br />
+          Tłuszcze: {{rightProduct.fat}} <span *ngIf="leftProduct != null"> / {{leftProduct.fat}}</span><br />
+          Kalorie: {{rightProduct.kcal}} <span *ngIf="leftProduct != null"> / {{leftProduct.kcal}}</span><br />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+

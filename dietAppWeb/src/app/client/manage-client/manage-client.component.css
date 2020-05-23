@@ -1,3 +1,46 @@
 .row-product{
   cursor: pointer;
 }
+
+.navigate-angle
+{
+  padding: 20px;
+}
+
+.navigate-angle:hover
+{
+  padding: 20px;
+  color: red;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.page-item
+{
+  cursor: pointer;
+  color: blue;
+}
+
+th
+{
+  cursor: default;
+}
+
+tr
+{
+  cursor: pointer;
+}
+
+.activate-sorting
+{
+  color: red;
+  font-size: larger;
+  font-weight: bolder;
+}
+
+.client-row:hover
+{
+  background: #ffe419;
+}
+
+

@@ -14,7 +14,16 @@ import {AngularFontAwesomeModule} from 'angular-font-awesome';
 import {AngularFileUploaderModule} from 'angular-file-uploader';
 import {DndModule, DraggableComponent, DraggableHandleComponent} from 'ng2-dnd';
 import {AppComponent} from '../app.component';
-import {ModalModule} from "angular-custom-modal";
+import {ModalModule} from 'angular-custom-modal';
+import {ChartsModule} from 'ng2-charts';
+import {
+  MatButtonModule,
+  MatCheckboxModule,
+  MatInputModule,
+  MatOptionModule,
+  MatSelectModule,
+  MatTableModule
+} from '@angular/material';
 
 
 @NgModule({
@@ -26,7 +35,14 @@ import {ModalModule} from "angular-custom-modal";
     AngularFontAwesomeModule,
     AngularFileUploaderModule,
     DndModule.forRoot(),
-    ModalModule
+    ModalModule,
+    ChartsModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    MatInputModule,
+    MatSelectModule,
+    MatOptionModule,
+    MatTableModule
   ],
   bootstrap: [AppComponent],
   providers: [CanActivateAuthGuard],

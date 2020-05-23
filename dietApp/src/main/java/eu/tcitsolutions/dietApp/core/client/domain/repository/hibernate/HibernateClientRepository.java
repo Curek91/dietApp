@@ -1,47 +1,35 @@
 package eu.tcitsolutions.dietApp.core.client.domain.repository.hibernate;
 
+import eu.tcitsolutions.dietApp.core.client.domain.dto.ClientDTO;
 import eu.tcitsolutions.dietApp.core.client.domain.entity.Client;
 import eu.tcitsolutions.dietApp.core.client.domain.repository.ClientRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+
 import java.util.List;
 
 @Repository
-public class HibernateClientRepository implements ClientRepository {
-
-    @PersistenceContext
-    private EntityManager entityManager;
+interface HibernateClientRepository extends ClientRepository, JpaRepository<Client, Long> {
 
     @Override
-    public List<Client> getClients() {
-        String hql = "select c from client c";
-        return (List<Client>) entityManager.createQuery(hql).getResultList();
-    }
+    List<Client> findClientsByClientNo(@Param("client_no") Long clientNo);
 
     @Override
-    public Client getClient(Long id) {
-        return entityManager.find(Client.class, id);
-    }
+    @Query(value="select c from client c where c.id in (select max(c2.id) from client c2 group by c2.clientNo)")
+    Page<Client> findNewestClients(Pageable pageable);
 
     @Override
-    public void save(Client client) {
-        entityManager.persist(client);
-    }
+    @Query(value="select c from client c where (c.firstname like concat('%', :firstname, '%') or c.lastname like concat('%', :lastname, '%')) and c.id in (select max(c2.id) from client c2 group by c2.clientNo)")
+    Page<Client> findNewestClientsByFirstnameContainsOrLastnameContains(String firstname, String lastname, Pageable pageable);
 
-    @Override
-    public void delete(Client client) {
-        entityManager.remove(client);
-    }
+    Client findFirstByClientNoOrderByIdDesc(Long clientNo);
 
-    @Override
-    public void delete(Long id) {
-        entityManager.remove(entityManager.find(Client.class, id));
-    }
+    @Query(nativeQuery = true, value="select nextval('client_no_seq')")
+    Long getClientSeqNoNextVal();
 
-    @Override
-    public void update(Client client) {
-        entityManager.merge(client);
-    }
-
+    Page<Client> findClientsByFirstnameContainsOrLastnameContains(@Param("firstname") String firstname, @Param("lastname") String lastname, Pageable pageable);
 }

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import {Product} from "../models/Product";
 import {DietService} from "../diet.service";
 import {AuthService} from "../../auth/auth.service";
@@ -8,7 +8,7 @@ import {AuthService} from "../../auth/auth.service";
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.css']
 })
-export class ProductComponent implements OnInit {
+export class ProductComponent implements OnInit, OnChanges {
   @Input() productInput: Product;
 
   imageToShow: any;
@@ -17,6 +17,10 @@ export class ProductComponent implements OnInit {
   constructor(private dietService: DietService) { }
 
   ngOnInit() {
+
+  }
+
+  ngOnChanges() {
     this.getImageFromService(this.productInput.id);
   }
 

@@ -10,6 +10,7 @@ import {AuthService} from "../../auth/auth.service";
 })
 export class ProductOnDietComponent implements OnInit {
   @Input() productInput: Product;
+  @Input() disable: boolean;
 
   imageToShow: any;
   isImageLoading: boolean;
