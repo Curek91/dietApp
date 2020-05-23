@@ -160,13 +160,15 @@ export class ShowClientComponent implements OnInit {
     });
   }
 
+  convertDateUsingTimezone(date: Date): Date{
+    return new Date(Date.UTC(date.getFullYear(), date.getUTCMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds()));
+  }
 
   loadClientVersions() {
     const clientNo = +this.route.snapshot.params['clientNo'];
     let clientTemp: Client;
     this.clientService.getClientVersions(clientNo).subscribe((clientVersions) => {
       this.clientVersions = [];
-      console.log(clientVersions);
       clientVersions.forEach((client) => {
         clientTemp = {
           clientNo: client.clientNo,
@@ -181,7 +183,7 @@ export class ShowClientComponent implements OnInit {
           chest: client.chest,
           waist: client.waist,
           thigh: client.thigh,
-          date: client.date
+          date: this.convertDateUsingTimezone(new Date(client.date))
         };
         this.clientVersions.push(clientTemp);
       });
@@ -206,7 +208,7 @@ export class ShowClientComponent implements OnInit {
     ];
     this.lineChartLabels.length = 0;
     for (let i = 0; i < clients.length; i++) {
-      this.lineChartLabels.push(new Date(clients[i].date).toUTCString());
+      this.lineChartLabels.push(this.convertDateUsingTimezone(new Date(clients[i].date)).toLocaleDateString());
     }
   }
 
@@ -222,7 +224,7 @@ export class ShowClientComponent implements OnInit {
     this.clientForm.get('chest').setValue(this.clientVersions[version].chest);
     this.clientForm.get('waist').setValue(this.clientVersions[version].waist);
     this.clientForm.get('thigh').setValue(this.clientVersions[version].thigh);
-    this.clientForm.get('date').setValue(new Date(this.clientVersions[version].date).toUTCString());
+    this.clientForm.get('date').setValue(this.clientVersions[version].date);
   }
 
   changeClientVersion(version: number) {

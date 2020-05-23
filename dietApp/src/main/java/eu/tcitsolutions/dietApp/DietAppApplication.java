@@ -20,6 +20,6 @@ public class DietAppApplication {
     @PostConstruct
     void started() {
         // set JVM timezone as UTC
-        TimeZone.setDefault(TimeZone.getTimeZone("Europe/Warsaw+"));
+        //TimeZone.setDefault(TimeZone.getTimeZone("Europe/Warsaw+"));
     }
 }

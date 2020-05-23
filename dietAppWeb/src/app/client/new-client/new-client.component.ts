@@ -49,7 +49,7 @@ export class NewClientComponent implements OnInit {
       height: +this.clientForm.value['height'],
       email: this.clientForm.value['email'].toString(),
       telephone: this.clientForm.value['telephone'].toString(),
-      biceps: +this.clientForm.value['height'],
+      biceps: +this.clientForm.value['biceps'],
       chest: +this.clientForm.value['chest'],
       waist: +this.clientForm.value['waist'],
       thigh: +this.clientForm.value['thigh'],
