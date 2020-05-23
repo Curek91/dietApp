@@ -139,7 +139,7 @@ export class ShowClientComponent implements OnInit {
       chest: +this.clientForm.value['chest'],
       waist: +this.clientForm.value['waist'],
       thigh: +this.clientForm.value['thigh'],
-      date: null
+      date: this.clientForm.value['date']
     };
     return client;
   }
@@ -168,7 +168,6 @@ export class ShowClientComponent implements OnInit {
       this.clientVersions = [];
       console.log(clientVersions);
       clientVersions.forEach((client) => {
-
         clientTemp = {
           clientNo: client.clientNo,
           firstname: client.firstname,

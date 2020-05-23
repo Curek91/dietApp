@@ -19,6 +19,12 @@
             </mat-form-field>
           </div>
           <div class="col-sm-4 align-self-end ">
+            <mat-form-field>
+              <mat-label>Data</mat-label>
+              <input matInput [matDatepicker]="picker" formControlName="date">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
           </div>
         </div>
         <div class="row form-group">
@@ -89,6 +95,9 @@
 </mat-expansion-panel>
 </mat-accordion>
 
+  <pre>
+    {{clientJson | json}}
+  </pre>
 
 <modal #createClientModal>
   <ng-template #modalHeader><h5 class="modal-title">Czy napewno chcesz utworzyć klienta?</h5></ng-template>

@@ -11,6 +11,7 @@ import {Client} from '../models/Client';
 })
 export class NewClientComponent implements OnInit {
 
+
   clientForm: FormGroup;
   showInfo: boolean;
 
@@ -52,7 +53,7 @@ export class NewClientComponent implements OnInit {
       chest: +this.clientForm.value['chest'],
       waist: +this.clientForm.value['waist'],
       thigh: +this.clientForm.value['thigh'],
-      date: null
+      date: this.clientForm.value['date']
     };
     return client;
   }

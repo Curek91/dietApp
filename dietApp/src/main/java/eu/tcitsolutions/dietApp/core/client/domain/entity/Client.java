@@ -1,5 +1,6 @@
 package eu.tcitsolutions.dietApp.core.client.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import eu.tcitsolutions.dietApp.core.common.entity.BaseLogEntity;
 import eu.tcitsolutions.dietApp.core.diet.domain.entity.Diet;
 import eu.tcitsolutions.dietApp.core.diet.domain.entity.Meal;
@@ -13,6 +14,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Set;
 
 @Entity(name = "client")
@@ -39,11 +42,12 @@ public class Client extends BaseLogEntity implements Serializable {
     private Integer chest;
     private Integer waist;
     private Integer thigh;
+    private LocalDateTime date;
 
     public Client() {
     }
 
-    public Client(String firstname, String lastname, Integer age, Float weight, Integer height, String email, String telephone, Integer biceps, Integer chest, Integer waist, Integer thigh, Long clientNo) {
+    public Client(String firstname, String lastname, Integer age, Float weight, Integer height, String email, String telephone, Integer biceps, Integer chest, Integer waist, Integer thigh, Long clientNo, LocalDateTime date) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.age = age;
@@ -56,6 +60,7 @@ public class Client extends BaseLogEntity implements Serializable {
         this.waist = waist;
         this.thigh = thigh;
         this.clientNo = clientNo;
+        this.date = date;
     }
 
     public Long getId() {
@@ -160,5 +165,13 @@ public class Client extends BaseLogEntity implements Serializable {
 
     public void setThigh(Integer thigh) {
         this.thigh = thigh;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
     }
 }

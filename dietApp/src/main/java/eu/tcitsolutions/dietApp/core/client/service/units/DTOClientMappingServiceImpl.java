@@ -36,7 +36,7 @@ public class DTOClientMappingServiceImpl implements DTOClientMappingService{
                 source.getChest(),
                 source.getWaist(),
                 source.getThigh(),
-                source.getCreationTime(),
+                source.getDate(),
                 source.getClientNo());
     }
 
@@ -53,6 +53,7 @@ public class DTOClientMappingServiceImpl implements DTOClientMappingService{
                 source.getChest(),
                 source.getWaist(),
                 source.getThigh(),
-                source.getClientNo());
+                source.getClientNo(),
+                source.getDate());
     }
 }

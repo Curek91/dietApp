@@ -18,7 +18,7 @@ import {
   MatCheckboxModule,
   MatDividerModule,
   MatInputModule,
-  MatAutocompleteModule
+  MatAutocompleteModule, MatDatepickerModule, MatNativeDateModule
 } from '@angular/material';
 
 @NgModule({
@@ -37,7 +37,9 @@ import {
     MatInputModule,
     MatDividerModule,
     MatExpansionModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   exports: [MatButtonModule, MatCheckboxModule],
   declarations: [ManageClientComponent, NewClientComponent, ShowClientComponent, ClientFilterPipe]
