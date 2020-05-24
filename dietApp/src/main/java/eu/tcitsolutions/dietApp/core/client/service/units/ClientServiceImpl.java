@@ -5,7 +5,9 @@ import eu.tcitsolutions.dietApp.core.client.domain.entity.Client;
 import eu.tcitsolutions.dietApp.core.client.domain.repository.ClientRepository;
 import eu.tcitsolutions.dietApp.core.client.service.ClientService;
 import eu.tcitsolutions.dietApp.core.client.service.DTOClientMappingService;
+import eu.tcitsolutions.dietApp.core.diet.domain.repository.DietRepository;
 import eu.tcitsolutions.dietApp.core.diet.service.DTOMappingService;
+import eu.tcitsolutions.dietApp.core.diet.service.DietService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,10 +22,12 @@ import java.util.stream.Collectors;
 public class ClientServiceImpl implements ClientService {
 
     private ClientRepository clientRepository;
+    private DietRepository dietRepository;
     private DTOClientMappingService dtoClientMappingService;
 
-    public ClientServiceImpl(ClientRepository clientRepository, DTOClientMappingService dtoClientMappingService){
+    public ClientServiceImpl(ClientRepository clientRepository, DietRepository dietRepository, DTOClientMappingService dtoClientMappingService){
         this.clientRepository = clientRepository;
+        this.dietRepository = dietRepository;
         this.dtoClientMappingService = dtoClientMappingService;
     }
 
@@ -57,6 +61,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public void removeClient(Long clientNo) {
+        dietRepository.findDietsByClient_ClientNo(clientNo).stream().forEach((diet) -> dietRepository.deleteById(diet.getId()));
         clientRepository.findClientsByClientNo(clientNo).stream().forEach((c) -> clientRepository.deleteById(c.getId()));
     }
 
