@@ -164,7 +164,7 @@
             <div class="col-sm-8" *ngIf="dietView === 'images'">
               <div class="row">
                 <div *ngFor="let productOnMeal of mealOnDiet.products; let i = index" class="col-sm-4">
-                  <app-product-on-diet [productInput]="productOnMeal"
+                  <app-product-on-diet [productInput]="productOnMeal" [disable]="false"
                                        (dblclick)="deleteFromMeal(i)"></app-product-on-diet>
                 </div>
               </div>

@@ -33,7 +33,7 @@
 
 .diet-row:hover
 {
-  background: burlywood;
+  background: #ffe419;
 }
 
 .accordion-title
@@ -56,7 +56,7 @@
 
 .active-diet
 {
-  background: aquamarine;
+  background: #ff9518;
 }
 
 .example-form {

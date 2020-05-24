@@ -20,6 +20,8 @@ export class ProductOnDietComponent implements OnInit {
   ngOnInit() {
     console.log(this.productInput.id);
     this.getImageFromService(this.productInput.id);
+    console.log('disable');
+    console.log(this.disable);
   }
 
   createImageFromBlob(image: Blob) {
