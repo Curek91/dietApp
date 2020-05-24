@@ -44,11 +44,15 @@ export class ProductOnDietComponent implements OnInit {
     });
   }
 
-  getTooltipText(product: Product): String {
-    return 'Białko: ' + product.protein * (product.weight / 100)  + 'g\n' +
-      'Węglowodany: ' + product.carbs * (product.weight / 100)  + 'g\n' +
+  getTooltipText(product: Product): string {
+    return 'Białko: ' + product.protein * (product.weight / 100)  + 'g \n' +
+      'Węglowodany: ' + product.carbs * (product.weight / 100)  + 'g\n'  +
       'Tłuszcze: ' + product.fat * (product.weight / 100)  + 'g\n' +
       'Kalorie: ' + product.kcal * (product.weight / 100);
+  }
+
+  getMoreInformation(): string {
+    return 'Address : Home \n  Tel : Number';
   }
 
 

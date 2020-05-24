@@ -22,7 +22,7 @@ import {
   MatInputModule,
   MatOptionModule,
   MatSelectModule, MatSnackBarModule,
-  MatTableModule
+  MatTableModule, MatTooltipModule
 } from '@angular/material';
 
 
@@ -43,7 +43,8 @@ import {
     MatSelectModule,
     MatOptionModule,
     MatTableModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatTooltipModule
   ],
   bootstrap: [AppComponent],
   providers: [CanActivateAuthGuard],
