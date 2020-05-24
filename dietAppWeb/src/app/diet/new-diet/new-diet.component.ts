@@ -12,6 +12,7 @@ import {MealToSend} from '../models/MealToSend';
 import {ProductToSend} from '../models/ProductToSend';
 import {ChartDataSets, MultiDataSet, Label, ChartType, ChartOptions, Chart} from 'chart.js';
 import 'chartjs-plugin-datalabels';
+import {MatSnackBar} from "@angular/material";
 
 
 export interface PeriodicElement {
@@ -67,7 +68,7 @@ export class NewDietComponent implements OnInit {
 
   doughnutChartType: ChartType = 'pie';
 
-  constructor(private dietService: DietService) {
+  constructor(private dietService: DietService, private _snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
@@ -128,11 +129,13 @@ export class NewDietComponent implements OnInit {
     const prod: Product = new Product(product);
     prod.weight = null;
     this.diet.meals[this.activeMeal - 1].products.push(prod);
+    this.openSnackBar('Produkt ' + prod.name + ' został dodany do posiłku: ' + this.activeMeal, 'Proudkt dodany');
   }
 
   moveToMeal($event: any, id: number) {
     const prod: Product = new Product($event.dragData);
     this.diet.meals[id - 1].products.push(prod);
+    this.openSnackBar('Produkt ' + prod.name + ' został dodany do posiłku: ' + id, 'Proudkt dodany');
   }
 
   addMeal(): void {
@@ -149,6 +152,7 @@ export class NewDietComponent implements OnInit {
       this.activeMeal = this.activeMeal + 1;
       this.diet.meals.sort((n1, n2) => (n1.mealNo - n2.mealNo));
     }
+    this.openSnackBar('Dodano posiłek numer ' + this.activeMeal, 'Posiłek');
   }
 
   deleteFromMeal(index: number): void {
@@ -168,6 +172,7 @@ export class NewDietComponent implements OnInit {
     if (active === this.diet.meals.length + 1) {
       this.activeMeal -= 1;
     }
+    this.openSnackBar('Usunięto posiłek numer ' + active, 'Posiłek');
   }
 
   setActiveMeal(id: number) {
@@ -317,4 +322,9 @@ export class NewDietComponent implements OnInit {
     }
   }
 
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 2000,
+    });
+  }
 }

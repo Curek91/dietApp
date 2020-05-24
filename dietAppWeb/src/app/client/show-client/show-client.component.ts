@@ -12,7 +12,7 @@ import {DietService} from '../../diet/diet.service';
 import {NewDietComponent} from '../../diet/new-diet/new-diet.component';
 import {ModalComponent, ModalModule} from 'angular-custom-modal';
 import {ChartDataSets, ChartOptions} from 'chart.js';
-import {MatSlider} from '@angular/material';
+import {MatSlider, MatSnackBar} from '@angular/material';
 import {Observable} from "rxjs";
 import {map, startWith} from "rxjs/operators";
 import {Product} from "../../diet/models/Product";
@@ -67,7 +67,8 @@ export class ShowClientComponent implements OnInit {
               private clientService: ClientService,
               private dietService: DietService,
               private router: Router,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.loadProducts();
@@ -254,6 +255,7 @@ export class ShowClientComponent implements OnInit {
   createNewDiet(): void {
     this.newDietRef.dietId = null;
     this.newDietRef.clearNewDiet();
+    this.openSnackBar('Tworzysz nową dietę', 'Dieta');
   }
 
   sendEmail(dietId: number) {
@@ -281,6 +283,7 @@ export class ShowClientComponent implements OnInit {
         this.loadClientVersions();
         this.clientForm.disable();
         this.saveClientModal.close();
+        this.openSnackBar('Nowa wersja klienta została utworzona', 'Klient');
       }
     );
   }
@@ -317,4 +320,12 @@ export class ShowClientComponent implements OnInit {
       this.rightProduct = new Product(product);
     });
   }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 2000,
+    });
+  }
 }
+
+

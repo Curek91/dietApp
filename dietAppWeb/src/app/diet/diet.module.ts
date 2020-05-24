@@ -21,7 +21,7 @@ import {
   MatCheckboxModule,
   MatInputModule,
   MatOptionModule,
-  MatSelectModule,
+  MatSelectModule, MatSnackBarModule,
   MatTableModule
 } from '@angular/material';
 
@@ -42,7 +42,8 @@ import {
     MatInputModule,
     MatSelectModule,
     MatOptionModule,
-    MatTableModule
+    MatTableModule,
+    MatSnackBarModule
   ],
   bootstrap: [AppComponent],
   providers: [CanActivateAuthGuard],
