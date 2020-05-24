@@ -161,7 +161,7 @@ export class ShowClientComponent implements OnInit {
     });
   }
 
-  convertDateUsingTimezone(date: Date): Date{
+  convertDateUsingTimezone(date: Date): Date {
     return new Date(Date.UTC(date.getFullYear(), date.getUTCMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds()));
   }
 
