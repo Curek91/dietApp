@@ -20,6 +20,7 @@ import {
   MatInputModule,
   MatAutocompleteModule, MatDatepickerModule, MatNativeDateModule, MatSnackBarModule
 } from '@angular/material';
+import {ClientService} from "./client.service";
 
 @NgModule({
   imports: [

@@ -113,4 +113,11 @@ public class ClientController {
         PagedResources<Client> pr = assembler.toResource(clientService.getNewestClientsByFirstnameContainsOrLastnameContains(page, ""), new Link(ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString()).withRel("example"));
         return ResponseEntity.ok(pr);
     }
+
+    @GetMapping(value = "clients/newestByClientNo/{clientNo}")
+    public ResponseEntity<Client> newestClientByClientNo(@PathVariable Long clientNo) {
+        Client client = clientService.getNewestClientVersion(clientNo);
+        return new ResponseEntity<>(client, HttpStatus.OK);
+    }
+
 }

@@ -61,4 +61,8 @@ export class ClientService {
     return this.http.get<Diet[]>(this.apiUrl + 'diets/byClientNo/' + clientNo, {headers: this.headers});
   }
 
+  getClientNewestVersion(clientNo: number): Observable<Client> {
+    return this.http.get<Client>(this.apiUrl + 'clients/newestByClientNo/' + clientNo, {headers: this.headers});
+  }
+
 }

@@ -12,28 +12,8 @@ import {MealToSend} from '../models/MealToSend';
 import {ProductToSend} from '../models/ProductToSend';
 import {ChartDataSets, MultiDataSet, Label, ChartType, ChartOptions, Chart} from 'chart.js';
 import 'chartjs-plugin-datalabels';
-import {MatSnackBar} from "@angular/material";
-
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-];
+import {MatSnackBar} from '@angular/material';
+import * as xlsx from 'xlsx';
 
 @Component({
   selector: 'app-new-diet',
@@ -41,9 +21,6 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./new-diet.component.css']
 })
 export class NewDietComponent implements OnInit {
-
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = ELEMENT_DATA;
 
   @Input() clientNo: number;
   @Input() dietId: number;
@@ -65,10 +42,9 @@ export class NewDietComponent implements OnInit {
   oldDiet: Diet;
   dietView: string;
   productsView: string;
-
   doughnutChartType: ChartType = 'pie';
 
-  constructor(private dietService: DietService, private _snackBar: MatSnackBar) {
+  constructor(private dietService: DietService, private _snackBar: MatSnackBar, private clientService: ClientService) {
   }
 
   ngOnInit() {
@@ -223,7 +199,6 @@ export class NewDietComponent implements OnInit {
           });
         });
         this.diet = diet;
-        this.diet.createdBy
         this.activeMeal = 1;
       }
     );
@@ -325,6 +300,44 @@ export class NewDietComponent implements OnInit {
   openSnackBar(message: string, action: string) {
     this._snackBar.open(message, action, {
       duration: 2000,
+    });
+  }
+
+  exportExcel(): void {
+    const workBook = xlsx.utils.book_new();
+    let workBookName = '';
+    const workSheetName = 'Dieta';
+    let productsTable: String[] = new Array();
+    let supplementsTable: String[] = new Array();
+    const xlsxDiet: any[][] = new Array();
+
+    xlsxDiet.push(['Posiłki', 'Dni treningowe', 'Suplementy']);
+    this.diet.meals.forEach(meal => {
+      productsTable = meal.products.map(p => p.weight + 'g - ' + p.name);
+      supplementsTable = meal.suplements.split('\n');
+
+      for (let i = 0; i < Math.max(productsTable.length, supplementsTable.length); i++) {
+        if (i === 0) {
+          xlsxDiet.push([meal.mealNo.toString() + '.', productsTable[i], supplementsTable[i]]);
+        } else {
+          xlsxDiet.push([null, productsTable[i], supplementsTable[i]]);
+        }
+      }
+      xlsxDiet.push([null, null, null]);
+    });
+    const workSheet = xlsx.utils.aoa_to_sheet(xlsxDiet);
+
+    workSheet['!cols'] = [
+      {wch: 15},
+      {wch: 30},
+      {wch: 30},
+      {wch: 30}
+    ];
+    xlsx.utils.book_append_sheet(workBook, workSheet, workSheetName);
+
+    this.clientService.getClientNewestVersion(this.clientNo).subscribe((client) => {
+      workBookName = client.firstname + ' ' + client.lastname + ' - ' + this.getValuesForDiet(this.diet, 'kcal') + ' kcal.xlsx';
+      xlsx.writeFile(workBook, workBookName);
     });
   }
 }

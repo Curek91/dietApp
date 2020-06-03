@@ -18,12 +18,14 @@ import {ModalModule} from 'angular-custom-modal';
 import {ChartsModule} from 'ng2-charts';
 import {
   MatButtonModule,
-  MatCheckboxModule,
+  MatCheckboxModule, MatIconModule,
   MatInputModule,
   MatOptionModule,
   MatSelectModule, MatSnackBarModule,
   MatTableModule, MatTooltipModule
 } from '@angular/material';
+import {ClientModule} from '../client/client.module';
+import {ClientService} from "../client/client.service";
 
 
 @NgModule({
@@ -44,10 +46,11 @@ import {
     MatOptionModule,
     MatTableModule,
     MatSnackBarModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatIconModule,
   ],
   bootstrap: [AppComponent],
-  providers: [CanActivateAuthGuard],
+  providers: [CanActivateAuthGuard, ClientService],
   exports: [NewDietComponent, ProductComponent, ManageProductComponent],
   declarations: [NewDietComponent,
     ProductComponent,

@@ -283,6 +283,10 @@
                       (click)="updateDietModal.open()" mat-raised-button color="primary"
                       class=" addDietBtn text-right">Aktualizuj diete
               </button>
+              <button *ngIf="diet.meals && diet.meals.length > 0"
+                      (click)="exportExcel()" mat-raised-button color="primary"
+                      class="addDietBtn text-right">Pobierz plik excel
+              </button>
             </div>
           </div>
         </div>
