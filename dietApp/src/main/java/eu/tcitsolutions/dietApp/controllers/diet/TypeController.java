@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import java.util.List;
 
 @CrossOrigin(origins = "${cors.host}")
@@ -21,12 +22,14 @@ public class TypeController {
         this.typeService = typeService;
     }
 
+    @RolesAllowed({"ROLE_TRAINER"})
     @GetMapping(value = "/types", params = {"!sort", "!page", "!size"})
     public ResponseEntity<List<Type>> types(){
         List<Type> types = typeService.getTypes();
         return ResponseEntity.ok(types);
     }
 
+    @RolesAllowed({"ROLE_TRAINER"})
     @GetMapping(value = "/types/{id}")
     public
     ResponseEntity<Type> getType(@PathVariable Long id){

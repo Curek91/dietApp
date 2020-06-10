@@ -29,7 +29,7 @@ insert into product (id,created_by,creation_timestamp,modification_timestamp,mod
 insert into product (id,created_by,creation_timestamp,modification_timestamp,modified_by,carbs,fat,kcal,name,protein,type_id) values (nextval('product_seq'),'Curek','2019-06-29 18:55:34.692','2019-06-29 18:55:43.376','Curek',0,3,112,'Wolowina polędwica',20,1);
 
 -- login user admin admin
-INSERT INTO loginuser(
+/*INSERT INTO loginuser(
             id, created_by, creation_timestamp, modification_timestamp, modified_by,
             email, enabled, firstname, lastpasswordresetdate, lastname,
             password, username)
@@ -43,7 +43,7 @@ INSERT INTO loginuser(
             password, username)
     VALUES (nextval('loginuser_seq'), 'Curek', now(), now(), 'Curek',
             'Curek', true, 'Curek', now(), 'Curek',
-            '$2a$08$lDnHPz7eUkSi6ao14Twuau08mzhWrL4kyZGGU5xfiGALO/Vxd5DOi', 'Curek');
+            '$2a$08$lDnHPz7eUkSi6ao14Twuau08mzhWrL4kyZGGU5xfiGALO/Vxd5DOi', 'Curek');*/
 
 
 -- create sequences
@@ -51,8 +51,8 @@ DROP sequence IF EXISTS client_no_seq;
 CREATE SEQUENCE IF NOT EXISTS client_no_seq INCREMENT 5 START 100;
 
 -- clients sqls
-/*insert into client (id,client_no,created_by,creation_timestamp,modification_timestamp,modified_by,age,email,firstname,height,lastname,telephone,weight,biceps,chest,waist,thigh) values (nextval('client_seq'),nextval('client_no_seq'),'Curek','2019-06-29 19:29:19.799','2019-06-29 19:29:19.796','',27,'tomasz.cur.91@gmail.com','Tomasz',163,'Cur','796455725',68,40,105,85,60);
-insert into client (id,client_no,created_by,creation_timestamp,modification_timestamp,modified_by,age,email,firstname,height,lastname,telephone,weight,biceps,chest,waist,thigh) values (nextval('client_seq'),nextval('client_no_seq'),'Curek','2019-06-29 19:29:19.799','2019-06-29 19:29:19.796','',27,'tomasz.cur.91@gmail.com','Rafał',180,'Czerski','796455725',68,40,105,85,60);
+insert into client (id,client_no,created_by,creation_timestamp,modification_timestamp,modified_by,age,email,firstname,height,lastname,telephone,weight,biceps,chest,waist,thigh) values (nextval('client_seq'),nextval('client_no_seq'),'Curek','2019-06-29 19:29:19.799','2019-06-29 19:29:19.796','',27,'tomasz.cur.91@gmail.com','Tomasz',163,'Cur','796455725',68,40,105,85,60);
+/*insert into client (id,client_no,created_by,creation_timestamp,modification_timestamp,modified_by,age,email,firstname,height,lastname,telephone,weight,biceps,chest,waist,thigh) values (nextval('client_seq'),nextval('client_no_seq'),'Curek','2019-06-29 19:29:19.799','2019-06-29 19:29:19.796','',27,'tomasz.cur.91@gmail.com','Rafał',180,'Czerski','796455725',68,40,105,85,60);
 insert into client (id,client_no,created_by,creation_timestamp,modification_timestamp,modified_by,age,email,firstname,height,lastname,telephone,weight,biceps,chest,waist,thigh) values (nextval('client_seq'),nextval('client_no_seq'),'Curek','2019-06-29 19:29:19.799','2019-06-29 19:29:19.796','',27,'tomasz.cur.91@gmail.com','Przemek',175,'Marzęta','796455725',68,40,105,85,60);
 insert into client (id,client_no,created_by,creation_timestamp,modification_timestamp,modified_by,age,email,firstname,height,lastname,telephone,weight,biceps,chest,waist,thigh) values (nextval('client_seq'),nextval('client_no_seq'),'Curek','2019-06-29 19:29:19.799','2019-06-29 19:29:19.796','',27,'tomasz.cur.91@gmail.com','Bartosz',163,'Guz','796455725',68,40,105,85,60);
 insert into client (id,client_no,created_by,creation_timestamp,modification_timestamp,modified_by,age,email,firstname,height,lastname,telephone,weight,biceps,chest,waist,thigh) values (nextval('client_seq'),nextval('client_no_seq'),'Curek','2019-06-29 19:29:19.799','2019-06-29 19:29:19.796','',27,'tomasz.cur.91@gmail.com','Przemek',163,'Kosiorek','796455725',68,40,105,85,60);

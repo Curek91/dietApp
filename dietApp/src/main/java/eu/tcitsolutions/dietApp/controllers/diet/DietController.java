@@ -18,6 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import java.util.List;
 
 @CrossOrigin(origins = "${cors.host}")
@@ -30,6 +31,7 @@ public class DietController {
         this.dietService = dietService;
     }
 
+    @RolesAllowed({"ROLE_TRAINER"})
     @PostMapping(value="/diets/{clientNo}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public
     ResponseEntity<Diet> createDiet(@RequestBody DietDTO source, @PathVariable Long clientNo){
@@ -37,6 +39,7 @@ public class DietController {
         return ResponseEntity.ok(diet);
     }
 
+    @RolesAllowed({"ROLE_TRAINER"})
     @GetMapping(value = "/diets/byClientNo/{clientNo}")
     public
     ResponseEntity<List<DietDTO>> dietsByClientNoList(@PathVariable Long clientNo){
@@ -44,6 +47,7 @@ public class DietController {
         return ResponseEntity.ok(dietList);
     }
 
+    @RolesAllowed({"ROLE_TRAINER"})
     @GetMapping(value = "/diets/{id}")
     public @ResponseBody
     ResponseEntity<DietGetDietDTO> getDiet(@PathVariable Long id){
@@ -51,6 +55,7 @@ public class DietController {
         return ResponseEntity.ok(dietGetDietDTO);
     }
 
+    @RolesAllowed({"ROLE_TRAINER"})
     @PutMapping(value = "/diets/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public
     ResponseEntity<Diet> updateDiet(@RequestBody DietDTO source, @PathVariable("id") Long id){
@@ -58,6 +63,7 @@ public class DietController {
         return ResponseEntity.ok(diet);
     }
 
+    @RolesAllowed({"ROLE_TRAINER"})
     @DeleteMapping(value = "/diets/{id}")
     public ResponseEntity<String> deleteDiet(@PathVariable("id") Long id){
         dietService.removeDiet(id);
