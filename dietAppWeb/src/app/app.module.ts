@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {APP_INITIALIZER, CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 
 
 import { AppComponent } from './app.component';
@@ -20,6 +20,8 @@ import {CanActivateAuthGuard} from './can-activate.authguard';
 import {ClientModule} from './client/client.module';
 import {ClientRoutingModule} from './client/client-routing.module';
 import {AngularFontAwesomeModule} from 'angular-font-awesome';
+import {KeycloakAngularModule, KeycloakService} from 'keycloak-angular';
+import {initializer} from './app-init';
 
 
 @NgModule({
@@ -37,9 +39,20 @@ import {AngularFontAwesomeModule} from 'angular-font-awesome';
     DietRoutingModule,
     ClientRoutingModule,
     AuthModule,
-    AngularFontAwesomeModule
+    AngularFontAwesomeModule,
+    KeycloakAngularModule
   ],
-  providers: [DietService, AuthService, CanActivateAuthGuard],
-  bootstrap: [AppComponent]
+  providers: [
+    DietService,
+    AuthService,
+    CanActivateAuthGuard,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializer,
+      multi: true,
+      deps: [KeycloakService]
+    }],
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }

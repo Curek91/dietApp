@@ -1,6 +1,7 @@
 import {Component, ViewChild} from '@angular/core';
 import {AuthService} from './auth/auth.service';
 import {NavbarComponent} from './core-module/navbar/navbar.component';
+import {KeycloakService} from "keycloak-angular";
 
 @Component({
   selector: 'app-root',
@@ -8,17 +9,6 @@ import {NavbarComponent} from './core-module/navbar/navbar.component';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(private authService: AuthService) {
+  constructor() {
   }
-
-  @ViewChild('appNavbar') navbar: NavbarComponent;
-
-  ifLogged(): boolean {
-    if (this.authService.getToken()) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
 }

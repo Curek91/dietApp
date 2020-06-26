@@ -10,11 +10,10 @@ import {ManageClientComponent} from './client/manage-client/manage-client.compon
 import {ManageProductComponent} from "./diet/manage-product/manage-product.component";
 
 const APP_ROUTES: Route[] = [
-  {path: '', pathMatch: 'full', redirectTo: 'login'},
-  {path: 'login', component: LoginComponent},
-  {path: 'diet', component: NewDietComponent, canActivate: [CanActivateAuthGuard]},
-  {path: 'client', component: ManageClientComponent, canActivate: [CanActivateAuthGuard]},
-  {path: 'manage-products', component: ManageProductComponent, canActivate: [CanActivateAuthGuard]}
+  {path: '', pathMatch: 'full', redirectTo: 'client'},
+  {path: 'client', component: ManageClientComponent, canActivate: [CanActivateAuthGuard],  data: {
+      roles: ['TRAINER']
+    }}
 ];
 
 @NgModule({

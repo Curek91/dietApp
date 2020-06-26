@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../../auth/auth.service';
-import {Router} from "@angular/router";
+import {Router} from '@angular/router';
+import {KeycloakService} from "keycloak-angular";
 
 @Component({
   selector: 'app-navbar',
@@ -10,17 +11,15 @@ import {Router} from "@angular/router";
 export class NavbarComponent implements OnInit {
 
   username: String = '';
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(private keycloakService: KeycloakService, private router: Router) {
     this.username = '';
   }
 
   ngOnInit() {
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    this.username = currentUser && currentUser.username;
+    this.username = this.keycloakService.getUsername();
   }
 
   logout() {
-    this.authService.logout();
-    this.router.navigate(['login']);
+    this.keycloakService.logout('http://localhost:4200/client');
   }
 }
