@@ -10,10 +10,9 @@ import {Page} from './models/Page';
   providedIn: 'root'
 })
 export class ClientService {
-  private apiUrl: String = 'http://localhost:8091/';
+  private apiUrl: String = 'http://localhost:8080/dietApp-0.0.1-SNAPSHOT/';
   private headers = new HttpHeaders({
-    'Content-Type': 'application/json',
-    'Authorization': 'Bearer ' + this.authService.getToken()
+    'Content-Type': 'application/json'
   });
 
   constructor(private http: HttpClient, private authService: AuthService) {

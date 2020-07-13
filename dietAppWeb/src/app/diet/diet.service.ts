@@ -11,18 +11,15 @@ import {Client} from "../client/models/Client";
 @Injectable()
 export class DietService {
 
-  private apiUrl: String = 'http://localhost:8091/';
+  private apiUrl: String = 'http://localhost:8080/dietApp-0.0.1-SNAPSHOT/';
   private headers = new HttpHeaders({
-    'Content-Type': 'application/json',
-    'Authorization': 'Bearer ' + this.authService.getToken()
+    'Content-Type': 'application/json'
   });
   private headersDeleteDiet = new HttpHeaders({
-    'Content-Type': 'text',
-    'Authorization': 'Bearer ' + this.authService.getToken()
+    'Content-Type': 'text'
   });
   private headersImage = new HttpHeaders({
-    'Content-Type': 'image/jpeg',
-    'Authorization': 'Bearer ' + this.authService.getToken()
+    'Content-Type': 'image/jpeg'
   });
   constructor(private http: HttpClient, private authService: AuthService) {
   }

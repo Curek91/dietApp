@@ -7,7 +7,7 @@ import { Response } from '@angular/http';
   providedIn: 'root'
 })
 export class AuthService {
-  private authUrl = 'http://localhost:8091/auth';
+  private authUrl = 'http://localhost:8080/dietApp-0.0.1-SNAPSHOT/auth';
   private headers = new HttpHeaders({'Content-Type': 'application/json'});
   constructor(private http: HttpClient) {
   }
