@@ -1,0 +1,46 @@
+version: '3.7'
+services:
+  diet-keycloak:
+      image: diet-keycloak
+      container_name: diet-keycloak
+      command: ["-Djboss.socket.binding.port-offset=100"]
+      environment:
+        KEYCLOAK_USER: admin
+        KEYCLOAK_PASSWORD: admin
+      ports:
+        - 8180:8180
+      networks:
+        dietApp_internal:
+            aliases:
+              - diet-keycloak
+  diet-postgres-db:
+    image: postgres:10.13
+    volumes:
+    - postgresDietDb_data:/var/lib/postgresql/data
+    container_name: diet-postgres-db
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=dietdb
+      - POSTGRES_PASSWORD=dietdb
+      - POSTGRES_DB=dietdb
+    networks:
+      dietApp_internal:
+        aliases:
+          - diet-postgres-db
+  tomcat:
+    image: diet-tomcat
+    container_name: diet-tomcat
+    ports:
+      - 8080:8080
+    networks:
+      dietApp_internal:
+        aliases:
+          - diet-tomcat
+networks:
+  dietApp_internal:
+    name: $NETWORK_NAME
+volumes:
+  postgresDietDb_data:
+      driver: local
+      
