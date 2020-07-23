@@ -10,7 +10,7 @@ import {Page} from './models/Page';
   providedIn: 'root'
 })
 export class ClientService {
-  private apiUrl: String = 'http://localhost:8080/dietApp-0.0.1-SNAPSHOT/';
+  private apiUrl: String = 'http://localhost:8091/';
   private headers = new HttpHeaders({
     'Content-Type': 'application/json'
   });
