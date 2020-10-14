@@ -1,7 +1,7 @@
 version: '3.7'
 services:
   diet-keycloak:
-      image: diet-keycloak
+      image: curek91/diet-app:keycloak
       container_name: diet-keycloak
       command: ["-Djboss.socket.binding.port-offset=100"]
       environment:
@@ -29,7 +29,7 @@ services:
         aliases:
           - diet-postgres-db
   tomcat:
-    image: diet-tomcat
+    image: curek91/diet-app:tomcat
     container_name: diet-tomcat
     ports:
       - 8080:8080
