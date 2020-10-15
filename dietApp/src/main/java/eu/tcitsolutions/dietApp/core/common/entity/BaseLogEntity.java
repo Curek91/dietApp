@@ -1,10 +1,12 @@
 package eu.tcitsolutions.dietApp.core.common.entity;
 
 import lombok.Getter;
+import org.keycloak.KeycloakPrincipal;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.persistence.Column;
@@ -39,12 +41,12 @@ public class BaseLogEntity{
     @PrePersist
     public void prePersist(){
         this.creationTime = LocalDateTime.now();
-        this.createdBy = SecurityContextHolder.getContext().getAuthentication().getName();
+        this.createdBy = ((KeycloakPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getKeycloakSecurityContext().getToken().getPreferredUsername();
     }
 
     @PreUpdate
     public void preUpdate() {
         this.modificationTime = LocalDateTime.now();
-        this.modifiedBy = SecurityContextHolder.getContext().getAuthentication().getName();
+        this.modifiedBy = ((KeycloakPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getKeycloakSecurityContext().getToken().getPreferredUsername();
     }
 }

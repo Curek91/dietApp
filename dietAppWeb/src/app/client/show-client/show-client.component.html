@@ -191,7 +191,7 @@
           <tbody>
           <tr *ngFor="let clientDiet of diets" class="diet-row" [ngClass]="{'active-diet':clientDiet.id === newDietRef.dietId}">
             <td (click)="setDietId(clientDiet.id)" [ngClass]="{'active-diet': clientDiet.id === newDietRef.dietId}">{{clientDiet.id}}</td>
-            <td (click)="setDietId(clientDiet.id)" [ngClass]="{'active-diet': clientDiet.id === newDietRef.dietId}">{{clientDiet.createdBy}}</td>
+            <td (click)="setDietId(clientDiet.id)" [ngClass]="{'active-diet': clientDiet.id === newDietRef.dietId}">{{clientDiet.createdBy | titlecase}}</td>
             <td (click)="setDietId(clientDiet.id)" [ngClass]="{'active-diet': clientDiet.id === newDietRef.dietId}">{{clientDiet.creationTime | date: 'dd-MM-yyyy HH:mm:ss'}} </td>
             <td (click)="setDietId(clientDiet.id)" [ngClass]="{'active-diet': clientDiet.id === newDietRef.dietId}">{{clientDiet.kcal}} </td>
             <td [ngClass]="{'active-diet':clientDiet.id === newDietRef.dietId}">

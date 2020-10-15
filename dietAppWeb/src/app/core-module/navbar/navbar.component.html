@@ -9,7 +9,7 @@
       </li>
     </ul>
     <div class="logout my-2 my-lg-0">
-      <p>Witaj, {{username}}</p>
+      <p>Witaj, {{username  | titlecase}}</p>
       <p class="text-right"><button mat-raised-button color="warn" (click)="logout()">Wyloguj</button></p>
     </div>
   </div>
