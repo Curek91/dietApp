@@ -3,12 +3,12 @@ services:
   diet-keycloak:
       image: curek91/diet-app:keycloak
       container_name: diet-keycloak
-      command: ["-Djboss.socket.binding.port-offset=100"]
+      command: ["-Djboss.socket.binding.port-offset=200"]
       environment:
         KEYCLOAK_USER: admin
         KEYCLOAK_PASSWORD: admin
       ports:
-        - 8180:8180
+        - 8280:8280
       networks:
         dietApp_internal:
             aliases:

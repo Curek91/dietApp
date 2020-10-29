@@ -2,10 +2,10 @@
   <div class="table">
     <div class="table">
       <div class="row">
-        <div class="col-sm-6" style="height: 100%">
+        <div class="col-sm-8" style="height: 100%">
           <div class="row">
             <div class="col-sm-4">
-              <div class="btn-group btn-group-toggle" data-toggle="buttons">
+<!--              <div class="btn-group btn-group-toggle" data-toggle="buttons">
                 <label class="btn btn-info active" (click)="changeDietView('list')">
                   <input type="radio" name="view" id="listView" value="list"
                          autocomplete="off" checked> Lista
@@ -14,18 +14,22 @@
                   <input type="radio" name="view" id="imagesView" value="images"
                          autocomplete="off"> Obrazki
                 </label>
-              </div>
+              </div>-->
+              <button *ngIf="diet.meals && diet.meals.length > 0"
+                      (click)="dietWithImages.open()" mat-raised-button color="primary"
+                      class="addDietBtn text-right">Pokaż diete z obrazkami
+              </button>
             </div>
-            <div class="col-sm-3">
+<!--          <div class="col-sm-3">
               Porównaj do:
             </div>
             <div class="col-sm-5" style="margin-bottom: 10%">
               <select id="typeOldId" (change)="getOldDiet($event.target.value)" class="form-control">
                 <option [ngValue]="null"></option>
                 <option *ngFor="let oldDiet of oldDiets" value="{{ oldDiet.id }}">{{oldDiet.id}} - {{oldDiet.createdBy}}
-                  - {{oldDiet.creationTime}}</option>
+                  - {{oldDiet.creationTime | date: 'dd-MM-yyyy HH:mm:ss'}}</option>
               </select>
-            </div>
+            </div>-->
           </div>
           <div class="row dietRow" [ngClass]="{'active-row': mealOnDiet.mealNo == activeMeal}"
                *ngFor="let mealOnDiet of diet.meals" (click)="setActiveMeal(mealOnDiet.mealNo)"
@@ -42,18 +46,18 @@
                 <th class="product-on-table text-center" style="width: 25%">Waga</th>
                 </thead>
                 <tbody>
-                <tr class="prod-row" *ngFor="let productOnMeal of mealOnDiet.products; let i = index"
+                <tr class="prod-row-on-diet" *ngFor="let productOnMeal of mealOnDiet.products; let i = index"
                     (dblclick)="deleteFromMeal(i)">
                   <td class="product-on-table text-right"
-                      style="font-weight: bold; padding: 5px 0; width: 40%; border-right: 1px solid">{{productOnMeal.name}}</td>
+                      style="font-weight: bold; padding: 5px 0; width: 20%; border-right: 1px solid">{{productOnMeal.name}}</td>
                   <td class="product-on-table text-center"
-                      style="width: 15%; padding: 5px 0">{{productOnMeal.protein * productOnMeal.weight / 100 | number:'1.1-2'}} </td>
+                      style="width: 20%; padding: 5px 0">{{productOnMeal.protein * productOnMeal.weight / 100 | number:'1.1-2'}} </td>
                   <td class="product-on-table text-center"
-                      style="width: 15%; padding: 5px 0">{{productOnMeal.carbs * productOnMeal.weight / 100 | number:'1.1-2'}} </td>
+                      style="width: 20%; padding: 5px 0">{{productOnMeal.carbs * productOnMeal.weight / 100 | number:'1.1-2'}} </td>
                   <td class="product-on-table text-center"
-                      style="width: 15%; padding: 5px 0">{{productOnMeal.fat * productOnMeal.weight / 100 | number:'1.1-2'}} </td>
+                      style="width: 20%; padding: 5px 0">{{productOnMeal.fat * productOnMeal.weight / 100 | number:'1.1-2'}} </td>
                   <td class="product-on-table text-center"
-                      style="width: 15%; padding: 5px 0">{{productOnMeal.kcal * productOnMeal.weight / 100 | number:'1.1-2'}} </td>
+                      style="width: 20%; padding: 5px 0">{{productOnMeal.kcal * productOnMeal.weight / 100 | number:'1.1-2'}} </td>
                   <td class="product-on-table text-center" style="width: 10%; padding: 5px 0"><mat-form-field class="example-full-width"><input matInput
                                                                                                    maxlength="3" (click)="$event.stopPropagation()" (dblclick)="$event.stopPropagation()"
                                                                                                    [(ngModel)]="productOnMeal.weight"
@@ -287,13 +291,18 @@
                       (click)="exportExcel()" mat-raised-button color="primary"
                       class="addDietBtn text-right">Pobierz plik excel
               </button>
+
+              <button *ngIf="diet.meals && diet.meals.length > 0"
+                      (click)="shopList.open()" mat-raised-button color="primary"
+                      class="addDietBtn text-right">Pokaż liste zakupów
+              </button>
             </div>
           </div>
         </div>
-        <div class="col-sm-6 product-column">
+        <div class="col-sm-4 product-column">
           <div class="row">
             <div class="col-sm-12">
-              <div class="btn-group btn-group-toggle" data-toggle="buttons">
+<!--              <div class="btn-group btn-group-toggle" data-toggle="buttons">
                 <label class="btn btn-info active" (click)="changeProductsView('list')">
                   <input type="radio" name="view" id="prodListView" value="list"
                          autocomplete="off" checked> Lista
@@ -302,7 +311,7 @@
                   <input type="radio" name="view" id="prodImagesView" value="images"
                          autocomplete="off"> Obrazki
                 </label>
-              </div>
+              </div>-->
             </div>
           </div>
           <div class="row filter-row">
@@ -332,20 +341,20 @@
           <div class="row products-row" *ngIf="productsView === 'list'">
             <table class="table table-striped">
               <thead>
-              <td class="text-center" style="width: 20%">Nazwa</td>
-              <td class="text-center" style="width: 20%">Białko</td>
-              <td class="text-center" style="width: 20%">Węglowodany</td>
-              <td class="text-center" style="width: 20%">Tłuszcze</td>
-              <td class="text-center" style="width: 20%">Kalorie</td>
+              <td class="text-center" style="width: 60%; font-weight: bold">Nazwa</td>
+              <td class="text-center" style="width: 10%">B</td>
+              <td class="text-center" style="width: 10%">W</td>
+              <td class="text-center" style="width: 10%">T</td>
+              <td class="text-center" style="width: 10%">Kcal</td>
               </thead>
               <tbody>
               <tr class="prod-row" *ngFor="let product of products | productFilter:filter:productTypeSelected"
                   (dblclick)="addToMeal(product)" dnd-draggable [dragEnabled]="true" [dragData]="product">
-                <td class="text-center" style="width: 20%; padding: 0px">{{product.name}}</td>
-                <td class="text-center" style="width: 20%; padding: 0px">{{product.protein}}</td>
-                <td class="text-center" style="width: 20%; padding: 0px">{{product.carbs}}</td>
-                <td class="text-center" style="width: 20%; padding: 0px">{{product.fat}}</td>
-                <td class="text-center" style="width: 20%; padding: 0px">{{product.kcal}}</td>
+                <td class="text-center" style="width: 60%; padding: 0px; font-weight: bold">{{product.name}}</td>
+                <td class="text-center" style="width: 10%; padding: 0px">{{product.protein}}</td>
+                <td class="text-center" style="width: 10%; padding: 0px">{{product.carbs}}</td>
+                <td class="text-center" style="width: 10%; padding: 0px">{{product.fat}}</td>
+                <td class="text-center" style="width: 10%; padding: 0px">{{product.kcal}}</td>
               </tr>
               </tbody>
             </table>
@@ -378,5 +387,93 @@
   </ng-template>
 </modal>
 
+
+<modal #shopList>
+  <ng-template #modalHeader><h5 class="modal-title">Lista zakupów</h5></ng-template>
+  <ng-template #modalBody>
+    <table>
+      <thead>
+        <th>Nazwa produktu</th>
+        <th>Waga</th>
+      </thead>
+      <tbody>
+      <tr *ngFor="let productOnShopList of createShopList()" class="shop-list">
+        <td>{{productOnShopList.name}}</td>
+        <td>{{productOnShopList.weight}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </ng-template>
+  <ng-template #modalFooter>
+  </ng-template>
+</modal>
+
+<modal #dietWithImages>
+  <ng-template #modalHeader><h5 class="modal-title">Dieta: {{diet.creationTime | date: 'dd-MM-yyyy HH:mm:ss'}}</h5></ng-template>
+  <ng-template #modalBody>
+
+
+
+    <div class="row dietRow"
+         *ngFor="let mealOnDiet of diet.meals">
+
+      <div class="col-sm-8">
+        <div class="row">
+          <div *ngFor="let productOnMeal of mealOnDiet.products; let i = index" class="col-sm-4">
+            <app-product-on-diet [productInput]="productOnMeal" [disable]="true"></app-product-on-diet>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            {{mealOnDiet.suplements}}
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-2 meal-summary">
+        <div class="row">
+          <div class="col-sm-12">
+            <span>Białko: </span><br/>
+            <span>Węglowodany: </span><br/>
+            <span>Tłuszcze: </span><br/>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-2 meal-summary">
+        <div class="row">
+          <div class="col-sm-12">
+            <span>{{ getValuesForMeal(mealOnDiet, 'proteins') | number:'1.1-2'}} </span><br/>
+            <span>{{ getValuesForMeal(mealOnDiet, 'carbs') | number:'1.1-2'}} </span><br/>
+            <span>{{ getValuesForMeal(mealOnDiet, 'fats') | number:'1.1-2'}}</span><br/>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12 kcal-difference">
+                  <span>{{ getValuesForMeal(mealOnDiet, 'kcal') | number:'1.1-2' }}
+                    </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row meal-summary">
+      <div class="col-sm-3" style="text-align: right;">
+         <span>Białko: </span><br/>
+        <span>Węglowodany: </span><br/>
+        <span>Tłuszcze: </span><br/>
+        <span>Kcal: </span><br/>
+      </div>
+      <div class="col-sm-5 meal-summary">
+        <span>{{ getValuesForDiet(diet, 'proteins') | number:'1.1-2'}}</span><br/>
+        <span>{{ getValuesForDiet(diet, 'carbs') | number:'1.1-2'}}</span><br/>
+        <span>{{ getValuesForDiet(diet, 'fats') | number:'1.1-2'}}</span><br/>
+        <span>{{ getValuesForDiet(diet, 'kcal') | number:'1.1-2'}}</span><br/>
+      </div>
+      <div class="col-sm-4">
+      </div>
+    </div>
+  </ng-template>
+  <ng-template #modalFooter>
+  </ng-template>
+</modal>
 
 

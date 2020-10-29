@@ -4,7 +4,7 @@ import {Diet} from '../models/Diet';
 import {DietService} from '../diet.service';
 import {Meal} from '../models/Meal';
 import {ProductType} from '../models/ProductType';
-import {IProduct} from '../models/IProduct';
+import {ProductOnShopList} from '../models/ProductOnShopList';
 import {ClientService} from '../../client/client.service';
 import {ModalComponent} from 'angular-custom-modal';
 import {DietToSend} from '../models/DietToSend';
@@ -14,6 +14,7 @@ import {ChartDataSets, MultiDataSet, Label, ChartType, ChartOptions, Chart} from
 import 'chartjs-plugin-datalabels';
 import {MatSnackBar} from '@angular/material';
 import * as xlsx from 'xlsx';
+
 
 @Component({
   selector: 'app-new-diet',
@@ -339,5 +340,15 @@ export class NewDietComponent implements OnInit {
       workBookName = client.firstname + ' ' + client.lastname + ' - ' + this.getValuesForDiet(this.diet, 'kcal') + ' kcal.xlsx';
       xlsx.writeFile(workBook, workBookName);
     });
+  }
+
+  createShopList(): ProductOnShopList[] {
+    const products: Product[] = new Array;
+    this.diet.meals.forEach(meal => products.push(...meal.products));
+    const shopListProducts: ProductOnShopList[] = new Array();
+
+    // tslint:disable-next-line:max-line-length
+    new Set(products.map(prod => prod.name)).forEach(prod_name => shopListProducts.push(new ProductOnShopList(prod_name, products.filter(prod => prod.name === prod_name).reduce((prev, next) => +prev + +next.weight, 0))));
+  return shopListProducts;
   }
 }

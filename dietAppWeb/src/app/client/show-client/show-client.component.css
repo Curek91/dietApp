@@ -33,7 +33,9 @@
 
 .diet-row:hover
 {
-  background: #ffe419;
+  font-weight: bold;
+  color: black;
+  text-decoration: underline;
 }
 
 .accordion-title
@@ -56,7 +58,9 @@
 
 .active-diet
 {
-  background: #ff9518;
+  font-weight: bolder;
+  color: #c0392b;
+  text-decoration: underline;
 }
 
 .example-form {
@@ -139,4 +143,15 @@
 
 mat-form-field {
   margin-right: 12px;
+}
+
+.progress-row:hover {
+  background: aliceblue;
+  font-weight: bolder;
+  color: #c0392b;
+}
+
+.header {
+  font-weight: bolder;
+  font-size: xx-large;
 }

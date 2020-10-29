@@ -31,7 +31,7 @@ export class ManageClientComponent implements OnInit {
     });
   }
 
-  loadClients(name: string = '', sortBy: string = 'firstname', direction: string = 'asc', size: string = '5', page: string = '0'): void {
+  loadClients(name: string = '', sortBy: string = 'firstname', direction: string = 'asc', size: string = '15', page: string = '0'): void {
     // tslint:disable-next-line:no-shadowed-variable
     this.clientService.getClientsByName(name, sortBy, direction, size, page).subscribe((page) => {
       this.fillTable(page);

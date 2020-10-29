@@ -17,7 +17,6 @@
 }
 
 .products-row{
-   height: 60vh;
    overflow: hidden;
    overflow-y: scroll;
    margin-top: 3%;
@@ -77,7 +76,18 @@
 
 .prod-row:hover
 {
-  background: #ffe419;
+  text-transform: uppercase;
+  font-weight: bolder;
+  color: #c0392b;
+  cursor: cell;
+}
+
+.prod-row-on-diet:hover
+{
+  text-transform: uppercase;
+  font-weight: bolder;
+  color: #c0392b;
+  background: aliceblue;
   cursor: cell;
 }
 

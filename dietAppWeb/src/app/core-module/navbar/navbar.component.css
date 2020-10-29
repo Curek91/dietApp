@@ -1,11 +1,12 @@
 .navbar-diet{
-  background: #ffe419;
+  background: grey;
   margin: 0px;
   padding: 0px;
 }
 
 .logo{
-  width: 10%
+  width: 10%;
+  border-radius: 50%;
 }
 
 ul {
@@ -21,9 +22,9 @@ li {
 }
 
 li:hover {
-  background: #e1cc16;
   transition: linear 300ms;
   border-bottom:  1px solid white;
+  text-decoration: underline;
 }
 
 li.active {

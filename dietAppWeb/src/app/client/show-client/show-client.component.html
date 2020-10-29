@@ -1,4 +1,9 @@
 <div class="container product-container">
+  <div class="row">
+    <div class="col-sm-12">
+      <p class="header text-center">{{clientForm.get("firstname").value}} {{clientForm.get("lastname").value}}</p>
+    </div>
+  </div>
   <mat-accordion>
     <mat-expansion-panel [expanded]="true">
       <mat-expansion-panel-header>
@@ -127,7 +132,7 @@
             <th>Udo</th>
             </thead>
             <tbody>
-            <tr *ngFor="let version of clientVersions; let i = index">
+            <tr class="progress-row" *ngFor="let version of clientVersions; let i = index">
               <td>{{i + 1}}</td>
               <td>{{version.weight}}</td>
               <td>{{version.height}}</td>
