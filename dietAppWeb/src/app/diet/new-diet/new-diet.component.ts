@@ -136,8 +136,8 @@ export class NewDietComponent implements OnInit {
     this.diet.meals[this.activeMeal - 1].products.splice(index, 1);
   }
 
-  deleteMeal(): void {
-    const active = this.activeMeal;
+  deleteMeal(mealNo: number): void {
+    const active = mealNo;
     this.diet.meals.map(function (item) {
       if (item.mealNo > active) {
         item.mealNo -= 1;

@@ -27,6 +27,7 @@
     "angular-custom-modal": "^1.2.0",
     "angular-file-uploader": "^5.0.2",
     "angular-font-awesome": "^3.1.2",
+    "angular2-draggable": "^2.3.2",
     "angular2-image-upload": "^1.0.0-rc.2",
     "bootstrap": "^4.1.1",
     "chart.js": "^2.9.3",

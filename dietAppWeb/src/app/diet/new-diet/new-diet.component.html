@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-sm-8" style="height: 100%">
           <div class="row">
-            <div class="col-sm-4">
+            <div class="col-sm-12" >
 <!--              <div class="btn-group btn-group-toggle" data-toggle="buttons">
                 <label class="btn btn-info active" (click)="changeDietView('list')">
                   <input type="radio" name="view" id="listView" value="list"
@@ -17,7 +17,7 @@
               </div>-->
               <button *ngIf="diet.meals && diet.meals.length > 0"
                       (click)="dietWithImages.open()" mat-raised-button color="primary"
-                      class="addDietBtn text-right">Pokaż diete z obrazkami
+                      class="dietWithImages">Pokaż diete z obrazkami
               </button>
             </div>
 <!--          <div class="col-sm-3">
@@ -35,10 +35,13 @@
                *ngFor="let mealOnDiet of diet.meals" (click)="setActiveMeal(mealOnDiet.mealNo)"
                dnd-droppable (onDropSuccess)="moveToMeal($event, mealOnDiet.mealNo)">
             <div class="col-sm-12 text-sm-left" *ngIf="dietView === 'list'">
-              <table class="table table-striped">
+              <table class="table table-striped row-table" [ngClass]="{'active-row-table': mealOnDiet.mealNo == activeMeal}">
                 <thead>
-                <th class="product-on-table text-center" style="width: 15%; border-right: 1px solid">Posiłek
-                  nr {{ mealOnDiet.mealNo }}</th>
+                <th class="product-on-table text-center" style="width: 15%; border-right: 1px solid">
+                   <span> <button (click)="deleteMeal(mealOnDiet.mealNo)" type="button" class="close close-button" aria-label="Close"><span aria-hidden="true">&times;</span></button></span>
+                  <span>Posiłek nr {{ mealOnDiet.mealNo }}</span>
+
+                  </th>
                 <th class="product-on-table text-center" style="width: 15%">B</th>
                 <th class="product-on-table text-center" style="width: 15%">W</th>
                 <th class="product-on-table text-center" style="width: 15%">T</th>
@@ -84,7 +87,6 @@
                 </tbody>
               </table>
             </div>
-
 
             <modal #summaryMealModal>
               <ng-template #modalHeader><h5 class="modal-title text-center font-weight-bold">Podsumowanie
@@ -173,6 +175,7 @@
                 </div>
               </div>
             </div>
+
             <div class="col-sm-2 meal-summary" *ngIf="dietView === 'images'">
               <div class="row">
                 <div class="col-sm-12">
@@ -224,6 +227,7 @@
                 </div>
               </div>
             </div>
+
           </div>
           <div class="row meal-summary" *ngIf="dietView === 'images' && diet.meals && diet.meals.length > 0">
             <div class="col-sm-3" style="text-align: right;">
@@ -253,7 +257,10 @@
             <div class="col-sm-4">
             </div>
           </div>
+          <button  color="success" class="addDietBtn btn btn-success btn-sm" (click)="addMeal()">Dodaj posiłek
+          </button>
           <div class="row dietRow" *ngIf="dietView === 'list' && activeMeal">
+
             <table class="table table-striped">
               <thead>
               <td class="text-center" style="width: 25%">Białko</td>
@@ -274,32 +281,27 @@
           </div>
           <div class="row">
             <div class="col-sm-12 center-block">
-              <button *ngIf="diet.meals && diet.meals.length > 0" mat-raised-button color="warn"
-                      class="addDietBtn text-center" (click)="deleteMeal()">Usuń posiłek
-              </button>
-              <button mat-raised-button color="primary" class="addDietBtn center" (click)="addMeal()">Dodaj posiłek
-              </button>
               <button *ngIf="diet.meals && diet.meals.length > 0 && diet.id == null"
                       (click)="createDietModal.open()" mat-raised-button color="primary"
-                      class="addDietBtn text-right">Zapisz Diete
+                      class="text-right bottom-button">Zapisz Diete
               </button>
               <button *ngIf="diet.meals && diet.meals.length > 0 && diet.id != null"
                       (click)="updateDietModal.open()" mat-raised-button color="primary"
-                      class=" addDietBtn text-right">Aktualizuj diete
+                      class="text-right bottom-button">Aktualizuj diete
               </button>
               <button *ngIf="diet.meals && diet.meals.length > 0"
                       (click)="exportExcel()" mat-raised-button color="primary"
-                      class="addDietBtn text-right">Pobierz plik excel
+                      class="text-right bottom-button">Pobierz plik excel
               </button>
 
               <button *ngIf="diet.meals && diet.meals.length > 0"
                       (click)="shopList.open()" mat-raised-button color="primary"
-                      class="addDietBtn text-right">Pokaż liste zakupów
+                      class="text-right bottom-button">Pokaż liste zakupów
               </button>
             </div>
           </div>
         </div>
-        <div class="col-sm-4 product-column">
+        <div class="col-sm-4 product-column" ngDraggable [handle]="ProductsHandle">
           <div class="row">
             <div class="col-sm-12">
 <!--              <div class="btn-group btn-group-toggle" data-toggle="buttons">
@@ -314,7 +316,7 @@
               </div>-->
             </div>
           </div>
-          <div class="row filter-row">
+          <div class="row filter-row" #ProductsHandle>
             <div class="col-sm-6">
               <mat-form-field class="filter-width">
               <input type="text" [(ngModel)]="filter" matInput placeholder="Szukaj produktu..." />

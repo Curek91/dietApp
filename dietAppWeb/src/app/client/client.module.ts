@@ -21,6 +21,7 @@ import {
   MatAutocompleteModule, MatDatepickerModule, MatNativeDateModule, MatSnackBarModule
 } from '@angular/material';
 import {ClientService} from "./client.service";
+import {AngularDraggableModule, AngularResizableDirective} from "angular2-draggable";
 
 @NgModule({
   imports: [
@@ -41,7 +42,8 @@ import {ClientService} from "./client.service";
     MatAutocompleteModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    AngularDraggableModule
   ],
   exports: [MatButtonModule, MatCheckboxModule],
   declarations: [ManageClientComponent, NewClientComponent, ShowClientComponent, ClientFilterPipe]

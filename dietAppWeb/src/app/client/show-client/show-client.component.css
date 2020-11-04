@@ -155,3 +155,7 @@ mat-form-field {
   font-weight: bolder;
   font-size: xx-large;
 }
+
+.create-new-diet {
+  margin-bottom: 1%;
+}

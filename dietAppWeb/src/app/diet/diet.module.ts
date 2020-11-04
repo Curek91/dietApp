@@ -26,6 +26,7 @@ import {
 } from '@angular/material';
 import {ClientModule} from '../client/client.module';
 import {ClientService} from "../client/client.service";
+import {AngularDraggableModule} from "angular2-draggable";
 
 
 @NgModule({
@@ -48,6 +49,7 @@ import {ClientService} from "../client/client.service";
     MatSnackBarModule,
     MatTooltipModule,
     MatIconModule,
+    AngularDraggableModule
   ],
   bootstrap: [AppComponent],
   providers: [CanActivateAuthGuard, ClientService],
